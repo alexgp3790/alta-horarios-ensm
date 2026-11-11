@@ -1,4 +1,144 @@
 {
+  "coordinadores": [
+    {
+      "clave": 204,
+      "nombre": "ALEJANDRA MAGAÑA HERNÁNDEZ",
+      "lic": "BL",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 160,
+      "nombre": "PAMELA YESENIA PÉREZ MENDOZA",
+      "lic": "BL",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 34,
+      "nombre": "BERTHA GUADALUPE PAULO GUERRERO",
+      "lic": "DPX",
+      "turno": "MATUTINO/VESPERTINO"
+    },
+    {
+      "clave": 275,
+      "nombre": "MARÍA ANGELINA RODRÍGUEZ HERNÁNDEZ",
+      "lic": "ES",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 77,
+      "nombre": "GRACIELA BÁRCENAS ARIAS",
+      "lic": "ES",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 7,
+      "nombre": "ALEJANDRO AGUILA MARTINEZ",
+      "lic": "FS",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 157,
+      "nombre": "OSCAR IGNACIO SALAS URBINA",
+      "lic": "FS",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 78,
+      "nombre": "GRACIELA CRUZ RAMIREZ",
+      "lic": "FE",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 220,
+      "nombre": "JESÚS ANTONIO CAMERAS GARCÍA",
+      "lic": "FE",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 348,
+      "nombre": "COORDINADOR CLAVE 348",
+      "lic": "GE",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 114,
+      "nombre": "LAURA MONSERRATH CARMONA TELLO",
+      "lic": "GE",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 312,
+      "nombre": "ALEJANDRO GUZMÁN MENDOZA",
+      "lic": "HS",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 99,
+      "nombre": "JORGE ICAZBALCETA GARCÍA",
+      "lic": "HS",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 280,
+      "nombre": "MARÍA LORENA VELASCO MARISCAL",
+      "lic": "IN",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 134,
+      "nombre": "MARÍA GUADALUPE RAMÍREZ GONZÁLEZ",
+      "lic": "IN",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 200,
+      "nombre": "FRANCISCO GUILLERMO HERRERA ARMEDIA",
+      "lic": "MT",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 38,
+      "nombre": "CAROLINA RUBI REAL ORTEGA",
+      "lic": "MT",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 163,
+      "nombre": "RAFAEL LOPEZ FLORES",
+      "lic": "PE",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 28,
+      "nombre": "ARTURO MONROY PÉREZ",
+      "lic": "PE",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 230,
+      "nombre": "JESÚS ALFONSO VICTORIA ESPINOZA",
+      "lic": "PS",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 58,
+      "nombre": "EDUARDO REYES ALANÍS",
+      "lic": "PS",
+      "turno": "VESPERTINO"
+    },
+    {
+      "clave": 174,
+      "nombre": "ROSA IVETT FLORES RUIZ",
+      "lic": "QM",
+      "turno": "MATUTINO"
+    },
+    {
+      "clave": 161,
+      "nombre": "PEDRO SMID SANTIAGO",
+      "lic": "QM",
+      "turno": "VESPERTINO"
+    }
+  ],
   "docentes": [
     {
       "clave": 203,
