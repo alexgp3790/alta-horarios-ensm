@@ -388,6 +388,8 @@
   </div>
 
   <script>
+    const URL_WEB_APP_SHEETS = "https://script.google.com/macros/s/AKfycbxGSH7--IUnJuEa1RujxKk56u122LiWpcMVXSkImR6zsbACtcrPlCsXrz9CJu2UipM_/exec";
+
     let docentesData = [];
     let coordinadoresData = [];
     let mapaMaterias = {};
@@ -625,16 +627,25 @@
       const duracion = endH - startH;
       const formatTime = (h) => (h < 10 ? '0' + h : h) + ':00';
       const timeslotStr = `${formatTime(startH)} - ${formatTime(endH)} hrs`;
-      const subjectFull = `[${cveMat}] ${optSub.dataset.nombre}`;
+      const nombreMateria = optSub.dataset.nombre;
+      const subjectFull = `[${cveMat}] ${nombreMateria}`;
+      const horasRequeridas = parseInt(optSub.dataset.horas);
 
       const item = {
-        cveMat: cveMat,
+        licCve: licCve,
         licText: licText,
+        sem: sem,
+        groupVal: groupVal,
+        cveMat: cveMat,
+        nombreMateria: nombreMateria,
         subject: subjectFull,
         semGpo: groupVal ? sem + '° Sem (Gpo ' + groupVal + ')' : sem + '° Semestre',
         day: day,
+        startH: startH,
+        endH: endH,
         timeslot: timeslotStr,
-        duracion: duracion
+        duracion: duracion,
+        horasRequeridas: horasRequeridas
       };
 
       materiasAgregadas.push(item);
@@ -680,39 +691,67 @@
       btnFinish.disabled = false;
     }
 
-    function generarComprobanteConsolidado() {
-      const folio = 'ENSM-DIV-LIC-' + Math.floor(100000 + Math.random() * 900000);
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+    async function generarComprobanteConsolidado() {
+      const btnFinish = document.getElementById('btn-finish');
+      btnFinish.disabled = true;
+      btnFinish.innerText = "Validando y guardando en BD...";
 
-      document.getElementById('rec-folio').innerText = folio;
-      document.getElementById('rec-date').innerText = dateStr;
-      document.getElementById('rec-cve-doc').innerText = usuarioActual.clave;
-      document.getElementById('rec-name').innerText = usuarioActual.nombre;
+      const payload = {
+        usuario: {
+          clave: usuarioActual.clave,
+          nombre: usuarioActual.nombre
+        },
+        sesiones: materiasAgregadas
+      };
 
-      const recTbody = document.getElementById('rec-tbody');
-      recTbody.innerHTML = '';
+      try {
+        const resp = await fetch(URL_WEB_APP_SHEETS, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        
+        const resData = await resp.json();
 
-      let totalHoras = 0;
+        if (resData.status === "ERROR") {
+          alert("⚠️ NO SE PUDO GUARDAR EL REGISTRO:\n\n" + resData.messages.join("\n\n"));
+          btnFinish.disabled = false;
+          btnFinish.innerText = "Finalizar y Generar Recibo Consolidado";
+          return;
+        }
 
-      materiasAgregadas.forEach(item => {
-        totalHoras += item.duracion;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${item.licText}</td>
-          <td>${item.subject}</td>
-          <td>${item.semGpo}</td>
-          <td>${item.day}</td>
-          <td>${item.timeslot}</td>
-          <td>${item.duracion} hr(s)</td>
-        `;
-        recTbody.appendChild(tr);
-      });
+        // SI LA BD CONFIRMA ÉXITO:
+        document.getElementById('rec-folio').innerText = resData.folio;
+        document.getElementById('rec-date').innerText = resData.fecha;
+        document.getElementById('rec-cve-doc').innerText = usuarioActual.clave;
+        document.getElementById('rec-name').innerText = usuarioActual.nombre;
 
-      document.getElementById('rec-total-horas').innerText = totalHoras + ' hrs';
+        const recTbody = document.getElementById('rec-tbody');
+        recTbody.innerHTML = '';
+        let totalHoras = 0;
 
-      document.getElementById('main-container').style.display = 'none';
-      document.getElementById('receipt-modal').style.display = 'block';
+        materiasAgregadas.forEach(item => {
+          totalHoras += item.duracion;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${item.licText}</td>
+            <td>${item.subject}</td>
+            <td>${item.semGpo}</td>
+            <td>${item.day}</td>
+            <td>${item.timeslot}</td>
+            <td>${item.duracion} hr(s)</td>
+          `;
+          recTbody.appendChild(tr);
+        });
+
+        document.getElementById('rec-total-horas').innerText = totalHoras + ' hrs';
+        document.getElementById('main-container').style.display = 'none';
+        document.getElementById('receipt-modal').style.display = 'block';
+
+      } catch (err) {
+        alert("Error de conexión al guardar en la Base de Datos. Intente de nuevo.");
+        btnFinish.disabled = false;
+        btnFinish.innerText = "Finalizar y Generar Recibo Consolidado";
+      }
     }
   </script>
 </body>
