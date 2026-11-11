@@ -24,7 +24,7 @@
     }
 
     .container {
-      max-width: 800px;
+      max-width: 850px;
       margin: 0 auto;
       background: var(--card);
       padding: 30px;
@@ -63,6 +63,12 @@
 
     .form-group {
       margin-bottom: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
     }
 
     label {
@@ -125,6 +131,17 @@
       background-color: #edf2f7;
     }
 
+    .info-badge {
+      display: inline-block;
+      background: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 5px;
+    }
+
     #app-form, #receipt-modal, #group-container {
       display: none;
     }
@@ -147,7 +164,7 @@
       <h2>División de Licenciaturas | Captura de Carga Horaria Docente</h2>
     </div>
 
-    <!-- MÓDULO DE AUTENTICACIÓN Y FILTRADO POR LICENCIATURA/COORDINACIÓN -->
+    <!-- MÓDULO DE AUTENTICACIÓN Y FILTRADO -->
     <div class="auth-box" id="auth-section">
       <div class="form-group">
         <label for="role-select">Tipo de Usuario:</label>
@@ -157,7 +174,6 @@
         </select>
       </div>
 
-      <!-- FILTRO DE LICENCIATURA DE ADSCRIPCIÓN / COORDINACIÓN -->
       <div class="form-group">
         <label for="filter-lic" id="filter-lic-label">Filtrar Docentes por Licenciatura:</label>
         <select id="filter-lic" onchange="poblarUsuarios()">
@@ -197,11 +213,11 @@
     <div id="app-form">
       <div style="background-color: #ebf8ff; border-left: 4px solid var(--accent); padding: 12px; margin-bottom: 20px; border-radius: 4px;">
         <strong id="active-user-name"></strong><br>
-        <span style="font-size: 0.85rem; color: #4a5568;">Usuario autenticado correctamente. Registre las materias requeridas.</span>
+        <span style="font-size: 0.85rem; color: #4a5568;">Usuario autenticado correctamente. Registre las sesiones requeridas para cada materia.</span>
       </div>
 
       <fieldset style="border: 1px solid #cbd5e0; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
-        <legend style="font-weight: bold; color: var(--primary); padding: 0 6px;">Agregar Asignatura</legend>
+        <legend style="font-weight: bold; color: var(--primary); padding: 0 6px;">Agregar Sesión de Asignatura</legend>
 
         <div class="form-group">
           <label for="licenciatura">Licenciatura:</label>
@@ -239,9 +255,10 @@
 
         <div class="form-group">
           <label for="subject">Asignatura:</label>
-          <select id="subject" disabled>
+          <select id="subject" onchange="actualizarInfoMateria()" disabled>
             <option value="">-- Primero seleccione Licenciatura y Semestre --</option>
           </select>
+          <div id="subject-info" class="info-badge" style="display: none;"></div>
         </div>
 
         <div class="form-group" id="group-container">
@@ -265,24 +282,41 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="time-slot">Bloque Horario:</label>
-          <select id="time-slot">
-            <option value="">-- Seleccione el bloque --</option>
-            <option value="07:00 - 09:00">07:00 - 09:00 hrs</option>
-            <option value="09:00 - 11:00">09:00 - 11:00 hrs</option>
-            <option value="11:00 - 13:00">11:00 - 13:00 hrs</option>
-            <option value="13:00 - 15:00">13:00 - 15:00 hrs</option>
-            <option value="15:00 - 17:00">15:00 - 17:00 hrs</option>
-            <option value="17:00 - 19:00">17:00 - 19:00 hrs</option>
-            <option value="19:00 - 21:00">19:00 - 21:00 hrs</option>
-          </select>
+        <!-- SELECCIÓN FLEXIBLE DE HORARIO DE HORA EN HORA -->
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="start-time">Hora de Inicio:</label>
+            <select id="start-time" onchange="actualizarHorasFin()">
+              <option value="">-- Hora Inicio --</option>
+              <option value="7">07:00 hrs</option>
+              <option value="8">08:00 hrs</option>
+              <option value="9">09:00 hrs</option>
+              <option value="10">10:00 hrs</option>
+              <option value="11">11:00 hrs</option>
+              <option value="12">12:00 hrs</option>
+              <option value="13">13:00 hrs</option>
+              <option value="14">14:00 hrs</option>
+              <option value="15">15:00 hrs</option>
+              <option value="16">16:00 hrs</option>
+              <option value="17">17:00 hrs</option>
+              <option value="18">18:00 hrs</option>
+              <option value="19">19:00 hrs</option>
+              <option value="20">20:00 hrs</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="end-time">Hora de Término:</label>
+            <select id="end-time">
+              <option value="">-- Hora Término --</option>
+            </select>
+          </div>
         </div>
 
-        <button type="button" class="btn btn-add" onclick="agregarMateria()">+ Agregar materia a la propuesta</button>
+        <button type="button" class="btn btn-add" onclick="agregarMateria()">+ Agregar sesión a la propuesta</button>
       </fieldset>
 
-      <!-- TABLA PREVIA DE RESUMEN DE MATERIAS CAPTURADAS -->
+      <!-- TABLA PREVIA DE RESUMEN DE SESIONES CAPTURADAS -->
       <h3 style="font-size: 1.05rem; color: var(--primary); margin-top: 20px;">Propuesta de Horarios a Registrar</h3>
       <table class="table-custom" id="preview-table">
         <thead>
@@ -291,13 +325,14 @@
             <th>Asignatura</th>
             <th>Sem./Gpo</th>
             <th>Día</th>
-            <th>Horario</th>
+            <th>Horario Sesión</th>
+            <th>Duración</th>
             <th>Acción</th>
           </tr>
         </thead>
         <tbody id="preview-body">
           <tr>
-            <td colspan="6" style="text-align: center; color: #a0aec0;">No hay materias agregadas a la propuesta.</td>
+            <td colspan="7" style="text-align: center; color: #a0aec0;">No hay sesiones agregadas a la propuesta.</td>
           </tr>
         </tbody>
       </table>
@@ -328,10 +363,17 @@
             <th>Semestre / Grupo</th>
             <th>Día</th>
             <th>Bloque Horario</th>
+            <th>Horas Sesión</th>
           </tr>
         </thead>
         <tbody id="rec-tbody">
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="5" style="text-align: right;">Total de Horas Registradas:</th>
+            <th id="rec-total-horas">0 hrs</th>
+          </tr>
+        </tfoot>
       </table>
 
       <p style="font-size: 0.8rem; color: #718096; text-align: center; margin-top: 25px;">
@@ -470,7 +512,6 @@
       const tagRol = rol === 'coordinador' ? 'Coordinador: ' : 'Docente: ';
       document.getElementById('active-user-name').innerText = tagRol + usuarioActual.nombre + " (Clave: " + usuarioActual.clave + ")";
 
-      // Pre-seleccionar la licenciatura si se filtró previa validación
       const filterLic = document.getElementById('filter-lic').value;
       if (filterLic !== 'TODAS') {
         const licSelect = document.getElementById('licenciatura');
@@ -499,11 +540,14 @@
       const selectSub = document.getElementById('subject');
 
       selectSub.innerHTML = '<option value="">-- Seleccione Asignatura --</option>';
+      document.getElementById('subject-info').style.display = 'none';
 
       if (licCve && sem && mapaMaterias[licCve] && mapaMaterias[licCve][sem]) {
         mapaMaterias[licCve][sem].forEach(m => {
           const opt = document.createElement('option');
-          opt.value = m.clave + ' - ' + m.nombre;
+          opt.value = m.clave;
+          opt.dataset.nombre = m.nombre;
+          opt.dataset.horas = m.horas;
           opt.textContent = '[' + m.clave + '] ' + m.nombre + ' (' + m.horas + ' hrs)';
           selectSub.appendChild(opt);
         });
@@ -513,18 +557,63 @@
       }
     }
 
+    function actualizarInfoMateria() {
+      const selectSub = document.getElementById('subject');
+      const infoBox = document.getElementById('subject-info');
+      const opt = selectSub.options[selectSub.selectedIndex];
+
+      if (opt && opt.dataset.horas) {
+        const cveMat = opt.value;
+        const hrsRequeridas = parseInt(opt.dataset.horas);
+        const hrsCapturadas = calcularHorasCapturadasMateria(cveMat);
+
+        infoBox.innerHTML = `Carga oficial: <strong>${hrsRequeridas} hrs/semana</strong> | Capturadas: <strong>${hrsCapturadas} hrs</strong>`;
+        infoBox.style.display = 'inline-block';
+      } else {
+        infoBox.style.display = 'none';
+      }
+    }
+
+    function calcularHorasCapturadasMateria(cveMat) {
+      return materiasAgregadas
+        .filter(m => m.cveMat === cveMat)
+        .reduce((sum, item) => sum + item.duracion, 0);
+    }
+
+    function actualizarHorasFin() {
+      const startVal = parseInt(document.getElementById('start-time').value);
+      const selectEnd = document.getElementById('end-time');
+      selectEnd.innerHTML = '<option value="">-- Hora Término --</option>';
+
+      if (!startVal) return;
+
+      for (let h = startVal + 1; h <= 21; h++) {
+        const opt = document.createElement('option');
+        opt.value = h;
+        const formatoHora = h < 10 ? '0' + h + ':00 hrs' : h + ':00 hrs';
+        const duracion = h - startVal;
+        opt.textContent = formatoHora + ' (' + duracion + (duracion === 1 ? ' hora)' : ' horas)');
+        selectEnd.appendChild(opt);
+      }
+    }
+
     function agregarMateria() {
       const licSelect = document.getElementById('licenciatura');
       const licCve = licSelect.value;
       const licText = licSelect.options[licSelect.selectedIndex].text;
       const sem = document.getElementById('semestre').value;
-      const subject = document.getElementById('subject').value;
+      
+      const selectSub = document.getElementById('subject');
+      const cveMat = selectSub.value;
+      const optSub = selectSub.options[selectSub.selectedIndex];
+
       const groupVal = document.getElementById('group').value;
       const day = document.getElementById('day').value;
-      const timeslot = document.getElementById('time-slot').value;
+      const startH = parseInt(document.getElementById('start-time').value);
+      const endH = parseInt(document.getElementById('end-time').value);
 
-      if (!licCve || !sem || !subject || !day || !timeslot) {
-        alert("Por favor complete todos los campos obligatorios de la materia.");
+      if (!licCve || !sem || !cveMat || !day || isNaN(startH) || isNaN(endH)) {
+        alert("Por favor complete todos los campos obligatorios de la sesión.");
         return;
       }
 
@@ -533,25 +622,34 @@
         return;
       }
 
+      const duracion = endH - startH;
+      const formatTime = (h) => (h < 10 ? '0' + h : h) + ':00';
+      const timeslotStr = `${formatTime(startH)} - ${formatTime(endH)} hrs`;
+      const subjectFull = `[${cveMat}] ${optSub.dataset.nombre}`;
+
       const item = {
+        cveMat: cveMat,
         licText: licText,
-        subject: subject,
+        subject: subjectFull,
         semGpo: groupVal ? sem + '° Sem (Gpo ' + groupVal + ')' : sem + '° Semestre',
         day: day,
-        timeslot: timeslot
+        timeslot: timeslotStr,
+        duracion: duracion
       };
 
       materiasAgregadas.push(item);
       renderTablaPrevia();
+      actualizarInfoMateria();
 
-      document.getElementById('subject').value = '';
       document.getElementById('day').value = '';
-      document.getElementById('time-slot').value = '';
+      document.getElementById('start-time').value = '';
+      document.getElementById('end-time').innerHTML = '<option value="">-- Hora Término --</option>';
     }
 
     function eliminarMateria(index) {
       materiasAgregadas.splice(index, 1);
       renderTablaPrevia();
+      actualizarInfoMateria();
     }
 
     function renderTablaPrevia() {
@@ -560,7 +658,7 @@
       tbody.innerHTML = '';
 
       if (materiasAgregadas.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #a0aec0;">No hay materias agregadas a la propuesta.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #a0aec0;">No hay sesiones agregadas a la propuesta.</td></tr>';
         btnFinish.disabled = true;
         return;
       }
@@ -573,6 +671,7 @@
           <td>${item.semGpo}</td>
           <td>${item.day}</td>
           <td>${item.timeslot}</td>
+          <td>${item.duracion} hr(s)</td>
           <td><button class="btn btn-danger" onclick="eliminarMateria(${index})">Quitar</button></td>
         `;
         tbody.appendChild(tr);
@@ -594,7 +693,10 @@
       const recTbody = document.getElementById('rec-tbody');
       recTbody.innerHTML = '';
 
+      let totalHoras = 0;
+
       materiasAgregadas.forEach(item => {
+        totalHoras += item.duracion;
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${item.licText}</td>
@@ -602,9 +704,12 @@
           <td>${item.semGpo}</td>
           <td>${item.day}</td>
           <td>${item.timeslot}</td>
+          <td>${item.duracion} hr(s)</td>
         `;
         recTbody.appendChild(tr);
       });
+
+      document.getElementById('rec-total-horas').innerText = totalHoras + ' hrs';
 
       document.getElementById('main-container').style.display = 'none';
       document.getElementById('receipt-modal').style.display = 'block';
