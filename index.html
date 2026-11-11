@@ -147,13 +147,33 @@
       <h2>División de Licenciaturas | Captura de Carga Horaria Docente</h2>
     </div>
 
-    <!-- MÓDULO DE AUTENTICACIÓN / ACCESO -->
+    <!-- MÓDULO DE AUTENTICACIÓN Y FILTRADO POR ADSCRIPCIÓN -->
     <div class="auth-box" id="auth-section">
       <div class="form-group">
         <label for="role-select">Tipo de Usuario:</label>
         <select id="role-select" onchange="cambiarRol()">
           <option value="docente">Docente</option>
           <option value="coordinador">Coordinador de Licenciatura</option>
+        </select>
+      </div>
+
+      <!-- FILTRO DE LICENCIATURA DE ADSCRIPCIÓN -->
+      <div class="form-group">
+        <label for="filter-lic" id="filter-lic-label">Filtrar Docentes por Licenciatura:</label>
+        <select id="filter-lic" onchange="poblarDocentes()">
+          <option value="TODAS">-- Ver Todas las Licenciaturas --</option>
+          <option value="BL">BIOLOGÍA (BL)</option>
+          <option value="ES">ESPAÑOL (ES)</option>
+          <option value="FS">FÍSICA (FS)</option>
+          <option value="FE">FORMACIÓN ÉTICA Y CIUDADANA (FE)</option>
+          <option value="GE">GEOGRAFÍA (GE)</option>
+          <option value="HS">HISTORIA (HS)</option>
+          <option value="IN">INGLÉS (IN)</option>
+          <option value="MT">MATEMÁTICAS (MT)</option>
+          <option value="PE">PEDAGOGÍA (PE)</option>
+          <option value="PS">PSICOLOGÍA EDUCATIVA (PS)</option>
+          <option value="QM">QUÍMICA (QM)</option>
+          <option value="DPX">DOCENCIA EN POSGRADO (DPX)</option>
         </select>
       </div>
 
@@ -266,3 +286,303 @@
       <h3 style="font-size: 1.05rem; color: var(--primary); margin-top: 20px;">Propuesta de Horarios a Registrar</h3>
       <table class="table-custom" id="preview-table">
         <thead>
+          <tr>
+            <th>Licenciatura</th>
+            <th>Asignatura</th>
+            <th>Sem./Gpo</th>
+            <th>Día</th>
+            <th>Horario</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="preview-body">
+          <tr>
+            <td colspan="6" style="text-align: center; color: #a0aec0;">No hay materias agregadas a la propuesta.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" class="btn btn-submit" id="btn-finish" onclick="generarComprobanteConsolidado()" disabled>
+        Finalizar y Generar Recibo Consolidado
+      </button>
+    </div>
+  </div>
+
+  <!-- VISTA DEL RECIBO ÚNICO CONSOLIDADO -->
+  <div class="container" id="receipt-modal">
+    <div class="header">
+      <h1>ESCUELA NORMAL SUPERIOR DE MÉXICO</h1>
+      <h2>COMPROBANTE DE RECEPCIÓN DE CARGA HORARIA</h2>
+    </div>
+
+    <div style="border: 2px dashed #a0aec0; padding: 25px; border-radius: 6px; background: #fafafa;">
+      <p><strong>Folio Único:</strong> <span id="rec-folio"></span></p>
+      <p><strong>Fecha / Hora de Registro:</strong> <span id="rec-date"></span></p>
+      <p><strong>Docente:</strong> <span id="rec-name"></span> (Clave Interna SIG-HO: <span id="rec-cve-doc"></span>)</p>
+
+      <table class="table-custom" style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>Licenciatura</th>
+            <th>Asignatura</th>
+            <th>Semestre / Grupo</th>
+            <th>Día</th>
+            <th>Bloque Horario</th>
+          </tr>
+        </thead>
+        <tbody id="rec-tbody">
+        </tbody>
+      </table>
+
+      <p style="font-size: 0.8rem; color: #718096; text-align: center; margin-top: 25px;">
+        Este documento es el comprobante oficial de propuesta de carga horaria consolidada para su validación en la División de Licenciaturas y su posterior captura en el SIG-HO.
+      </p>
+    </div>
+
+    <div style="margin-top: 20px; text-align: center;" class="no-print">
+      <button onclick="window.print()" class="btn btn-primary" style="margin-bottom: 10px;">Imprimir / Guardar en PDF</button>
+      <button onclick="location.reload()" class="btn" style="background-color: #718096; color: white;">Capturar otro docente / Reiniciar</button>
+    </div>
+  </div>
+
+  <script>
+    let docentesData = [];
+    let mapaMaterias = {};
+    let materiasAgregadas = [];
+    let docenteActual = null;
+    const CLAVE_MAESTRA_COORDINADOR = "ENSM2026";
+
+    fetch('catalogos.json')
+      .then(r => r.json())
+      .then(data => {
+        docentesData = data.docentes;
+        mapaMaterias = data.materias;
+        poblarDocentes();
+      });
+
+    function poblarDocentes() {
+      const selectDoc = document.getElementById('teacher-select');
+      const filterLic = document.getElementById('filter-lic').value;
+      
+      selectDoc.innerHTML = '<option value="">-- Seleccione Docente --</option>';
+
+      let docentesFiltrados = docentesData;
+      if (filterLic !== 'TODAS') {
+        docentesFiltrados = docentesData.filter(d => d.licAdscripcion === filterLic);
+      }
+
+      docentesFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+      docentesFiltrados.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = String(d.clave);
+        opt.textContent = d.nombre + (filterLic === 'TODAS' && d.licNombre ? ' (' + d.licNombre + ')' : '');
+        selectDoc.appendChild(opt);
+      });
+    }
+
+    function cambiarRol() {
+      const rol = document.getElementById('role-select').value;
+      const passLabel = document.getElementById('pass-label');
+      const filterLabel = document.getElementById('filter-lic-label');
+
+      if (rol === 'coordinador') {
+        passLabel.innerText = "Clave Maestra de Coordinación:";
+        filterLabel.innerText = "Coordinación de Licenciatura:";
+      } else {
+        passLabel.innerText = "PIN Único de Docente (4 dígitos):";
+        filterLabel.innerText = "Filtrar Docentes por Licenciatura:";
+      }
+    }
+
+    function validarAcceso() {
+      const rol = document.getElementById('role-select').value;
+      const cveDoc = document.getElementById('teacher-select').value;
+      let pass = document.getElementById('pass-input').value.trim();
+      const errBox = document.getElementById('auth-error');
+
+      errBox.style.display = 'none';
+
+      if (!cveDoc) {
+        errBox.innerText = "Por favor seleccione un docente de la lista.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      const docObj = docentesData.find(d => String(d.clave) === String(cveDoc));
+
+      if (!docObj) {
+        errBox.innerText = "No se encontró la información del docente seleccionado.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      if (rol === 'docente') {
+        const pinIngresado = pass.padStart(4, '0');
+        const pinCorrecto = String(docObj.pin).padStart(4, '0');
+
+        if (pinIngresado === pinCorrecto) {
+          docenteActual = docObj;
+          iniciarFormulario();
+        } else {
+          errBox.innerText = "PIN incorrecto. Verifique sus datos o consulte la lista de PINs.";
+          errBox.style.display = 'block';
+        }
+      } else if (rol === 'coordinador') {
+        if (pass === CLAVE_MAESTRA_COORDINADOR) {
+          docenteActual = docObj;
+          iniciarFormulario();
+        } else {
+          errBox.innerText = "Clave Maestra de Coordinador incorrecta.";
+          errBox.style.display = 'block';
+        }
+      }
+    }
+
+    function iniciarFormulario() {
+      document.getElementById('auth-section').style.display = 'none';
+      document.getElementById('app-form').style.display = 'block';
+      document.getElementById('active-user-name').innerText = "Docente: " + docenteActual.nombre + " (Clave: " + docenteActual.clave + ")";
+
+      // Si se filtró por una licenciatura en el login, se selecciona automáticamente en el formulario
+      const filterLic = document.getElementById('filter-lic').value;
+      if (filterLic !== 'TODAS') {
+        const licSelect = document.getElementById('licenciatura');
+        licSelect.value = filterLic;
+        evaluarLicenciatura();
+      }
+    }
+
+    function evaluarLicenciatura() {
+      const licCve = document.getElementById('licenciatura').value;
+      const groupContainer = document.getElementById('group-container');
+      const groupSelect = document.getElementById('group');
+
+      if (['ES', 'MT', 'IN'].includes(licCve)) {
+        groupContainer.style.display = 'block';
+      } else {
+        groupContainer.style.display = 'none';
+        groupSelect.value = '';
+      }
+      cargarMaterias();
+    }
+
+    function cargarMaterias() {
+      const licCve = document.getElementById('licenciatura').value;
+      const sem = document.getElementById('semestre').value;
+      const selectSub = document.getElementById('subject');
+
+      selectSub.innerHTML = '<option value="">-- Seleccione Asignatura --</option>';
+
+      if (licCve && sem && mapaMaterias[licCve] && mapaMaterias[licCve][sem]) {
+        mapaMaterias[licCve][sem].forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.clave + ' - ' + m.nombre;
+          opt.textContent = '[' + m.clave + '] ' + m.nombre + ' (' + m.horas + ' hrs)';
+          selectSub.appendChild(opt);
+        });
+        selectSub.disabled = false;
+      } else {
+        selectSub.disabled = true;
+      }
+    }
+
+    function agregarMateria() {
+      const licSelect = document.getElementById('licenciatura');
+      const licCve = licSelect.value;
+      const licText = licSelect.options[licSelect.selectedIndex].text;
+      const sem = document.getElementById('semestre').value;
+      const subject = document.getElementById('subject').value;
+      const groupVal = document.getElementById('group').value;
+      const day = document.getElementById('day').value;
+      const timeslot = document.getElementById('time-slot').value;
+
+      if (!licCve || !sem || !subject || !day || !timeslot) {
+        alert("Por favor complete todos los campos obligatorios de la materia.");
+        return;
+      }
+
+      if (['ES', 'MT', 'IN'].includes(licCve) && !groupVal) {
+        alert("Para la licenciatura de " + licText + " debe seleccionar Grupo A o Grupo B.");
+        return;
+      }
+
+      const item = {
+        licText: licText,
+        subject: subject,
+        semGpo: groupVal ? sem + '° Sem (Gpo ' + groupVal + ')' : sem + '° Semestre',
+        day: day,
+        timeslot: timeslot
+      };
+
+      materiasAgregadas.push(item);
+      renderTablaPrevia();
+
+      document.getElementById('subject').value = '';
+      document.getElementById('day').value = '';
+      document.getElementById('time-slot').value = '';
+    }
+
+    function eliminarMateria(index) {
+      materiasAgregadas.splice(index, 1);
+      renderTablaPrevia();
+    }
+
+    function renderTablaPrevia() {
+      const tbody = document.getElementById('preview-body');
+      const btnFinish = document.getElementById('btn-finish');
+      tbody.innerHTML = '';
+
+      if (materiasAgregadas.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #a0aec0;">No hay materias agregadas a la propuesta.</td></tr>';
+        btnFinish.disabled = true;
+        return;
+      }
+
+      materiasAgregadas.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.licText}</td>
+          <td>${item.subject}</td>
+          <td>${item.semGpo}</td>
+          <td>${item.day}</td>
+          <td>${item.timeslot}</td>
+          <td><button class="btn btn-danger" onclick="eliminarMateria(${index})">Quitar</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      btnFinish.disabled = false;
+    }
+
+    function generarComprobanteConsolidado() {
+      const folio = 'ENSM-LIC-' + Math.floor(100000 + Math.random() * 900000);
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+
+      document.getElementById('rec-folio').innerText = folio;
+      document.getElementById('rec-date').innerText = dateStr;
+      document.getElementById('rec-cve-doc').innerText = docenteActual.clave;
+      document.getElementById('rec-name').innerText = docenteActual.nombre;
+
+      const recTbody = document.getElementById('rec-tbody');
+      recTbody.innerHTML = '';
+
+      materiasAgregadas.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.licText}</td>
+          <td>${item.subject}</td>
+          <td>${item.semGpo}</td>
+          <td>${item.day}</td>
+          <td>${item.timeslot}</td>
+        `;
+        recTbody.appendChild(tr);
+      });
+
+      document.getElementById('main-container').style.display = 'none';
+      document.getElementById('receipt-modal').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
