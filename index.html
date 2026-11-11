@@ -351,7 +351,7 @@
         materias.forEach(m => {
           const option = document.createElement('option');
           option.value = m.clave + ' - ' + m.nombre;
-          option.textContent = '[' + m.clave + '] ' + m.nombre + ' (' + m.horas + ' hrs)';
+          option.textContent = m.nombre + ' (' + m.horas + ' hrs)';
           selectSubject.appendChild(option);
         });
         selectSubject.disabled = false;
