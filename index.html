@@ -681,7 +681,7 @@
     }
 
     function generarComprobanteConsolidado() {
-      const folio = 'ENSM-LIC-' + Math.floor(100000 + Math.random() * 900000);
+      const folio = 'ENSM-DIV-LIC-' + Math.floor(100000 + Math.random() * 900000);
       const now = new Date();
       const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
 
