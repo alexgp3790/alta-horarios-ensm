@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alta de Horarios Docentes - ENSM</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --accent: #2b6cb0;
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #2d3748;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--card);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--primary);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 15px;
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin: 0 0 5px 0;
+    }
+
+    .header h2 {
+      font-size: 1.1rem;
+      color: #4a5568;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cbd5e0;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 0.95rem;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+    }
+
+    .btn-submit {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--accent);
+    }
+
+    /* Estilos del Recibo */
+    #receipt-modal {
+      display: none;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #receipt-modal, #receipt-modal * {
+        visibility: visible;
+      }
+      #receipt-modal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        display: block !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    .receipt-box {
+      border: 2px dashed #a0aec0;
+      padding: 25px;
+      border-radius: 6px;
+      background: #fafafa;
+      margin-top: 20px;
+    }
+
+    .receipt-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+
+    .receipt-table th, .receipt-table td {
+      border: 1px solid #cbd5e0;
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .receipt-table th {
+      background-color: #edf2f7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="form-container">
+    <div class="header">
+      <h1>ESCUELA NORMAL SUPERIOR DE MÉXICO</h1>
+      <h2>División de Licenciaturas | Registro de Propuesta Horaria</h2>
+    </div>
+
+    <form id="schedule-form">
+      <div class="form-group">
+        <label for="teacher-name">Nombre Completo del Docente:</label>
+        <input type="text" id="teacher-name" required placeholder="Ej. Juan Pérez López">
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Asignatura:</label>
+        <input type="text" id="subject" required placeholder="Nombre exacto del programa">
+      </div>
+
+      <div class="form-group">
+        <label for="group">Grupo / Semestre:</label>
+        <input type="text" id="group" required placeholder="Ej. 1° A">
+      </div>
+
+      <div class="form-group">
+        <label for="day">Día de la semana:</label>
+        <select id="day" required>
+          <option value="">-- Seleccione un día --</option>
+          <option value="Lunes">Lunes</option>
+          <option value="Martes">Martes</option>
+          <option value="Miércoles">Miércoles</option>
+          <option value="Jueves">Jueves</option>
+          <option value="Viernes">Viernes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="time-slot">Bloque Horario:</label>
+        <select id="time-slot" required>
+          <option value="">-- Seleccione el bloque --</option>
+          <option value="07:00 - 09:00">07:00 - 09:00 hrs</option>
+          <option value="09:00 - 11:00">09:00 - 11:00 hrs</option>
+          <option value="11:00 - 13:00">11:00 - 13:00 hrs</option>
+          <option value="13:00 - 15:00">13:00 - 15:00 hrs</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit">Registrar Horario y Generar Recibo</button>
+    </form>
+  </div>
+
+  <!-- VISTA DE RECIBO DE CONFIRMACIÓN -->
+  <div class="container" id="receipt-modal">
+    <div class="header">
+      <h1>ESCUELA NORMAL SUPERIOR DE MÉXICO</h1>
+      <h2>COMPROBANTE DE RECEPCIÓN DE HORARIO</h2>
+    </div>
+
+    <div class="receipt-box">
+      <p><strong>Folio de Registro:</strong> <span id="rec-folio"></span></p>
+      <p><strong>Fecha / Hora de Registro:</strong> <span id="rec-date"></span></p>
+      <p><strong>Docente:</strong> <span id="rec-name"></span></p>
+
+      <table class="receipt-table">
+        <thead>
+          <tr>
+            <th>Asignatura</th>
+            <th>Grupo</th>
+            <th>Día</th>
+            <th>Bloque Horario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="rec-subject"></td>
+            <td id="rec-group"></td>
+            <td id="rec-day"></td>
+            <td id="rec-timeslot"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-size: 0.8rem; color: #718096; text-align: center; margin-top: 20px;">
+        Este documento es un comprobante de propuesta de carga horaria. La asignación final queda sujeta a la validación de la División de Licenciaturas para su captura en el SIG-HO.
+      </p>
+    </div>
+
+    <div style="margin-top: 20px; text-align: center;" class="no-print">
+      <button onclick="window.print()" class="btn-submit" style="background-color: #2b6cb0; margin-bottom: 10px;">Imprimir / Guardar en PDF</button>
+      <button onclick="location.reload()" class="btn-submit" style="background-color: #718096;">Registrar otro horario</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('schedule-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Recopilar datos
+      const name = document.getElementById('teacher-name').value;
+      const subject = document.getElementById('subject').value;
+      const group = document.getElementById('group').value;
+      const day = document.getElementById('day').value;
+      const timeslot = document.getElementById('time-slot').value;
+
+      // Generar Folio y Fecha
+      const folio = 'ENSM-LIC-' + Math.floor(100000 + Math.random() * 900000);
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+
+      // Llenar Recibo
+      document.getElementById('rec-folio').innerText = folio;
+      document.getElementById('rec-date').innerText = dateStr;
+      document.getElementById('rec-name').innerText = name;
+      document.getElementById('rec-subject').innerText = subject;
+      document.getElementById('rec-group').innerText = group;
+      document.getElementById('rec-day').innerText = day;
+      document.getElementById('rec-timeslot').innerText = timeslot;
+
+      // Ocultar Formulario y Mostrar Recibo
+      document.getElementById('form-container').style.display = 'none';
+      document.getElementById('receipt-modal').style.display = 'block';
+
+      // AQUÍ IRÁ LA CONEXIÓN DE ENVÍO DE DATOS EN EL SIGUIENTE PASO
+    });
+  </script>
+</body>
+</html>
