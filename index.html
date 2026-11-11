@@ -22,7 +22,7 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 750px;
       margin: 0 auto;
       background: var(--card);
       padding: 30px;
@@ -95,7 +95,6 @@
       background-color: var(--accent);
     }
 
-    /* Estilos del Recibo */
     #receipt-modal {
       display: none;
     }
@@ -154,19 +153,61 @@
     </div>
 
     <form id="schedule-form">
+      <!-- SELECCIÓN DE DOCENTE -->
       <div class="form-group">
-        <label for="teacher-name">Nombre Completo del Docente:</label>
-        <input type="text" id="teacher-name" required placeholder="Ej. Juan Pérez López">
+        <label for="teacher-select">Nombre del Docente:</label>
+        <select id="teacher-select" required>
+          <option value="">-- Seleccione Docente --</option>
+        </select>
       </div>
 
+      <!-- SELECCIÓN DE LICENCIATURA -->
+      <div class="form-group">
+        <label for="licenciatura">Licenciatura:</label>
+        <select id="licenciatura" required onchange="cargarMaterias()">
+          <option value="">-- Seleccione Licenciatura --</option>
+          <option value="BL">BIOLOGÍA (BL)</option>
+          <option value="ES">ESPAÑOL (ES)</option>
+          <option value="FS">FÍSICA (FS)</option>
+          <option value="FE">FORMACIÓN ÉTICA Y CIUDADANA (FE)</option>
+          <option value="GE">GEOGRAFÍA (GE)</option>
+          <option value="HS">HISTORIA (HS)</option>
+          <option value="IN">INGLÉS (IN)</option>
+          <option value="MT">MATEMÁTICAS (MT)</option>
+          <option value="PE">PEDAGOGÍA (PE)</option>
+          <option value="PS">PSICOLOGÍA EDUCATIVA (PS)</option>
+          <option value="QM">QUÍMICA (QM)</option>
+          <option value="DPX">DOCENCIA EN POSGRADO (DPX)</option>
+        </select>
+      </div>
+
+      <!-- SELECCIÓN DE SEMESTRE -->
+      <div class="form-group">
+        <label for="semestre">Semestre:</label>
+        <select id="semestre" required onchange="cargarMaterias()">
+          <option value="">-- Seleccione Semestre --</option>
+          <option value="1">1° Semestre</option>
+          <option value="2">2° Semestre</option>
+          <option value="3">3° Semestre</option>
+          <option value="4">4° Semestre</option>
+          <option value="5">5° Semestre</option>
+          <option value="6">6° Semestre</option>
+          <option value="7">7° Semestre</option>
+          <option value="8">8° Semestre</option>
+        </select>
+      </div>
+
+      <!-- ASIGNATURA FILTRADA -->
       <div class="form-group">
         <label for="subject">Asignatura:</label>
-        <input type="text" id="subject" required placeholder="Nombre exacto del programa">
+        <select id="subject" required disabled>
+          <option value="">-- Primero seleccione Licenciatura y Semestre --</option>
+        </select>
       </div>
 
       <div class="form-group">
-        <label for="group">Grupo / Semestre:</label>
-        <input type="text" id="group" required placeholder="Ej. 1° A">
+        <label for="group">Grupo:</label>
+        <input type="text" id="group" required placeholder="Ej. 101, A, B">
       </div>
 
       <div class="form-group">
@@ -189,6 +230,9 @@
           <option value="09:00 - 11:00">09:00 - 11:00 hrs</option>
           <option value="11:00 - 13:00">11:00 - 13:00 hrs</option>
           <option value="13:00 - 15:00">13:00 - 15:00 hrs</option>
+          <option value="15:00 - 17:00">15:00 - 17:00 hrs</option>
+          <option value="17:00 - 19:00">17:00 - 19:00 hrs</option>
+          <option value="19:00 - 21:00">19:00 - 21:00 hrs</option>
         </select>
       </div>
 
@@ -196,7 +240,7 @@
     </form>
   </div>
 
-  <!-- VISTA DE RECIBO DE CONFIRMACIÓN -->
+  <!-- VISTA DE RECIBO -->
   <div class="container" id="receipt-modal">
     <div class="header">
       <h1>ESCUELA NORMAL SUPERIOR DE MÉXICO</h1>
@@ -211,14 +255,18 @@
       <table class="receipt-table">
         <thead>
           <tr>
-            <th>Asignatura</th>
-            <th>Grupo</th>
+            <th>Clave Docente</th>
+            <th>Licenciatura</th>
+            <th>Clave y Asignatura</th>
+            <th>Sem/Grupo</th>
             <th>Día</th>
             <th>Bloque Horario</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td id="rec-cve-doc"></td>
+            <td id="rec-lic"></td>
             <td id="rec-subject"></td>
             <td id="rec-group"></td>
             <td id="rec-day"></td>
@@ -228,7 +276,7 @@
       </table>
 
       <p style="font-size: 0.8rem; color: #718096; text-align: center; margin-top: 20px;">
-        Este documento es un comprobante de propuesta de carga horaria. La asignación final queda sujeta a la validación de la División de Licenciaturas para su captura en el SIG-HO.
+        Este documento es un comprobante de propuesta de carga horaria para su validación en la División de Licenciaturas y captura en el SIG-HO.
       </p>
     </div>
 
@@ -239,35 +287,91 @@
   </div>
 
   <script>
+    // CARGAR CATÁLOGOS EXTRAÍDOS DE EXCEL
+    let docentesData = [];
+    let mapaMaterias = {};
+
+    // Cargar catálogos dinámicamente al iniciar
+    fetch('catalogos.json')
+      .then(response => response.json())
+      .then(data => {
+        docentesData = data.docentes;
+        mapaMaterias = data.materias;
+        poblarDocentes();
+      })
+      .catch(err => console.error("Error cargando catálogos:", err));
+
+    function poblarDocentes() {
+      const selectDoc = document.getElementById('teacher-select');
+      selectDoc.innerHTML = '<option value="">-- Seleccione Docente --</option>';
+      
+      // Ordenar docentes por nombre
+      docentesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+      docentesData.forEach(d => {
+        const option = document.createElement('option');
+        option.value = d.clave + '||' + d.nombre;
+        option.textContent = '[' + d.clave + '] ' + d.nombre;
+        selectDoc.appendChild(option);
+      });
+    }
+
+    function cargarMaterias() {
+      const licCve = document.getElementById('licenciatura').value;
+      const sem = document.getElementById('semestre').value;
+      const selectSubject = document.getElementById('subject');
+
+      selectSubject.innerHTML = '<option value="">-- Seleccione Asignatura --</option>';
+
+      if (licCve && sem && mapaMaterias[licCve] && mapaMaterias[licCve][sem]) {
+        const materias = mapaMaterias[licCve][sem];
+        materias.forEach(m => {
+          const option = document.createElement('option');
+          option.value = m.clave + ' - ' + m.nombre;
+          option.textContent = '[' + m.clave + '] ' + m.nombre + ' (' + m.horas + ' hrs)';
+          selectSubject.appendChild(option);
+        });
+        selectSubject.disabled = false;
+      } else if (licCve && sem) {
+        selectSubject.innerHTML = '<option value="">-- No hay materias cargadas para este semestre --</option>';
+        selectSubject.disabled = true;
+      } else {
+        selectSubject.innerHTML = '<option value="">-- Primero seleccione Licenciatura y Semestre --</option>';
+        selectSubject.disabled = true;
+      }
+    }
+
     document.getElementById('schedule-form').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // Recopilar datos
-      const name = document.getElementById('teacher-name').value;
+      const docVal = document.getElementById('teacher-select').value.split('||');
+      const cveDoc = docVal[0];
+      const nameDoc = docVal[1];
+
+      const licSelect = document.getElementById('licenciatura');
+      const licText = licSelect.options[licSelect.selectedIndex].text;
+      const sem = document.getElementById('semestre').value;
       const subject = document.getElementById('subject').value;
       const group = document.getElementById('group').value;
       const day = document.getElementById('day').value;
       const timeslot = document.getElementById('time-slot').value;
 
-      // Generar Folio y Fecha
       const folio = 'ENSM-LIC-' + Math.floor(100000 + Math.random() * 900000);
       const now = new Date();
       const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
 
-      // Llenar Recibo
       document.getElementById('rec-folio').innerText = folio;
       document.getElementById('rec-date').innerText = dateStr;
-      document.getElementById('rec-name').innerText = name;
+      document.getElementById('rec-cve-doc').innerText = cveDoc;
+      document.getElementById('rec-name').innerText = nameDoc;
+      document.getElementById('rec-lic').innerText = licText;
       document.getElementById('rec-subject').innerText = subject;
-      document.getElementById('rec-group').innerText = group;
+      document.getElementById('rec-group').innerText = sem + '° ' + group;
       document.getElementById('rec-day').innerText = day;
       document.getElementById('rec-timeslot').innerText = timeslot;
 
-      // Ocultar Formulario y Mostrar Recibo
       document.getElementById('form-container').style.display = 'none';
       document.getElementById('receipt-modal').style.display = 'block';
-
-      // AQUÍ IRÁ LA CONEXIÓN DE ENVÍO DE DATOS EN EL SIGUIENTE PASO
     });
   </script>
 </body>
