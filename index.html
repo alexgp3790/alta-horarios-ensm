@@ -147,7 +147,7 @@
       <h2>División de Licenciaturas | Captura de Carga Horaria Docente</h2>
     </div>
 
-    <!-- MÓDULO DE AUTENTICACIÓN Y FILTRADO POR ADSCRIPCIÓN -->
+    <!-- MÓDULO DE AUTENTICACIÓN Y FILTRADO POR LICENCIATURA/COORDINACIÓN -->
     <div class="auth-box" id="auth-section">
       <div class="form-group">
         <label for="role-select">Tipo de Usuario:</label>
@@ -157,10 +157,10 @@
         </select>
       </div>
 
-      <!-- FILTRO DE LICENCIATURA DE ADSCRIPCIÓN -->
+      <!-- FILTRO DE LICENCIATURA DE ADSCRIPCIÓN / COORDINACIÓN -->
       <div class="form-group">
         <label for="filter-lic" id="filter-lic-label">Filtrar Docentes por Licenciatura:</label>
-        <select id="filter-lic" onchange="poblarDocentes()">
+        <select id="filter-lic" onchange="poblarUsuarios()">
           <option value="TODAS">-- Ver Todas las Licenciaturas --</option>
           <option value="BL">BIOLOGÍA (BL)</option>
           <option value="ES">ESPAÑOL (ES)</option>
@@ -178,7 +178,7 @@
       </div>
 
       <div class="form-group">
-        <label for="teacher-select">Seleccione Docente:</label>
+        <label for="teacher-select" id="user-select-label">Seleccione Docente:</label>
         <select id="teacher-select">
           <option value="">-- Cargando lista... --</option>
         </select>
@@ -197,7 +197,7 @@
     <div id="app-form">
       <div style="background-color: #ebf8ff; border-left: 4px solid var(--accent); padding: 12px; margin-bottom: 20px; border-radius: 4px;">
         <strong id="active-user-name"></strong><br>
-        <span style="font-size: 0.85rem; color: #4a5568;">Docente autenticado correctamente. Puede registrar múltiples materias para su acuse.</span>
+        <span style="font-size: 0.85rem; color: #4a5568;">Usuario autenticado correctamente. Registre las materias requeridas.</span>
       </div>
 
       <fieldset style="border: 1px solid #cbd5e0; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
@@ -318,7 +318,7 @@
     <div style="border: 2px dashed #a0aec0; padding: 25px; border-radius: 6px; background: #fafafa;">
       <p><strong>Folio Único:</strong> <span id="rec-folio"></span></p>
       <p><strong>Fecha / Hora de Registro:</strong> <span id="rec-date"></span></p>
-      <p><strong>Docente:</strong> <span id="rec-name"></span> (Clave Interna SIG-HO: <span id="rec-cve-doc"></span>)</p>
+      <p><strong>Registrado por:</strong> <span id="rec-name"></span> (Clave Interna SIG-HO: <span id="rec-cve-doc"></span>)</p>
 
       <table class="table-custom" style="margin-top: 20px;">
         <thead>
@@ -341,97 +341,121 @@
 
     <div style="margin-top: 20px; text-align: center;" class="no-print">
       <button onclick="window.print()" class="btn btn-primary" style="margin-bottom: 10px;">Imprimir / Guardar en PDF</button>
-      <button onclick="location.reload()" class="btn" style="background-color: #718096; color: white;">Capturar otro docente / Reiniciar</button>
+      <button onclick="location.reload()" class="btn" style="background-color: #718096; color: white;">Capturar otro registro / Reiniciar</button>
     </div>
   </div>
 
   <script>
     let docentesData = [];
+    let coordinadoresData = [];
     let mapaMaterias = {};
     let materiasAgregadas = [];
-    let docenteActual = null;
+    let usuarioActual = null;
     const CLAVE_MAESTRA_COORDINADOR = "ENSM2026";
 
     fetch('catalogos.json')
       .then(r => r.json())
       .then(data => {
         docentesData = data.docentes;
+        coordinadoresData = data.coordinadores || [];
         mapaMaterias = data.materias;
-        poblarDocentes();
+        poblarUsuarios();
       });
-
-    function poblarDocentes() {
-      const selectDoc = document.getElementById('teacher-select');
-      const filterLic = document.getElementById('filter-lic').value;
-      
-      selectDoc.innerHTML = '<option value="">-- Seleccione Docente --</option>';
-
-      let docentesFiltrados = docentesData;
-      if (filterLic !== 'TODAS') {
-        docentesFiltrados = docentesData.filter(d => d.licAdscripcion === filterLic);
-      }
-
-      docentesFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
-      docentesFiltrados.forEach(d => {
-        const opt = document.createElement('option');
-        opt.value = String(d.clave);
-        opt.textContent = d.nombre + (filterLic === 'TODAS' && d.licNombre ? ' (' + d.licNombre + ')' : '');
-        selectDoc.appendChild(opt);
-      });
-    }
 
     function cambiarRol() {
       const rol = document.getElementById('role-select').value;
       const passLabel = document.getElementById('pass-label');
       const filterLabel = document.getElementById('filter-lic-label');
+      const userLabel = document.getElementById('user-select-label');
 
       if (rol === 'coordinador') {
         passLabel.innerText = "Clave Maestra de Coordinación:";
         filterLabel.innerText = "Coordinación de Licenciatura:";
+        userLabel.innerText = "Seleccione Coordinador:";
       } else {
         passLabel.innerText = "PIN Único de Docente (4 dígitos):";
         filterLabel.innerText = "Filtrar Docentes por Licenciatura:";
+        userLabel.innerText = "Seleccione Docente:";
+      }
+      poblarUsuarios();
+    }
+
+    function poblarUsuarios() {
+      const rol = document.getElementById('role-select').value;
+      const selectUser = document.getElementById('teacher-select');
+      const filterLic = document.getElementById('filter-lic').value;
+
+      selectUser.innerHTML = '<option value="">-- Seleccione una opción --</option>';
+
+      if (rol === 'docente') {
+        let docentesFiltrados = docentesData;
+        if (filterLic !== 'TODAS') {
+          docentesFiltrados = docentesData.filter(d => d.licAdscripcion === filterLic);
+        }
+        docentesFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        docentesFiltrados.forEach(d => {
+          const opt = document.createElement('option');
+          opt.value = String(d.clave);
+          opt.textContent = d.nombre + (filterLic === 'TODAS' && d.licNombre ? ' (' + d.licNombre + ')' : '');
+          selectUser.appendChild(opt);
+        });
+      } else if (rol === 'coordinador') {
+        let coordFiltrados = coordinadoresData;
+        if (filterLic !== 'TODAS') {
+          coordFiltrados = coordinadoresData.filter(c => c.lic === filterLic);
+        }
+        coordFiltrados.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = String(c.clave);
+          opt.textContent = c.nombre + ' [' + c.lic + ' - ' + c.turno + ']';
+          selectUser.appendChild(opt);
+        });
       }
     }
 
     function validarAcceso() {
       const rol = document.getElementById('role-select').value;
-      const cveDoc = document.getElementById('teacher-select').value;
+      const cveUser = document.getElementById('teacher-select').value;
       let pass = document.getElementById('pass-input').value.trim();
       const errBox = document.getElementById('auth-error');
 
       errBox.style.display = 'none';
 
-      if (!cveDoc) {
-        errBox.innerText = "Por favor seleccione un docente de la lista.";
-        errBox.style.display = 'block';
-        return;
-      }
-
-      const docObj = docentesData.find(d => String(d.clave) === String(cveDoc));
-
-      if (!docObj) {
-        errBox.innerText = "No se encontró la información del docente seleccionado.";
+      if (!cveUser) {
+        errBox.innerText = "Por favor seleccione un usuario de la lista.";
         errBox.style.display = 'block';
         return;
       }
 
       if (rol === 'docente') {
+        const docObj = docentesData.find(d => String(d.clave) === String(cveUser));
+        if (!docObj) {
+          errBox.innerText = "No se encontró la información del docente seleccionado.";
+          errBox.style.display = 'block';
+          return;
+        }
+
         const pinIngresado = pass.padStart(4, '0');
         const pinCorrecto = String(docObj.pin).padStart(4, '0');
 
         if (pinIngresado === pinCorrecto) {
-          docenteActual = docObj;
-          iniciarFormulario();
+          usuarioActual = docObj;
+          iniciarFormulario(rol);
         } else {
           errBox.innerText = "PIN incorrecto. Verifique sus datos o consulte la lista de PINs.";
           errBox.style.display = 'block';
         }
       } else if (rol === 'coordinador') {
+        const coordObj = coordinadoresData.find(c => String(c.clave) === String(cveUser));
+        if (!coordObj) {
+          errBox.innerText = "No se encontró la información del coordinador seleccionado.";
+          errBox.style.display = 'block';
+          return;
+        }
+
         if (pass === CLAVE_MAESTRA_COORDINADOR) {
-          docenteActual = docObj;
-          iniciarFormulario();
+          usuarioActual = coordObj;
+          iniciarFormulario(rol);
         } else {
           errBox.innerText = "Clave Maestra de Coordinador incorrecta.";
           errBox.style.display = 'block';
@@ -439,12 +463,14 @@
       }
     }
 
-    function iniciarFormulario() {
+    function iniciarFormulario(rol) {
       document.getElementById('auth-section').style.display = 'none';
       document.getElementById('app-form').style.display = 'block';
-      document.getElementById('active-user-name').innerText = "Docente: " + docenteActual.nombre + " (Clave: " + docenteActual.clave + ")";
+      
+      const tagRol = rol === 'coordinador' ? 'Coordinador: ' : 'Docente: ';
+      document.getElementById('active-user-name').innerText = tagRol + usuarioActual.nombre + " (Clave: " + usuarioActual.clave + ")";
 
-      // Si se filtró por una licenciatura en el login, se selecciona automáticamente en el formulario
+      // Pre-seleccionar la licenciatura si se filtró previa validación
       const filterLic = document.getElementById('filter-lic').value;
       if (filterLic !== 'TODAS') {
         const licSelect = document.getElementById('licenciatura');
@@ -562,8 +588,8 @@
 
       document.getElementById('rec-folio').innerText = folio;
       document.getElementById('rec-date').innerText = dateStr;
-      document.getElementById('rec-cve-doc').innerText = docenteActual.clave;
-      document.getElementById('rec-name').innerText = docenteActual.nombre;
+      document.getElementById('rec-cve-doc').innerText = usuarioActual.clave;
+      document.getElementById('rec-name').innerText = usuarioActual.nombre;
 
       const recTbody = document.getElementById('rec-tbody');
       recTbody.innerHTML = '';
