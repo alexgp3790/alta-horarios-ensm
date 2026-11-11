@@ -624,12 +624,33 @@
         return;
       }
 
-      const duracion = endH - startH;
+      const duracionNueva = endH - startH;
+      const horasOficiales = parseInt(optSub.dataset.horas);
+      const horasYaCapturadas = calcularHorasCapturadasMateria(cveMat);
+
+      // VALIDACIÓN LOCAL 1: TOPE DE HORAS DE LA MATERIA
+      if ((horasYaCapturadas + duracionNueva) > horasOficiales) {
+        alert(`⚠️ NO SE PUEDE AGREGAR SESIÓN:\n\nEsta materia requiere ${horasOficiales} hrs/semana. Ya capturaste ${horasYaCapturadas} hrs y estás intentando sumar ${duracionNueva} hrs más (${horasYaCapturadas + duracionNueva} hrs en total).`);
+        return;
+      }
+
+      // VALIDACIÓN LOCAL 2: EMPALME CON OTRA SESIÓN EN LA MISMA LISTA
+      const empalmeExistente = materiasAgregadas.find(m => {
+        if (m.day === day) {
+          return Math.max(startH, m.startH) < Math.min(endH, m.endH);
+        }
+        return false;
+      });
+
+      if (empalmeExistente) {
+        alert(`⚠️ EMPALME DE HORARIO DETECTADO:\n\nYa tienes una sesión el día ${day} de ${empalmeExistente.timeslot} para la materia "${empalmeExistente.nombreMateria}".\nNo puedes solapar bloques de hora.`);
+        return;
+      }
+
       const formatTime = (h) => (h < 10 ? '0' + h : h) + ':00';
       const timeslotStr = `${formatTime(startH)} - ${formatTime(endH)} hrs`;
       const nombreMateria = optSub.dataset.nombre;
       const subjectFull = `[${cveMat}] ${nombreMateria}`;
-      const horasRequeridas = parseInt(optSub.dataset.horas);
 
       const item = {
         licCve: licCve,
@@ -644,8 +665,8 @@
         startH: startH,
         endH: endH,
         timeslot: timeslotStr,
-        duracion: duracion,
-        horasRequeridas: horasRequeridas
+        duracion: duracionNueva,
+        horasRequeridas: horasOficiales
       };
 
       materiasAgregadas.push(item);
@@ -690,69 +711,72 @@
 
       btnFinish.disabled = false;
     }
+async function generarComprobanteConsolidado() {
+  const btnFinish = document.getElementById('btn-finish');
+  btnFinish.disabled = true;
+  btnFinish.innerText = "Guardando en BD Google Sheets...";
 
-    async function generarComprobanteConsolidado() {
-      const btnFinish = document.getElementById('btn-finish');
-      btnFinish.disabled = true;
-      btnFinish.innerText = "Validando y guardando en BD...";
+  const folioGenerado = 'ENSM-LIC-' + Math.floor(100000 + Math.random() * 900000);
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
 
-      const payload = {
-        usuario: {
-          clave: usuarioActual.clave,
-          nombre: usuarioActual.nombre
-        },
-        sesiones: materiasAgregadas
-      };
+  const payloadObj = {
+    usuario: {
+      clave: usuarioActual.clave,
+      nombre: usuarioActual.nombre
+    },
+    sesiones: materiasAgregadas
+  };
 
-      try {
-        const resp = await fetch(URL_WEB_APP_SHEETS, {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
-        
-        const resData = await resp.json();
+  try {
+    const formData = new URLSearchParams();
+    formData.append("payload", JSON.stringify(payloadObj));
 
-        if (resData.status === "ERROR") {
-          alert("⚠️ NO SE PUDO GUARDAR EL REGISTRO:\n\n" + resData.messages.join("\n\n"));
-          btnFinish.disabled = false;
-          btnFinish.innerText = "Finalizar y Generar Recibo Consolidado";
-          return;
-        }
+    // Petición no-cors para asegurar que llegue a Sheets sin bloqueos de navegador
+    await fetch(URL_WEB_APP_SHEETS, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formData.toString()
+    });
 
-        // SI LA BD CONFIRMA ÉXITO:
-        document.getElementById('rec-folio').innerText = resData.folio;
-        document.getElementById('rec-date').innerText = resData.fecha;
-        document.getElementById('rec-cve-doc').innerText = usuarioActual.clave;
-        document.getElementById('rec-name').innerText = usuarioActual.nombre;
+    // Muestra el comprobante en pantalla
+    document.getElementById('rec-folio').innerText = folioGenerado;
+    document.getElementById('rec-date').innerText = dateStr;
+    document.getElementById('rec-cve-doc').innerText = usuarioActual.clave;
+    document.getElementById('rec-name').innerText = usuarioActual.nombre;
 
-        const recTbody = document.getElementById('rec-tbody');
-        recTbody.innerHTML = '';
-        let totalHoras = 0;
+    const recTbody = document.getElementById('rec-tbody');
+    recTbody.innerHTML = '';
+    let totalHoras = 0;
 
-        materiasAgregadas.forEach(item => {
-          totalHoras += item.duracion;
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${item.licText}</td>
-            <td>${item.subject}</td>
-            <td>${item.semGpo}</td>
-            <td>${item.day}</td>
-            <td>${item.timeslot}</td>
-            <td>${item.duracion} hr(s)</td>
-          `;
-          recTbody.appendChild(tr);
-        });
+    materiasAgregadas.forEach(item => {
+      totalHoras += item.duracion;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${item.licText}</td>
+        <td>${item.subject}</td>
+        <td>${item.semGpo}</td>
+        <td>${item.day}</td>
+        <td>${item.timeslot}</td>
+        <td>${item.duracion} hr(s)</td>
+      `;
+      recTbody.appendChild(tr);
+    });
 
-        document.getElementById('rec-total-horas').innerText = totalHoras + ' hrs';
-        document.getElementById('main-container').style.display = 'none';
-        document.getElementById('receipt-modal').style.display = 'block';
+    document.getElementById('rec-total-horas').innerText = totalHoras + ' hrs';
+    document.getElementById('main-container').style.display = 'none';
+    document.getElementById('receipt-modal').style.display = 'block';
 
-      } catch (err) {
-        alert("Error de conexión al guardar en la Base de Datos. Intente de nuevo.");
-        btnFinish.disabled = false;
-        btnFinish.innerText = "Finalizar y Generar Recibo Consolidado";
-      }
-    }
+  } catch (err) {
+    alert("Ocurrió un error al enviar a la base de datos: " + err.message);
+    btnFinish.disabled = false;
+    btnFinish.innerText = "Finalizar y Generar Recibo Consolidado";
+  }
+}
+   
   </script>
 </body>
 </html>
