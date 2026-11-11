@@ -3,1737 +3,2431 @@
     {
       "clave": 203,
       "nombre": "MIGUEL ÁNGEL ALCÁNTARA FLORES",
-      "pin": "0203"
+      "pin": "0203",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 344,
       "nombre": "PAOLA ÁLVAREZ LARA ÁLVAREZ LARA",
-      "pin": "0344"
+      "pin": "0344",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 198,
       "nombre": "EDUARDO BUSTOS VALENZUELA",
-      "pin": "0198"
+      "pin": "0198",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 18,
       "nombre": "ANAID ADRIANA CERVANTES SANTIAGO",
-      "pin": "0018"
+      "pin": "0018",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 301,
       "nombre": "INÉS GRISELDA DÍAZ REYES",
-      "pin": "0301"
+      "pin": "0301",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 67,
       "nombre": "ESPERANZA GUERRERO MARTINEZ",
-      "pin": "0067"
+      "pin": "0067",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 75,
       "nombre": "GERARDO DE JESÚS HERNÁNDEZ BLANCAS",
-      "pin": "0075"
+      "pin": "0075",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 30,
       "nombre": "AURORA ISABEL JUAREZ ISRADE",
-      "pin": "0030"
+      "pin": "0030",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 49,
       "nombre": "DANIEL JUÁREZ CHILPA",
-      "pin": "0049"
+      "pin": "0049",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 195,
       "nombre": "YADIRA LEON GRAJALES",
-      "pin": "0195"
+      "pin": "0195",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 111,
       "nombre": "JUAN MARIO MACIAS ARREDONDO",
-      "pin": "0111"
+      "pin": "0111",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 204,
       "nombre": "ALEJANDRA MAGAÑA HERNÁNDEZ",
-      "pin": "0204"
+      "pin": "0204",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 160,
       "nombre": "PAMELA YESENIA PÉREZ MENDOZA",
-      "pin": "0160"
+      "pin": "0160",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 162,
       "nombre": "PEDRO MARCO ANTONIO PULIDO GILES (CAM)",
-      "pin": "0162"
+      "pin": "0162",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 72,
       "nombre": "GABRIELA ITZCHEL SALGADO JARAMILLO",
-      "pin": "0072"
+      "pin": "0072",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 248,
       "nombre": "ANA LAURA SALINAS ROMERO (DGENAM)",
-      "pin": "0248"
+      "pin": "0248",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 136,
       "nombre": "MARIA TERESA SANCHEZ MARTINEZ",
-      "pin": "0136"
+      "pin": "0136",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 154,
       "nombre": "ODETE SERNA HUESCA",
-      "pin": "0154"
+      "pin": "0154",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 142,
       "nombre": "MELLY VALENZUELA JIMENEZ",
-      "pin": "0142"
+      "pin": "0142",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 284,
       "nombre": "KARLA LETICIA VILLANUEVA BRAVO (DGENAM)",
-      "pin": "0284"
+      "pin": "0284",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 113,
       "nombre": "LAURA MINERVA ZALDIVAR FLORES",
-      "pin": "0113"
+      "pin": "0113",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 304,
       "nombre": "ELIZABETH REBECA ZÁRATE VACA",
-      "pin": "0304"
+      "pin": "0304",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 285,
       "nombre": "JAZMÍN ZUÑIGA ZAMUDIO (DGENAM)",
-      "pin": "0285"
+      "pin": "0285",
+      "licAdscripcion": "BL",
+      "licNombre": "BIOLOGÍA"
     },
     {
       "clave": 29,
       "nombre": "ARTURO ASAEL ALANIS AYALA",
-      "pin": "0029"
+      "pin": "0029",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 293,
       "nombre": "HUGO CAMACHO MEDINA",
-      "pin": "0293"
+      "pin": "0293",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 150,
       "nombre": "MYRNA OLIVIA CHAVARRIA MENDOZA",
-      "pin": "0150"
+      "pin": "0150",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 65,
       "nombre": "ERIKA GISELA CORONA VELAZQUEZ",
-      "pin": "0065"
+      "pin": "0065",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 322,
       "nombre": "CINTHYA CUAUTLE RANGEL (APOYO DGENAM)",
-      "pin": "0322"
+      "pin": "0322",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 282,
       "nombre": "ARI YAIR FENOY BRITO",
-      "pin": "0282"
+      "pin": "0282",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 94,
       "nombre": "JAVIER ENRIQUE GUTIÉRREZ NAVA (APOYO INNOVACIÓN EDUCATIVA - DGENAM)",
-      "pin": "0094"
+      "pin": "0094",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 323,
       "nombre": "ROBERTO ALEJANDRO HERNÁNDEZ CALLEJAS",
-      "pin": "0323"
+      "pin": "0323",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 321,
       "nombre": "LESTER LEDESMA LANDEROS",
-      "pin": "0321"
+      "pin": "0321",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 119,
       "nombre": "LOGAN LEDESMA LANDEROS",
-      "pin": "0119"
+      "pin": "0119",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 193,
       "nombre": "VERONICA BEATRIZ MENDOZA HUERTA",
-      "pin": "0193"
+      "pin": "0193",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 302,
       "nombre": "ROBERT O ALEJANDRO",
-      "pin": "0302"
+      "pin": "0302",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 295,
       "nombre": "MAESTRO PENDIENTE DE ASIGNAR",
-      "pin": "0295"
+      "pin": "0295",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 205,
       "nombre": "CELENS PETE ZAHUT",
-      "pin": "0205"
+      "pin": "0205",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 46,
       "nombre": "DANAE RANGEL RINCÓN",
-      "pin": "0046"
+      "pin": "0046",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 11,
       "nombre": "ALFREDO ROSAS LOPEZ",
-      "pin": "0011"
+      "pin": "0011",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 172,
       "nombre": "RODRIGO EDER SORIA ROJAS",
-      "pin": "0172"
+      "pin": "0172",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 188,
       "nombre": "SUSANA VÁZQUEZ MARTÍNEZ",
-      "pin": "0188"
+      "pin": "0188",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 206,
       "nombre": "CELENS PITT ZAHOT ZAHOT ZAHOT",
-      "pin": "0206"
+      "pin": "0206",
+      "licAdscripcion": "DPX",
+      "licNombre": "CELENS"
     },
     {
       "clave": 170,
       "nombre": "ROCÍO ALARCÓN PÉREZ (DGENAM)",
-      "pin": "0170"
+      "pin": "0170",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 271,
       "nombre": "ERICK ALBERTO ALONSO MARTÍNEZ",
-      "pin": "0271"
+      "pin": "0271",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 77,
       "nombre": "GRACIELA BÁRCENAS ARIAS",
-      "pin": "0077"
+      "pin": "0077",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 14,
       "nombre": "ALMA ELENA BREMAUNTZ MONGE",
-      "pin": "0014"
+      "pin": "0014",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 22,
       "nombre": "ANGÉLICA CABALLERO MARURE",
-      "pin": "0022"
+      "pin": "0022",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 164,
       "nombre": "RAMÓN CARMONA BARRIOS",
-      "pin": "0164"
+      "pin": "0164",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 76,
       "nombre": "GILBERTO CASTILLO PEÑA",
-      "pin": "0076"
+      "pin": "0076",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 69,
       "nombre": "FELICIA DEL CARMEN COTRERAS HIJUELOS (CAM)",
-      "pin": "0069"
+      "pin": "0069",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 166,
       "nombre": "RITA RAQUEL DE LA MORA LUNA",
-      "pin": "0166"
+      "pin": "0166",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 267,
       "nombre": "SIN DOCENTE ESPAÑOL PRIMERO A",
-      "pin": "0267"
+      "pin": "0267",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 270,
       "nombre": "SIN DOCENTE ESPAÑOL PRIMERO B",
-      "pin": "0270"
+      "pin": "0270",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 108,
       "nombre": "JUAN CARLOS FLORES SÁNCHEZ",
-      "pin": "0108"
+      "pin": "0108",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 56,
       "nombre": "EDTIH GUTIERREZ ALVAREZ",
-      "pin": "0056"
+      "pin": "0056",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 274,
       "nombre": "EDITH GUTIÉRREZ ÁLVAREZ",
-      "pin": "0274"
+      "pin": "0274",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 101,
       "nombre": "JORGE LUIS HERAS RAMÍREZ",
-      "pin": "0101"
+      "pin": "0101",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 31,
       "nombre": "AUSTREBERTO HERNÁNDEZ MORALES",
-      "pin": "0031"
+      "pin": "0031",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 120,
       "nombre": "MARCO ANTONIO HERNÁNDEZ REYNOSO",
-      "pin": "0120"
+      "pin": "0120",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 185,
       "nombre": "SERGIO ALFREDO HERNÁNDEZ GARCÍA",
-      "pin": "0185"
+      "pin": "0185",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 265,
       "nombre": "ARTURO HUERTA REYES",
-      "pin": "0265"
+      "pin": "0265",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 40,
       "nombre": "CÉSAR ARMANDO ISLAS HUITRÓN",
-      "pin": "0040"
+      "pin": "0040",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 169,
       "nombre": "ROBERTO ISAÍAS JIMÉNEZ BENÍTEZ",
-      "pin": "0169"
+      "pin": "0169",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 224,
       "nombre": "MANUEL ALEJANDRO JUSTO MORALES",
-      "pin": "0224"
+      "pin": "0224",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 27,
       "nombre": "ARTURO MARTÍNEZ MARTÍNEZ",
-      "pin": "0027"
+      "pin": "0027",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 266,
       "nombre": "MARTHA PATRICIA MARTÍNEZ MÁRQUEZ",
-      "pin": "0266"
+      "pin": "0266",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 225,
       "nombre": "PAOLA Y. MARTÍNEZ ESCALERA",
-      "pin": "0225"
+      "pin": "0225",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 124,
       "nombre": "MARÍA DE LOS ÁNGELES MAYA SANTILLANA",
-      "pin": "0124"
+      "pin": "0124",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 273,
       "nombre": "LUIS RAFAEL MEJÍA GÁMEZ",
-      "pin": "0273"
+      "pin": "0273",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 226,
       "nombre": "IRWING JOSÉ MÉNDEZ LÓPEZ",
-      "pin": "0226"
+      "pin": "0226",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 130,
       "nombre": "MARÍA DEL ROSARIO MICHEL ORTEGA",
-      "pin": "0130"
+      "pin": "0130",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 269,
       "nombre": "MARÍA DEL CARMEN NAVARRETE PAREDES",
-      "pin": "0269"
+      "pin": "0269",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 20,
       "nombre": "ÁNGELA PEÑA GONZÁLEZ",
-      "pin": "0020"
+      "pin": "0020",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 9,
       "nombre": "ALEJANDRO IVÁN PÉREZ GUTIÉRREZ",
-      "pin": "0009"
+      "pin": "0009",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 151,
       "nombre": "NANCY GABRIELA PINO RODRÍGUEZ",
-      "pin": "0151"
+      "pin": "0151",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 105,
       "nombre": "JOSÉ JORGE RAMÍREZ CONDADO",
-      "pin": "0105"
+      "pin": "0105",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 264,
       "nombre": "RICARDO JUAN RAMÍREZ MARTÍNEZ",
-      "pin": "0264"
+      "pin": "0264",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 32,
       "nombre": "BELEM RESÉNDIZ NUÑEZ",
-      "pin": "0032"
+      "pin": "0032",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 268,
       "nombre": "ABRAHAM RÍOS BAHENA",
-      "pin": "0268"
+      "pin": "0268",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 122,
       "nombre": "MARIA ANGELINA RODRIGUEZ HERNANDEZ",
-      "pin": "0122"
+      "pin": "0122",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 275,
       "nombre": "MARÍA ANGELINA RODRÍGUEZ HERNÁNDEZ",
-      "pin": "0275"
+      "pin": "0275",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 149,
       "nombre": "MOISÉS SALINAS ÁLVAREZ",
-      "pin": "0149"
+      "pin": "0149",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 156,
       "nombre": "ORQUÍDEA TORRES PEGUEROS",
-      "pin": "0156"
+      "pin": "0156",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 272,
       "nombre": "JOSÉ LUIS ÁNGEL UBERETAGOYENA LOREDO",
-      "pin": "0272"
+      "pin": "0272",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 117,
       "nombre": "LILIA VILLA AGUILAR",
-      "pin": "0117"
+      "pin": "0117",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 115,
       "nombre": "LETICIA ZAPATA URIBE (CAM)",
-      "pin": "0115"
+      "pin": "0115",
+      "licAdscripcion": "ES",
+      "licNombre": "ESPAÑOL"
     },
     {
       "clave": 296,
       "nombre": "DAVID REY ALATRISTE VILCHIS",
-      "pin": "0296"
+      "pin": "0296",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 139,
       "nombre": "MARITERE ARZATE TOLEDO",
-      "pin": "0139"
+      "pin": "0139",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 128,
       "nombre": "MARÍA DEL CONSUELO BARRIOS RIVERA",
-      "pin": "0128"
+      "pin": "0128",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 297,
       "nombre": "ELTON EVERARDO DÍAZ FIGUEROA",
-      "pin": "0297"
+      "pin": "0297",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 298,
       "nombre": "SIN DOCENTE ASIGNADO",
-      "pin": "0298"
+      "pin": "0298",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 217,
       "nombre": "SIN DOCENTE FÍSICA 1",
-      "pin": "0217"
+      "pin": "0217",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 218,
       "nombre": "SIN DOCENTE FÍSICA 3",
-      "pin": "0218"
+      "pin": "0218",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 53,
       "nombre": "DULCE MARÍA GUERRA MARTÍNEZ",
-      "pin": "0053"
+      "pin": "0053",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 341,
       "nombre": "LILIANA GUTIERREZ AREVALO",
-      "pin": "0341"
+      "pin": "0341",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 51,
       "nombre": "DIANA ISELA GUZMAN LOPEZ",
-      "pin": "0051"
+      "pin": "0051",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 104,
       "nombre": "JOSÉ CÉSAR LICEA GARCÍA",
-      "pin": "0104"
+      "pin": "0104",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 330,
       "nombre": "ELIZABETH LÓPEZ MORALES",
-      "pin": "0330"
+      "pin": "0330",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 10,
       "nombre": "ALFREDO MARTINEZ URIBE",
-      "pin": "0010"
+      "pin": "0010",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 342,
       "nombre": "JESÚS ALEJANDRO MARTÍNEZ BAUTISTA",
-      "pin": "0342"
+      "pin": "0342",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 329,
       "nombre": "LUIS MARTÍNEZ (DGENAM)",
-      "pin": "0329"
+      "pin": "0329",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 328,
       "nombre": "ÁNGEL JAVIER MAYA GONZÁLEZ (DGENAM)",
-      "pin": "0328"
+      "pin": "0328",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 191,
       "nombre": "TANIA MEJÍA CHÁVEZ",
-      "pin": "0191"
+      "pin": "0191",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 85,
       "nombre": "HERNAN JAVIER NERI FAJARDO",
-      "pin": "0085"
+      "pin": "0085",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 148,
       "nombre": "MIRIAM GABRIELA OSORNIO ZEPEDA",
-      "pin": "0148"
+      "pin": "0148",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 294,
       "nombre": "GRACIELA PONCE MEZA",
-      "pin": "0294"
+      "pin": "0294",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 15,
       "nombre": "ALMA ROSA REYES PIMENTEL",
-      "pin": "0015"
+      "pin": "0015",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 299,
       "nombre": "DANIEL GERARDO ROBLES REYES",
-      "pin": "0299"
+      "pin": "0299",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 157,
       "nombre": "OSCAR IGNACIO SALAS URBINA",
-      "pin": "0157"
+      "pin": "0157",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 343,
       "nombre": "JESSICA SÁNCHEZ PICAZO",
-      "pin": "0343"
+      "pin": "0343",
+      "licAdscripcion": "FS",
+      "licNombre": "FÍSICA"
     },
     {
       "clave": 220,
       "nombre": "JESÚS ANTONIO CAMERAS GARCÍA",
-      "pin": "0220"
+      "pin": "0220",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 78,
       "nombre": "GRACIELA CRUZ RAMIREZ",
-      "pin": "0078"
+      "pin": "0078",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 180,
       "nombre": "SARA ALEJANDRA CRUZ FUENTES",
-      "pin": "0180"
+      "pin": "0180",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 310,
       "nombre": "ADRIANA LIZBETH DELGADO OLALDE",
-      "pin": "0310"
+      "pin": "0310",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 145,
       "nombre": "MIGUEL ÁNGEL FLORES PÉREZ",
-      "pin": "0145"
+      "pin": "0145",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 306,
       "nombre": "JAZMÍN GALLEGOS HERNÁNDEZ",
-      "pin": "0306"
+      "pin": "0306",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 54,
       "nombre": "EDGAR EDUARDO GARCÍA MARTÍNEZ",
-      "pin": "0054"
+      "pin": "0054",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 307,
       "nombre": "JAVIER GÓMEZ VALLESILLOS",
-      "pin": "0307"
+      "pin": "0307",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 100,
       "nombre": "JORGE HUMBERTO GÓNGORA FAJARDO",
-      "pin": "0100"
+      "pin": "0100",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 88,
       "nombre": "ILSE YANNIN HERNANDEZ MARTINEZ",
-      "pin": "0088"
+      "pin": "0088",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 334,
       "nombre": "ORLANDO LLAMAS CRUZ",
-      "pin": "0334"
+      "pin": "0334",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 192,
       "nombre": "TONANTZIN LÓPEZ LÓPEZ",
-      "pin": "0192"
+      "pin": "0192",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 339,
       "nombre": "CLAUDIA BERENICE MARTÍNEZ ALCÁNTARA",
-      "pin": "0339"
+      "pin": "0339",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 311,
       "nombre": "CARLOS MORALES RAMÍREZ",
-      "pin": "0311"
+      "pin": "0311",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 21,
       "nombre": "ANGELA PEÑA GONZALEZ",
-      "pin": "0021"
+      "pin": "0021",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 73,
       "nombre": "GEORGINA YEMILY PEREZ ROCHA",
-      "pin": "0073"
+      "pin": "0073",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 305,
       "nombre": "JOSÉ LUIS PEREZ CAZARES",
-      "pin": "0305"
+      "pin": "0305",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 110,
       "nombre": "JUAN MANUEL RÍOS TREJO",
-      "pin": "0110"
+      "pin": "0110",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 324,
       "nombre": "LORENA YAEL SÁNCHEZ FLORES",
-      "pin": "0324"
+      "pin": "0324",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 309,
       "nombre": "OSCAR TERÁN TOSCANO",
-      "pin": "0309"
+      "pin": "0309",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 131,
       "nombre": "MARÍA ELIZABETH TINAJERO LÓPEZ",
-      "pin": "0131"
+      "pin": "0131",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 12,
       "nombre": "ALFREDO VILLEGAS ORTEGA",
-      "pin": "0012"
+      "pin": "0012",
+      "licAdscripcion": "FE",
+      "licNombre": "FORMACIÓN ÉTICA Y CIUDADANA"
     },
     {
       "clave": 114,
       "nombre": "LAURA MONSERRATH CARMONA TELLO",
-      "pin": "0114"
+      "pin": "0114",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 127,
       "nombre": "MARÍA DEL CARMEN CASIO nan",
-      "pin": "0127"
+      "pin": "0127",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 92,
       "nombre": "JAVIER CASTAÑEDA RINCÓN",
-      "pin": "0092"
+      "pin": "0092",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 141,
       "nombre": "MÁRQUEZ PADILLA ROBERTO DE ANDA DE ME ANDA",
-      "pin": "0141"
+      "pin": "0141",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 171,
       "nombre": "RODRIGO ANTONIO ESCALONA VALDEZ",
-      "pin": "0171"
+      "pin": "0171",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 146,
       "nombre": "MIGUEL ÁNGEL GARDUÑO ZEPEDA (DGENAM)",
-      "pin": "0146"
+      "pin": "0146",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 335,
       "nombre": "ANGELA GUZMAN GIL",
-      "pin": "0335"
+      "pin": "0335",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 152,
       "nombre": "NORMA HERNANDEZ VAZQUEZ",
-      "pin": "0152"
+      "pin": "0152",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 138,
       "nombre": "MARICELA HERNÁNDEZ CHAMORRO",
-      "pin": "0138"
+      "pin": "0138",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 70,
       "nombre": "FELIPE DE JESÚS JUÁREZ VILLANUEVA",
-      "pin": "0070"
+      "pin": "0070",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 17,
       "nombre": "ANA LAURA LÓPEZ CRUZ",
-      "pin": "0017"
+      "pin": "0017",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 221,
       "nombre": "ROBERTO DE ANDA MÁRQUEZ PADILLA",
-      "pin": "0221"
+      "pin": "0221",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 196,
       "nombre": "YOANI MONTOYA RESENDIZ",
-      "pin": "0196"
+      "pin": "0196",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 5,
       "nombre": "ALEJANDRA BERENICE MURAIRA FUENTES (DGENAM)",
-      "pin": "0005"
+      "pin": "0005",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 39,
       "nombre": "CECILIA PEREZ SANCHEZ",
-      "pin": "0039"
+      "pin": "0039",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 168,
       "nombre": "ROBERTO RAMÍREZ FABIANI",
-      "pin": "0168"
+      "pin": "0168",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 91,
       "nombre": "JAIRO ALBERTO ROMERO HUERTA",
-      "pin": "0091"
+      "pin": "0091",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 336,
       "nombre": "ADRIAN ROSETE LEON",
-      "pin": "0336"
+      "pin": "0336",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 176,
       "nombre": "RUBEN RUIZ VARGAS",
-      "pin": "0176"
+      "pin": "0176",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 337,
       "nombre": "ESPERANZA SÁNCHEZ PARADA",
-      "pin": "0337"
+      "pin": "0337",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 143,
       "nombre": "MERCEDES TAKAGUI CARBAJO",
-      "pin": "0143"
+      "pin": "0143",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 83,
       "nombre": "HECTOR VILLANUEVA LIGORI",
-      "pin": "0083"
+      "pin": "0083",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 338,
       "nombre": "PENDIENTE nan nan",
-      "pin": "0338"
+      "pin": "0338",
+      "licAdscripcion": "GE",
+      "licNombre": "GEOGRAFÍA"
     },
     {
       "clave": 317,
       "nombre": "DANIELA ALBARRÁN RAMÍREZ",
-      "pin": "0317"
+      "pin": "0317",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 314,
       "nombre": "DANIELA A. ARVIZU RICO",
-      "pin": "0314"
+      "pin": "0314",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 147,
       "nombre": "MILTON CORZO ESTRADA",
-      "pin": "0147"
+      "pin": "0147",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 2,
       "nombre": "AIDE RAQUEL CUELLAR SALAZAR",
-      "pin": "0002"
+      "pin": "0002",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 109,
       "nombre": "JUAN GERARDO ESCAMILLA GUTIÉRREZ",
-      "pin": "0109"
+      "pin": "0109",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 37,
       "nombre": "CARLOS MARIO GÓMEZ JIMÉNEZ",
-      "pin": "0037"
+      "pin": "0037",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 126,
       "nombre": "MARÍA DE LOURDES GÓMEZ GONZÁLEZ",
-      "pin": "0126"
+      "pin": "0126",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 312,
       "nombre": "ALEJANDRO GUZMÁN MENDOZA",
-      "pin": "0312"
+      "pin": "0312",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 98,
       "nombre": "JESÚS GUADALUPE HERAS RAMÍREZ",
-      "pin": "0098"
+      "pin": "0098",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 99,
       "nombre": "JORGE ICAZBALCETA GARCÍA",
-      "pin": "0099"
+      "pin": "0099",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 33,
       "nombre": "BERNARDINO LEÓN OLIVARES",
-      "pin": "0033"
+      "pin": "0033",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 315,
       "nombre": "MARCO ANTONIO LOZANO CASTILLO",
-      "pin": "0315"
+      "pin": "0315",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 313,
       "nombre": "NADIA MINÚ MENDOZA CABALLERO",
-      "pin": "0313"
+      "pin": "0313",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 167,
       "nombre": "ROBERTO MONROY VALLEJO",
-      "pin": "0167"
+      "pin": "0167",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 332,
       "nombre": "LUIS RICARDO MONTER RAMÍREZ",
-      "pin": "0332"
+      "pin": "0332",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 187,
       "nombre": "SOCORRO GUADALUPE MORENO GÓMEZ",
-      "pin": "0187"
+      "pin": "0187",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 316,
       "nombre": "VALERIA JENNIFER OCAMPO ESPINOSA",
-      "pin": "0316"
+      "pin": "0316",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 173,
       "nombre": "ROSA ORTIZ PAZ",
-      "pin": "0173"
+      "pin": "0173",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 318,
       "nombre": "FRANCISCO ROJAS ROBLES (DGENAM)",
-      "pin": "0318"
+      "pin": "0318",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 71,
       "nombre": "FORTINO VERGARA SANTAMARÍA",
-      "pin": "0071"
+      "pin": "0071",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 184,
       "nombre": "SERGIO VIEYRA LÓPEZ",
-      "pin": "0184"
+      "pin": "0184",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 207,
       "nombre": "RICARDO nan nan",
-      "pin": "0207"
+      "pin": "0207",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 320,
       "nombre": "MARICRUZ AGUILERA MORENO",
-      "pin": "0320"
+      "pin": "0320",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 283,
       "nombre": "JAVIER AGUIRRE MENDINO",
-      "pin": "0283"
+      "pin": "0283",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 238,
       "nombre": "LUCRECIA BAENA CERÓN",
-      "pin": "0238"
+      "pin": "0238",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 87,
       "nombre": "HUMBERTO CARDENAS TARRASA",
-      "pin": "0087"
+      "pin": "0087",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 277,
       "nombre": "MARCO ANTONIO CARLO GARCÍA",
-      "pin": "0277"
+      "pin": "0277",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 50,
       "nombre": "DIANA CASTAÑON LOPEZ",
-      "pin": "0050"
+      "pin": "0050",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 97,
       "nombre": "JESÚS DEL CARMEN GALVAN DURAN",
-      "pin": "0097"
+      "pin": "0097",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 240,
       "nombre": "EDUARDO GARCÍA BARRIOS",
-      "pin": "0240"
+      "pin": "0240",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 159,
       "nombre": "PAMELA ISABEL GARDUÑO ZEPEDA (DGENAM)",
-      "pin": "0159"
+      "pin": "0159",
+      "licAdscripcion": "HS",
+      "licNombre": "HISTORIA"
     },
     {
       "clave": 81,
       "nombre": "GUSTAVO GUILLERMO GÓMEZ PEÑA",
-      "pin": "0081"
+      "pin": "0081",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 276,
       "nombre": "ALEJANDRO GUZMÁN MEDINA",
-      "pin": "0276"
+      "pin": "0276",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 23,
       "nombre": "ANGÉLICA HERNANDEZ LUNA",
-      "pin": "0023"
+      "pin": "0023",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 244,
       "nombre": "SIN DOCENTE INGLES 3A",
-      "pin": "0244"
+      "pin": "0244",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 245,
       "nombre": "SIN DOCENTE INGLES 3B",
-      "pin": "0245"
+      "pin": "0245",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 241,
       "nombre": "SIN DOCENTE INGLÉS PRIMERO",
-      "pin": "0241"
+      "pin": "0241",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 243,
       "nombre": "SIN DOCENTE INGLÉS PRIMERO B",
-      "pin": "0243"
+      "pin": "0243",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 246,
       "nombre": "SIN DOCENTE INLGÉS 5",
-      "pin": "0246"
+      "pin": "0246",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 279,
       "nombre": "LESLY LEONOR LOZANO RAMÍREZ",
-      "pin": "0279"
+      "pin": "0279",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 42,
       "nombre": "CLAUDIA SARA OROZCO FASSINETO",
-      "pin": "0042"
+      "pin": "0042",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 34,
       "nombre": "BERTHA GUADALUPE PAULO GUERRERO",
-      "pin": "0034"
+      "pin": "0034",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 116,
       "nombre": "LILA PEREZ CUERVO",
-      "pin": "0116"
+      "pin": "0116",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 190,
       "nombre": "TAMARA COLUMBA PÉREZ ONTIVEROS",
-      "pin": "0190"
+      "pin": "0190",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 165,
       "nombre": "RICARDO MARTIN QUIROGA OLVERA",
-      "pin": "0165"
+      "pin": "0165",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 242,
       "nombre": "DANAE RAMÍREZ RODRÍGUEZ",
-      "pin": "0242"
+      "pin": "0242",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 134,
       "nombre": "MARÍA GUADALUPE RAMÍREZ GONZÁLEZ",
-      "pin": "0134"
+      "pin": "0134",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 340,
       "nombre": "DANAE RODRÍGUEZ RAMÍREZ",
-      "pin": "0340"
+      "pin": "0340",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 47,
       "nombre": "DÁNAE RODRÍGUEZ RAMÍREZ",
-      "pin": "0047"
+      "pin": "0047",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 79,
       "nombre": "GREGORIO RICARDO RODRÍGUEZ ÁLVAREZ",
-      "pin": "0079"
+      "pin": "0079",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 68,
       "nombre": "EUNICE FABIOLA RUÍZ JAIMES",
-      "pin": "0068"
+      "pin": "0068",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 144,
       "nombre": "MIGUEL TORRES SÁNCHEZ",
-      "pin": "0144"
+      "pin": "0144",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 278,
       "nombre": "WENDY ANEL VÁZQUEZ GÓMEZ",
-      "pin": "0278"
+      "pin": "0278",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 280,
       "nombre": "MARÍA LORENA VELASCO MARISCAL",
-      "pin": "0280"
+      "pin": "0280",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     },
     {
       "clave": 214,
       "nombre": "SIN DOCENTE GRUPO 3A nan",
-      "pin": "0214"
+      "pin": "0214",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 7,
       "nombre": "ALEJANDRO AGUILA MARTINEZ",
-      "pin": "0007"
+      "pin": "0007",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 215,
       "nombre": "ALEJANDRA ÁVALOS ROGEL",
-      "pin": "0215"
+      "pin": "0215",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 133,
       "nombre": "MARÍA FAVIOLA AVILA GALLEGOS",
-      "pin": "0133"
+      "pin": "0133",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 16,
       "nombre": "ANA BÁRBARA BARRÓN AGUILAR",
-      "pin": "0016"
+      "pin": "0016",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 61,
       "nombre": "ELIZABETH BECERRA RAMOS",
-      "pin": "0061"
+      "pin": "0061",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 261,
       "nombre": "MARIANO BENÍTEZ BENÍTEZ",
-      "pin": "0261"
+      "pin": "0261",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 137,
       "nombre": "MARICELA BONILLA GONZALEZ",
-      "pin": "0137"
+      "pin": "0137",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 201,
       "nombre": "HÉCTOR CANTÚ LAGUNAS",
-      "pin": "0201"
+      "pin": "0201",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 8,
       "nombre": "ALEJANDRO CASTRO MÁRQUEZ",
-      "pin": "0008"
+      "pin": "0008",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 48,
       "nombre": "JOSÉ DANIEL CISNEROS PEREZ",
-      "pin": "0048"
+      "pin": "0048",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 208,
       "nombre": "MARÍA EVELIA CRUZ LÓPEZ",
-      "pin": "0208"
+      "pin": "0208",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 181,
       "nombre": "SAÚL DÍAZ ESCALONA",
-      "pin": "0181"
+      "pin": "0181",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 182,
       "nombre": "SAÚL ELIZARRARÁS BAENA",
-      "pin": "0182"
+      "pin": "0182",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 121,
       "nombre": "MARCOS FAJARDO RENDON",
-      "pin": "0121"
+      "pin": "0121",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 96,
       "nombre": "JESUS DEL CARMEN GALVAN DURAN",
-      "pin": "0096"
+      "pin": "0096",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 106,
       "nombre": "JOSÉ LUIS GALVAN JIMENEZ",
-      "pin": "0106"
+      "pin": "0106",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 209,
       "nombre": "MOISÉS GARCÍA BAEZA",
-      "pin": "0209"
+      "pin": "0209",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 216,
       "nombre": "SIN DOCENTE GRUPO 3B",
-      "pin": "0216"
+      "pin": "0216",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 212,
       "nombre": "SIN DOCENTE GRUPO A",
-      "pin": "0212"
+      "pin": "0212",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 213,
       "nombre": "SIN DOCENTE GRUPO B",
-      "pin": "0213"
+      "pin": "0213",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 140,
       "nombre": "MARLENY HERNANDEZ ESCOBAR",
-      "pin": "0140"
+      "pin": "0140",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 200,
       "nombre": "FRANCISCO GUILLERMO HERRERA ARMEDIA",
-      "pin": "0200"
+      "pin": "0200",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 36,
       "nombre": "CARLOS JIMÉNEZ GONZÁLEZ",
-      "pin": "0036"
+      "pin": "0036",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 13,
       "nombre": "ALICIA LOPEZ SENTIES",
-      "pin": "0013"
+      "pin": "0013",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 325,
       "nombre": "MARIANA ELIZABETH LOPEZ MORALES",
-      "pin": "0325"
+      "pin": "0325",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 257,
       "nombre": "GONZALO LÓPEZ RUEDA",
-      "pin": "0257"
+      "pin": "0257",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 74,
       "nombre": "GERARDO (CAM) LOREDO nan",
-      "pin": "0074"
+      "pin": "0074",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 326,
       "nombre": "CHARLIE JAIR MAHUNGNOS ORTEGA",
-      "pin": "0326"
+      "pin": "0326",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 199,
       "nombre": "EVELYNG MARLENE MARTÍNEZ ODALDE",
-      "pin": "0199"
+      "pin": "0199",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 254,
       "nombre": "SIN DOCENTE MATEMÁTICAS PRIMERO B",
-      "pin": "0254"
+      "pin": "0254",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 252,
       "nombre": "SIN DOCENTE MATEMÁTICAS PRIMERO M",
-      "pin": "0252"
+      "pin": "0252",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 259,
       "nombre": "SIN DOCENTE MATEMÁTICAS QUINTO A",
-      "pin": "0259"
+      "pin": "0259",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 262,
       "nombre": "SIN DOCENTE MATEMÁTICAS QUINTO B",
-      "pin": "0262"
+      "pin": "0262",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 256,
       "nombre": "SIN DOCENTE MATEMÁTICAS TERCERO A",
-      "pin": "0256"
+      "pin": "0256",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 258,
       "nombre": "SIN DOCENTE MATEMÁTICAS TERCERO B",
-      "pin": "0258"
+      "pin": "0258",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 255,
       "nombre": "MARLEN OLALDE MARTÍNEZ",
-      "pin": "0255"
+      "pin": "0255",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 60,
       "nombre": "ELIDETH PACHECO SALGADO",
-      "pin": "0060"
+      "pin": "0060",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 327,
       "nombre": "MARICELA PEREZ HERRERA",
-      "pin": "0327"
+      "pin": "0327",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 107,
       "nombre": "JOSÉ LUIS MEDARDO QUIROZ GLEASON",
-      "pin": "0107"
+      "pin": "0107",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 38,
       "nombre": "CAROLINA RUBI REAL ORTEGA",
-      "pin": "0038"
+      "pin": "0038",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 210,
       "nombre": "GABRIEL RODRÍGUEZ BAEZ (CAM)",
-      "pin": "0210"
+      "pin": "0210",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 260,
       "nombre": "ENRIQUE SALAZAR PEÑA",
-      "pin": "0260"
+      "pin": "0260",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 123,
       "nombre": "MARIA DE JESUS SENTIES NASCAPAC",
-      "pin": "0123"
+      "pin": "0123",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 250,
       "nombre": "MARÍA DE JESÚS SENTÍES NACASPAC",
-      "pin": "0250"
+      "pin": "0250",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 251,
       "nombre": "RAFAEL TRUJILLO ZARATE",
-      "pin": "0251"
+      "pin": "0251",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 211,
       "nombre": "EUSEBIO VÁRGAS BELLO",
-      "pin": "0211"
+      "pin": "0211",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 155,
       "nombre": "ORLANDO VÁZQUEZ PÉREZ",
-      "pin": "0155"
+      "pin": "0155",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 249,
       "nombre": "ALMA ROSA VILLAGÓMEZ ZAVALA",
-      "pin": "0249"
+      "pin": "0249",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 253,
       "nombre": "ISAAC VILLAVICENCIO GÓMEZ",
-      "pin": "0253"
+      "pin": "0253",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 19,
       "nombre": "ANDRÉS ZAPATA URIBE",
-      "pin": "0019"
+      "pin": "0019",
+      "licAdscripcion": "MT",
+      "licNombre": "MATEMÁTICAS"
     },
     {
       "clave": 57,
       "nombre": "EDUARDO AGUILAR PÉREZ",
-      "pin": "0057"
+      "pin": "0057",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 319,
       "nombre": "ADRIÁN AGUILERA AGUILAR",
-      "pin": "0319"
+      "pin": "0319",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 287,
       "nombre": "LEONORA PATRICIA ARIAS LOZANO",
-      "pin": "0287"
+      "pin": "0287",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 219,
       "nombre": "DIANA ELIA BELMONT MALFAVÓN",
-      "pin": "0219"
+      "pin": "0219",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 178,
       "nombre": "SALVADOR CANO RANGEL",
-      "pin": "0178"
+      "pin": "0178",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 289,
       "nombre": "NOHEMÍ CASTRO TAPIA",
-      "pin": "0289"
+      "pin": "0289",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 62,
       "nombre": "ELIZABETH CORTES LECHUGA",
-      "pin": "0062"
+      "pin": "0062",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 64,
       "nombre": "ERICK OMAR CRUZ MENDOZA",
-      "pin": "0064"
+      "pin": "0064",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 197,
       "nombre": "YONATAN ALFREDO DE LA CRUZ ARIAS (CAM)",
-      "pin": "0197"
+      "pin": "0197",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 158,
       "nombre": "OSWALDO ESCOBAR URIBE",
-      "pin": "0158"
+      "pin": "0158",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 291,
       "nombre": "CATALINA AIDA GARCÍA ESPINOSA DE LOS MONTEROS",
-      "pin": "0291"
+      "pin": "0291",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 290,
       "nombre": "JOSÉ MANUEL IBARRA CISNEROS",
-      "pin": "0290"
+      "pin": "0290",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 52,
       "nombre": "DOMINGA LEYVA FLORES",
-      "pin": "0052"
+      "pin": "0052",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 163,
       "nombre": "RAFAEL LOPEZ FLORES",
-      "pin": "0163"
+      "pin": "0163",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 43,
       "nombre": "CONSTANTINO LÓPEZ MATUS",
-      "pin": "0043"
+      "pin": "0043",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 89,
       "nombre": "INES LOZANO ANDRADE",
-      "pin": "0089"
+      "pin": "0089",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 28,
       "nombre": "ARTURO MONROY PÉREZ",
-      "pin": "0028"
+      "pin": "0028",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 132,
       "nombre": "MARÍA ESTELA MORALES PÉREZ",
-      "pin": "0132"
+      "pin": "0132",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 292,
       "nombre": "MARÍA VERÓNICA NAVA AVILÉS",
-      "pin": "0292"
+      "pin": "0292",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 93,
       "nombre": "JAVIER PAZ JUÁREZ",
-      "pin": "0093"
+      "pin": "0093",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 288,
       "nombre": "ZOILA RAFAEL BALLESTEROS",
-      "pin": "0288"
+      "pin": "0288",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 303,
       "nombre": "ERICK ALBERTO RAMOS TORRES",
-      "pin": "0303"
+      "pin": "0303",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 135,
       "nombre": "MARÍA PRIMITIVA RUIZ TREJO",
-      "pin": "0135"
+      "pin": "0135",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 41,
       "nombre": "CINTHIA JESSICA SANCHEZ SERRANO",
-      "pin": "0041"
+      "pin": "0041",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 129,
       "nombre": "MARÍA DEL ROCÍO (CAM) SEGURA CRUZ",
-      "pin": "0129"
+      "pin": "0129",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 118,
       "nombre": "LILIANA TRINIDAD CASTILLO",
-      "pin": "0118"
+      "pin": "0118",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 189,
       "nombre": "SUSANA EDITH VEGA AVILA",
-      "pin": "0189"
+      "pin": "0189",
+      "licAdscripcion": "PE",
+      "licNombre": "PEDAGOGÍA"
     },
     {
       "clave": 239,
       "nombre": "ANDREA BERENICE ÁVILA GUARNEROS",
-      "pin": "0239"
+      "pin": "0239",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 82,
       "nombre": "HANNI ARLETTE BARRERA QUIROZ (CAM)",
-      "pin": "0082"
+      "pin": "0082",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 228,
       "nombre": "MARÍA WENDOLY BERMUDEZ MUÑOZ",
-      "pin": "0228"
+      "pin": "0228",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 4,
       "nombre": "ALEJANDRA BORJA GALLEGOS",
-      "pin": "0004"
+      "pin": "0004",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 80,
       "nombre": "GUADALUPE CAMBRON MUÑOZ",
-      "pin": "0080"
+      "pin": "0080",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 153,
       "nombre": "NORMA CARRO MARTÍNEZ",
-      "pin": "0153"
+      "pin": "0153",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 112,
       "nombre": "JULIA CERVANTES MOSCOSO",
-      "pin": "0112"
+      "pin": "0112",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 247,
       "nombre": "JORGE ANTONIO CIRUJEDA MASTACHE (DGENAM)",
-      "pin": "0247"
+      "pin": "0247",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 179,
       "nombre": "ADRIANA DE LOS SANTOS REYES",
-      "pin": "0179"
+      "pin": "0179",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 281,
       "nombre": "MARISOL DOMÍNGUEZ RUÍZ",
-      "pin": "0281"
+      "pin": "0281",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 183,
       "nombre": "SERGIO ENRIQUEZ ARREDONDO",
-      "pin": "0183"
+      "pin": "0183",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 35,
       "nombre": "BONIFACIO ESCOBAR ALCÁNTARA",
-      "pin": "0035"
+      "pin": "0035",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 90,
       "nombre": "JACQUELINE ESCOTO FONSECA",
-      "pin": "0090"
+      "pin": "0090",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 25,
       "nombre": "ARIANNA GUADALUPE ESPINOSA CAMBRÓN",
-      "pin": "0025"
+      "pin": "0025",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 231,
       "nombre": "JOSÉ ARMANDO ESTRADA PARRA",
-      "pin": "0231"
+      "pin": "0231",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 186,
       "nombre": "SILVIA GUADALUPE FLORES RIVAS",
-      "pin": "0186"
+      "pin": "0186",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 300,
       "nombre": "CARLOS GARCÍA DE LEÓN ROMANÍ",
-      "pin": "0300"
+      "pin": "0300",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 229,
       "nombre": "ROMANÍ CARLOS GARCÍA DE LEÓN",
-      "pin": "0229"
+      "pin": "0229",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 333,
       "nombre": "JOSÉ ANTONIO GUERRERO GARCÍA (DGENAM)",
-      "pin": "0333"
+      "pin": "0333",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 263,
       "nombre": "ELIZABETH HERNÁNDEZ REYES",
-      "pin": "0263"
+      "pin": "0263",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 63,
       "nombre": "ELIZABETH PEÑA LUCAS (CAM)",
-      "pin": "0063"
+      "pin": "0063",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 286,
       "nombre": "SIN DOCENTE PSICOLOGIA 3",
-      "pin": "0286"
+      "pin": "0286",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 125,
       "nombre": "MARÍA DE LOS ÁNGELES QUINTERO GARCÍA",
-      "pin": "0125"
+      "pin": "0125",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 6,
       "nombre": "ALEJANDRA PAOLA RAMIREZ MEJIA",
-      "pin": "0006"
+      "pin": "0006",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 175,
       "nombre": "ROXANA RAMÍREZ FLORES",
-      "pin": "0175"
+      "pin": "0175",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 58,
       "nombre": "EDUARDO REYES ALANÍS",
-      "pin": "0058"
+      "pin": "0058",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 86,
       "nombre": "HILARIO RODRÍGUEZ ARAGÓN",
-      "pin": "0086"
+      "pin": "0086",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 45,
       "nombre": "DAN RUIZ REYES",
-      "pin": "0045"
+      "pin": "0045",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 177,
       "nombre": "RUBÉN SÁNCHEZ DEL RÍO",
-      "pin": "0177"
+      "pin": "0177",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 103,
       "nombre": "JOSÉ ALBERTO SANTANA CARVAJAL",
-      "pin": "0103"
+      "pin": "0103",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 194,
       "nombre": "VIOLETA SILVERIO DOMÍNGUEZ",
-      "pin": "0194"
+      "pin": "0194",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 227,
       "nombre": "YADIRA ELIZABETH TORRES RIVERA",
-      "pin": "0227"
+      "pin": "0227",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 308,
       "nombre": "ALEJANDRO VÁZQUEZ MARTÍNEZ",
-      "pin": "0308"
+      "pin": "0308",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 230,
       "nombre": "JESÚS ALFONSO VICTORIA ESPINOZA",
-      "pin": "0230"
+      "pin": "0230",
+      "licAdscripcion": "PS",
+      "licNombre": "PSICOLOGÍA EDUCATIVA"
     },
     {
       "clave": 3,
       "nombre": "ALBERTO ALAVÉZ GONZÁLEZ",
-      "pin": "0003"
+      "pin": "0003",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 1,
       "nombre": "ADA CINDY BÁRCENAS MARTÍNEZ",
-      "pin": "0001"
+      "pin": "0001",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 59,
       "nombre": "EFRAÍN BENÍTEZ RUIZ",
-      "pin": "0059"
+      "pin": "0059",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 44,
       "nombre": "DALIA VIANNEY FLORES SÁNCHEZ",
-      "pin": "0044"
+      "pin": "0044",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 174,
       "nombre": "ROSA IVETT FLORES RUIZ",
-      "pin": "0174"
+      "pin": "0174",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 26,
       "nombre": "ARISTEO GARCÍA ACEVEDO",
-      "pin": "0026"
+      "pin": "0026",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 95,
       "nombre": "JESÚS DAGOBERTO GOMEZ ZALDIVAR",
-      "pin": "0095"
+      "pin": "0095",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 55,
       "nombre": "EDITH HERNÁNDEZ VÁZQUEZ",
-      "pin": "0055"
+      "pin": "0055",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 223,
       "nombre": "ROBERTO GUSTAVO HERNÁNDEZ CALDERÓN",
-      "pin": "0223"
+      "pin": "0223",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 202,
       "nombre": "ROBERTO GUSTAVO HERNÁNDEZ CALDERÓN (CAMCM)",
-      "pin": "0202"
+      "pin": "0202",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 102,
       "nombre": "JOSÉ JACAL ALDAZ",
-      "pin": "0102"
+      "pin": "0102",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 84,
       "nombre": "HÉCTOR GERARDO PACHECO RAMÍREZ",
-      "pin": "0084"
+      "pin": "0084",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 232,
       "nombre": "MARGARITA PACHECO ARCARAZ",
-      "pin": "0232"
+      "pin": "0232",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 222,
       "nombre": "JACQUELINE CITLALI PALACIOS CÁRDENAS (DGENAM)",
-      "pin": "0222"
+      "pin": "0222",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 331,
       "nombre": "SIN DOCENTE QUIMICA PRIMERO",
-      "pin": "0331"
+      "pin": "0331",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 237,
       "nombre": "SIN DOCENTE QUIMICA TERCERO",
-      "pin": "0237"
+      "pin": "0237",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 236,
       "nombre": "SIN DOCENTE QUÍMICA PRIMERO",
-      "pin": "0236"
+      "pin": "0236",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 233,
       "nombre": "MARIO RODRÍGUEZ RAYÓN",
-      "pin": "0233"
+      "pin": "0233",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 234,
       "nombre": "JOSEFINA ELIZABETH RUIZ MORENO",
-      "pin": "0234"
+      "pin": "0234",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 24,
       "nombre": "ARELI RUBÍ SALGADO FERNÁNDEZ",
-      "pin": "0024"
+      "pin": "0024",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 235,
       "nombre": "ROMINA HAIDÉ SÁNCHEZ FLORES",
-      "pin": "0235"
+      "pin": "0235",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 161,
       "nombre": "PEDRO SMID SANTIAGO",
-      "pin": "0161"
+      "pin": "0161",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 66,
       "nombre": "ERNESTO URIBE GOMEZ",
-      "pin": "0066"
+      "pin": "0066",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 345,
       "nombre": "ERÉNDIRA REBECA MONTERO BARBOSA (DGENAM)",
-      "pin": "0345"
+      "pin": "0345",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 346,
       "nombre": "ERÉNDIRA REBECA MONTERO BARBOSA (CAMCM)",
-      "pin": "0346"
+      "pin": "0346",
+      "licAdscripcion": "QM",
+      "licNombre": "QUÍMICA"
     },
     {
       "clave": 347,
       "nombre": "RICARDO ROMERO RUVALCABA",
-      "pin": "0347"
+      "pin": "0347",
+      "licAdscripcion": "IN",
+      "licNombre": "INGLÉS"
     }
   ],
   "materias": {
