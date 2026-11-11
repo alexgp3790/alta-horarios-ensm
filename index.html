@@ -8,6 +8,8 @@
     :root {
       --primary: #1a365d;
       --accent: #2b6cb0;
+      --success: #2f855a;
+      --danger: #c53030;
       --bg: #f7fafc;
       --card: #ffffff;
       --text: #2d3748;
@@ -22,7 +24,7 @@
     }
 
     .container {
-      max-width: 750px;
+      max-width: 800px;
       margin: 0 auto;
       background: var(--card);
       padding: 30px;
@@ -45,14 +47,22 @@
     }
 
     .header h2 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #4a5568;
       margin: 0;
       font-weight: 500;
     }
 
+    .auth-box {
+      background: #edf2f7;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      border: 1px solid #cbd5e0;
+    }
+
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     label {
@@ -77,191 +87,220 @@
       box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
     }
 
-    .btn-submit {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1rem;
+    .btn {
+      padding: 10px 18px;
+      font-size: 0.95rem;
       font-weight: 600;
       border-radius: 4px;
+      border: none;
       cursor: pointer;
-      width: 100%;
-      margin-top: 10px;
       transition: background 0.2s;
     }
 
-    .btn-submit:hover {
-      background-color: var(--accent);
-    }
+    .btn-primary { background-color: var(--primary); color: white; }
+    .btn-primary:hover { background-color: var(--accent); }
 
-    #group-container {
-      display: none; /* Se activa solo para ES, MT e IN */
-    }
+    .btn-add { background-color: var(--accent); color: white; width: 100%; margin-top: 5px; }
+    .btn-add:hover { background-color: #2c5282; }
 
-    #receipt-modal {
-      display: none;
-    }
+    .btn-submit { background-color: var(--success); color: white; width: 100%; font-size: 1.05rem; padding: 12px; margin-top: 15px; }
+    .btn-submit:hover { background-color: #276749; }
 
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #receipt-modal, #receipt-modal * {
-        visibility: visible;
-      }
-      #receipt-modal {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        display: block !important;
-      }
-      .no-print {
-        display: none !important;
-      }
-    }
+    .btn-danger { background-color: var(--danger); color: white; padding: 4px 8px; font-size: 0.8rem; }
 
-    .receipt-box {
-      border: 2px dashed #a0aec0;
-      padding: 25px;
-      border-radius: 6px;
-      background: #fafafa;
-      margin-top: 20px;
-    }
-
-    .receipt-table {
+    .table-custom {
       width: 100%;
       border-collapse: collapse;
       margin: 15px 0;
     }
 
-    .receipt-table th, .receipt-table td {
+    .table-custom th, .table-custom td {
       border: 1px solid #cbd5e0;
-      padding: 8px 12px;
+      padding: 8px 10px;
       text-align: left;
       font-size: 0.88rem;
     }
 
-    .receipt-table th {
+    .table-custom th {
       background-color: #edf2f7;
+    }
+
+    #app-form, #receipt-modal, #group-container {
+      display: none;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #receipt-modal, #receipt-modal * { visibility: visible; }
+      #receipt-modal {
+        position: absolute; left: 0; top: 0; width: 100%; display: block !important;
+      }
+      .no-print { display: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container" id="form-container">
+  <div class="container" id="main-container">
     <div class="header">
       <h1>ESCUELA NORMAL SUPERIOR DE MÉXICO</h1>
-      <h2>División de Licenciaturas | Registro de Propuesta Horaria</h2>
+      <h2>División de Licenciaturas | Captura de Carga Horaria Docente</h2>
     </div>
 
-    <form id="schedule-form">
-      <!-- SELECCIÓN DE DOCENTE (SOLO NOMBRE) -->
+    <!-- MÓDULO DE AUTENTICACIÓN / ACCESO -->
+    <div class="auth-box" id="auth-section">
       <div class="form-group">
-        <label for="teacher-select">Nombre del Docente:</label>
-        <select id="teacher-select" required>
-          <option value="">-- Seleccione Docente --</option>
-        </select>
-      </div>
-
-      <!-- SELECCIÓN DE LICENCIATURA -->
-      <div class="form-group">
-        <label for="licenciatura">Licenciatura:</label>
-        <select id="licenciatura" required onchange="evaluarLicenciatura()">
-          <option value="">-- Seleccione Licenciatura --</option>
-          <option value="BL">BIOLOGÍA (BL)</option>
-          <option value="ES">ESPAÑOL (ES)</option>
-          <option value="FS">FÍSICA (FS)</option>
-          <option value="FE">FORMACIÓN ÉTICA Y CIUDADANA (FE)</option>
-          <option value="GE">GEOGRAFÍA (GE)</option>
-          <option value="HS">HISTORIA (HS)</option>
-          <option value="IN">INGLÉS (IN)</option>
-          <option value="MT">MATEMÁTICAS (MT)</option>
-          <option value="PE">PEDAGOGÍA (PE)</option>
-          <option value="PS">PSICOLOGÍA EDUCATIVA (PS)</option>
-          <option value="QM">QUÍMICA (QM)</option>
-          <option value="DPX">DOCENCIA EN POSGRADO (DPX)</option>
-        </select>
-      </div>
-
-      <!-- SELECCIÓN DE SEMESTRE -->
-      <div class="form-group">
-        <label for="semestre">Semestre:</label>
-        <select id="semestre" required onchange="cargarMaterias()">
-          <option value="">-- Seleccione Semestre --</option>
-          <option value="1">1° Semestre</option>
-          <option value="2">2° Semestre</option>
-          <option value="3">3° Semestre</option>
-          <option value="4">4° Semestre</option>
-          <option value="5">5° Semestre</option>
-          <option value="6">6° Semestre</option>
-          <option value="7">7° Semestre</option>
-          <option value="8">8° Semestre</option>
-        </select>
-      </div>
-
-      <!-- ASIGNATURA FILTRADA -->
-      <div class="form-group">
-        <label for="subject">Asignatura:</label>
-        <select id="subject" required disabled>
-          <option value="">-- Primero seleccione Licenciatura y Semestre --</option>
-        </select>
-      </div>
-
-      <!-- GRUPO (ÚNICAMENTE PARA ESPAÑOL, MATEMÁTICAS E INGLÉS) -->
-      <div class="form-group" id="group-container">
-        <label for="group">Grupo:</label>
-        <select id="group">
-          <option value="">-- Seleccione Grupo --</option>
-          <option value="A">Grupo A</option>
-          <option value="B">Grupo B</option>
+        <label for="role-select">Tipo de Usuario:</label>
+        <select id="role-select" onchange="cambiarRol()">
+          <option value="docente">Docente</option>
+          <option value="coordinador">Coordinador de Licenciatura</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="day">Día de la semana:</label>
-        <select id="day" required>
-          <option value="">-- Seleccione un día --</option>
-          <option value="Lunes">Lunes</option>
-          <option value="Martes">Martes</option>
-          <option value="Miércoles">Miércoles</option>
-          <option value="Jueves">Jueves</option>
-          <option value="Viernes">Viernes</option>
+        <label for="teacher-select">Seleccione Docente:</label>
+        <select id="teacher-select">
+          <option value="">-- Cargando lista... --</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="time-slot">Bloque Horario:</label>
-        <select id="time-slot" required>
-          <option value="">-- Seleccione el bloque --</option>
-          <option value="07:00 - 09:00">07:00 - 09:00 hrs</option>
-          <option value="09:00 - 11:00">09:00 - 11:00 hrs</option>
-          <option value="11:00 - 13:00">11:00 - 13:00 hrs</option>
-          <option value="13:00 - 15:00">13:00 - 15:00 hrs</option>
-          <option value="15:00 - 17:00">15:00 - 17:00 hrs</option>
-          <option value="17:00 - 19:00">17:00 - 19:00 hrs</option>
-          <option value="19:00 - 21:00">19:00 - 21:00 hrs</option>
-        </select>
+        <label for="pass-input" id="pass-label">PIN Único de Docente (4 dígitos):</label>
+        <input type="password" id="pass-input" placeholder="Ingrese su PIN">
       </div>
 
-      <button type="submit" class="btn-submit">Registrar Horario y Generar Recibo</button>
-    </form>
+      <button type="button" class="btn btn-primary" onclick="validarAcceso()" style="width: 100%;">Validar Acceso</button>
+      <p id="auth-error" style="color: var(--danger); font-size: 0.85rem; display: none; margin-top: 10px; text-align: center;"></p>
+    </div>
+
+    <!-- FORMULARIO DE CAPTURA DE MATERIAS -->
+    <div id="app-form">
+      <div style="background-color: #ebf8ff; border-left: 4px solid var(--accent); padding: 12px; margin-bottom: 20px; border-radius: 4px;">
+        <strong id="active-user-name"></strong><br>
+        <span style="font-size: 0.85rem; color: #4a5568;">Docente autenticado correctamente. Puede registrar múltiples materias para su acuse.</span>
+      </div>
+
+      <fieldset style="border: 1px solid #cbd5e0; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+        <legend style="font-weight: bold; color: var(--primary); padding: 0 6px;">Agregar Asignatura</legend>
+
+        <div class="form-group">
+          <label for="licenciatura">Licenciatura:</label>
+          <select id="licenciatura" onchange="evaluarLicenciatura()">
+            <option value="">-- Seleccione Licenciatura --</option>
+            <option value="BL">BIOLOGÍA (BL)</option>
+            <option value="ES">ESPAÑOL (ES)</option>
+            <option value="FS">FÍSICA (FS)</option>
+            <option value="FE">FORMACIÓN ÉTICA Y CIUDADANA (FE)</option>
+            <option value="GE">GEOGRAFÍA (GE)</option>
+            <option value="HS">HISTORIA (HS)</option>
+            <option value="IN">INGLÉS (IN)</option>
+            <option value="MT">MATEMÁTICAS (MT)</option>
+            <option value="PE">PEDAGOGÍA (PE)</option>
+            <option value="PS">PSICOLOGÍA EDUCATIVA (PS)</option>
+            <option value="QM">QUÍMICA (QM)</option>
+            <option value="DPX">DOCENCIA EN POSGRADO (DPX)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="semestre">Semestre:</label>
+          <select id="semestre" onchange="cargarMaterias()">
+            <option value="">-- Seleccione Semestre --</option>
+            <option value="1">1° Semestre</option>
+            <option value="2">2° Semestre</option>
+            <option value="3">3° Semestre</option>
+            <option value="4">4° Semestre</option>
+            <option value="5">5° Semestre</option>
+            <option value="6">6° Semestre</option>
+            <option value="7">7° Semestre</option>
+            <option value="8">8° Semestre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Asignatura:</label>
+          <select id="subject" disabled>
+            <option value="">-- Primero seleccione Licenciatura y Semestre --</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="group-container">
+          <label for="group">Grupo:</label>
+          <select id="group">
+            <option value="">-- Seleccione Grupo --</option>
+            <option value="A">Grupo A</option>
+            <option value="B">Grupo B</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="day">Día de la semana:</label>
+          <select id="day">
+            <option value="">-- Seleccione un día --</option>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="time-slot">Bloque Horario:</label>
+          <select id="time-slot">
+            <option value="">-- Seleccione el bloque --</option>
+            <option value="07:00 - 09:00">07:00 - 09:00 hrs</option>
+            <option value="09:00 - 11:00">09:00 - 11:00 hrs</option>
+            <option value="11:00 - 13:00">11:00 - 13:00 hrs</option>
+            <option value="13:00 - 15:00">13:00 - 15:00 hrs</option>
+            <option value="15:00 - 17:00">15:00 - 17:00 hrs</option>
+            <option value="17:00 - 19:00">17:00 - 19:00 hrs</option>
+            <option value="19:00 - 21:00">19:00 - 21:00 hrs</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn btn-add" onclick="agregarMateria()">+ Agregar materia a la propuesta</button>
+      </fieldset>
+
+      <!-- TABLA PREVIA DE RESUMEN DE MATERIAS CAPTURADAS -->
+      <h3 style="font-size: 1.05rem; color: var(--primary); margin-top: 20px;">Propuesta de Horarios a Registrar</h3>
+      <table class="table-custom" id="preview-table">
+        <thead>
+          <tr>
+            <th>Licenciatura</th>
+            <th>Asignatura</th>
+            <th>Sem./Gpo</th>
+            <th>Día</th>
+            <th>Horario</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="preview-body">
+          <tr>
+            <td colspan="6" style="text-align: center; color: #a0aec0;">No hay materias agregadas a la propuesta.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" class="btn btn-submit" id="btn-finish" onclick="generarComprobanteConsolidado()" disabled>
+        Finalizar y Generar Recibo Consolidado
+      </button>
+    </div>
   </div>
 
-  <!-- VISTA DE RECIBO -->
+  <!-- VISTA DEL RECIBO ÚNICO CONSOLIDADO -->
   <div class="container" id="receipt-modal">
     <div class="header">
       <h1>ESCUELA NORMAL SUPERIOR DE MÉXICO</h1>
-      <h2>COMPROBANTE DE RECEPCIÓN DE HORARIO</h2>
+      <h2>COMPROBANTE DE RECEPCIÓN DE CARGA HORARIA</h2>
     </div>
 
-    <div class="receipt-box">
-      <p><strong>Folio de Registro:</strong> <span id="rec-folio"></span></p>
+    <div style="border: 2px dashed #a0aec0; padding: 25px; border-radius: 6px; background: #fafafa;">
+      <p><strong>Folio Único:</strong> <span id="rec-folio"></span></p>
       <p><strong>Fecha / Hora de Registro:</strong> <span id="rec-date"></span></p>
-      <p><strong>Docente:</strong> <span id="rec-name"></span> (Clave: <span id="rec-cve-doc"></span>)</p>
+      <p><strong>Docente:</strong> <span id="rec-name"></span> (Clave Internal SIG-HO: <span id="rec-cve-doc"></span>)</p>
 
-      <table class="receipt-table">
+      <table class="table-custom" style="margin-top: 20px;">
         <thead>
           <tr>
             <th>Licenciatura</th>
@@ -271,54 +310,101 @@
             <th>Bloque Horario</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td id="rec-lic"></td>
-            <td id="rec-subject"></td>
-            <td id="rec-group"></td>
-            <td id="rec-day"></td>
-            <td id="rec-timeslot"></td>
-          </tr>
+        <tbody id="rec-tbody">
         </tbody>
       </table>
 
-      <p style="font-size: 0.8rem; color: #718096; text-align: center; margin-top: 20px;">
-        Este documento es un comprobante de propuesta de carga horaria para su validación en la División de Licenciaturas y captura en el SIG-HO.
+      <p style="font-size: 0.8rem; color: #718096; text-align: center; margin-top: 25px;">
+        Este documento es el comprobante oficial de propuesta de carga horaria consolidada para su validación en la División de Licenciaturas y su posterior captura en el SIG-HO.
       </p>
     </div>
 
     <div style="margin-top: 20px; text-align: center;" class="no-print">
-      <button onclick="window.print()" class="btn-submit" style="background-color: #2b6cb0; margin-bottom: 10px;">Imprimir / Guardar en PDF</button>
-      <button onclick="location.reload()" class="btn-submit" style="background-color: #718096;">Registrar otro horario</button>
+      <button onclick="window.print()" class="btn btn-primary" style="margin-bottom: 10px;">Imprimir / Guardar en PDF</button>
+      <button onclick="location.reload()" class="btn" style="background-color: #718096; color: white;">Capturar otro docente / Reiniciar</button>
     </div>
   </div>
 
   <script>
     let docentesData = [];
     let mapaMaterias = {};
+    let materiasAgregadas = [];
+    let docenteActual = null;
+    const CLAVE_MAESTRA_COORDINADOR = "ENSM2026";
 
     fetch('catalogos.json')
-      .then(response => response.json())
+      .then(r => r.json())
       .then(data => {
         docentesData = data.docentes;
         mapaMaterias = data.materias;
         poblarDocentes();
-      })
-      .catch(err => console.error("Error cargando catálogos:", err));
+      });
 
     function poblarDocentes() {
       const selectDoc = document.getElementById('teacher-select');
       selectDoc.innerHTML = '<option value="">-- Seleccione Docente --</option>';
-      
       docentesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
       docentesData.forEach(d => {
-        const option = document.createElement('option');
-        option.value = d.clave + '||' + d.nombre;
-        // Muestra únicamente el Nombre del Docente
-        option.textContent = d.nombre;
-        selectDoc.appendChild(option);
+        const opt = document.createElement('option');
+        opt.value = d.clave;
+        opt.textContent = d.nombre; // Únicamente muestra Nombre
+        selectDoc.appendChild(opt);
       });
+    }
+
+    function cambiarRol() {
+      const rol = document.getElementById('role-select').value;
+      const passLabel = document.getElementById('pass-label');
+      const teacherSelect = document.getElementById('teacher-select');
+
+      if (rol === 'coordinador') {
+        passLabel.innerText = "Clave Maestra de Coordinación:";
+        teacherSelect.disabled = false;
+      } else {
+        passLabel.innerText = "PIN Único de Docente (4 dígitos):";
+        teacherSelect.disabled = false;
+      }
+    }
+
+    function validarAcceso() {
+      const rol = document.getElementById('role-select').value;
+      const cveDoc = document.getElementById('teacher-select').value;
+      const pass = document.getElementById('pass-input').value.trim();
+      const errBox = document.getElementById('auth-error');
+
+      errBox.style.display = 'none';
+
+      if (!cveDoc) {
+        errBox.innerText = "Por favor seleccione un docente de la lista.";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      const docObj = docentesData.find(d => d.clave == cveDoc);
+
+      if (rol === 'docente') {
+        if (pass === docObj.pin) {
+          docenteActual = docObj;
+          iniciarFormulario();
+        } else {
+          errBox.innerText = "PIN incorrecto. Por favor verifique sus datos.";
+          errBox.style.display = 'block';
+        }
+      } else if (rol === 'coordinador') {
+        if (pass === CLAVE_MAESTRA_COORDINADOR) {
+          docenteActual = docObj;
+          iniciarFormulario();
+        } else {
+          errBox.innerText = "Clave Maestra de Coordinador incorrecta.";
+          errBox.style.display = 'block';
+        }
+      }
+    }
+
+    function iniciarFormulario() {
+      document.getElementById('auth-section').style.display = 'none';
+      document.getElementById('app-form').style.display = 'block';
+      document.getElementById('active-user-name').innerText = "Docente: " + docenteActual.nombre + " (Clave: " + docenteActual.clave + ")";
     }
 
     function evaluarLicenciatura() {
@@ -326,52 +412,38 @@
       const groupContainer = document.getElementById('group-container');
       const groupSelect = document.getElementById('group');
 
-      // Solo Español (ES), Matemáticas (MT) e Inglés (IN) tienen divisiones A y B
       if (['ES', 'MT', 'IN'].includes(licCve)) {
         groupContainer.style.display = 'block';
-        groupSelect.required = true;
       } else {
         groupContainer.style.display = 'none';
-        groupSelect.required = false;
         groupSelect.value = '';
       }
-
       cargarMaterias();
     }
 
     function cargarMaterias() {
       const licCve = document.getElementById('licenciatura').value;
       const sem = document.getElementById('semestre').value;
-      const selectSubject = document.getElementById('subject');
+      const selectSub = document.getElementById('subject');
 
-      selectSubject.innerHTML = '<option value="">-- Seleccione Asignatura --</option>';
+      selectSub.innerHTML = '<option value="">-- Seleccione Asignatura --</option>';
 
       if (licCve && sem && mapaMaterias[licCve] && mapaMaterias[licCve][sem]) {
-        const materias = mapaMaterias[licCve][sem];
-        materias.forEach(m => {
-          const option = document.createElement('option');
-          option.value = m.clave + ' - ' + m.nombre;
-          option.textContent = m.nombre + ' (' + m.horas + ' hrs)';
-          selectSubject.appendChild(option);
+        mapaMaterias[licCve][sem].forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.clave + ' - ' + m.nombre;
+          opt.textContent = '[' + m.clave + '] ' + m.nombre + ' (' + m.horas + ' hrs)';
+          selectSub.appendChild(opt);
         });
-        selectSubject.disabled = false;
-      } else if (licCve && sem) {
-        selectSubject.innerHTML = '<option value="">-- No hay materias cargadas para este semestre --</option>';
-        selectSubject.disabled = true;
+        selectSub.disabled = false;
       } else {
-        selectSubject.innerHTML = '<option value="">-- Primero seleccione Licenciatura y Semestre --</option>';
-        selectSubject.disabled = true;
+        selectSub.disabled = true;
       }
     }
 
-    document.getElementById('schedule-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const docVal = document.getElementById('teacher-select').value.split('||');
-      const cveDoc = docVal[0];
-      const nameDoc = docVal[1];
-
+    function agregarMateria() {
       const licSelect = document.getElementById('licenciatura');
+      const licCve = licSelect.value;
       const licText = licSelect.options[licSelect.selectedIndex].text;
       const sem = document.getElementById('semestre').value;
       const subject = document.getElementById('subject').value;
@@ -379,26 +451,93 @@
       const day = document.getElementById('day').value;
       const timeslot = document.getElementById('time-slot').value;
 
+      if (!licCve || !sem || !subject || !day || !timeslot) {
+        alert("Por favor complete todos los campos obligatorios de la materia.");
+        return;
+      }
+
+      if (['ES', 'MT', 'IN'].includes(licCve) && !groupVal) {
+        alert("Para la licenciatura de " + licText + " debe seleccionar Grupo A o Grupo B.");
+        return;
+      }
+
+      const item = {
+        licText: licText,
+        subject: subject,
+        semGpo: groupVal ? sem + '° Sem (Gpo ' + groupVal + ')' : sem + '° Semestre',
+        day: day,
+        timeslot: timeslot
+      };
+
+      materiasAgregadas.push(item);
+      renderTablaPrevia();
+
+      // Reset campos de materia
+      document.getElementById('subject').value = '';
+      document.getElementById('day').value = '';
+      document.getElementById('time-slot').value = '';
+    }
+
+    function eliminarMateria(index) {
+      materiasAgregadas.splice(index, 1);
+      renderTablaPrevia();
+    }
+
+    function renderTablaPrevia() {
+      const tbody = document.getElementById('preview-body');
+      const btnFinish = document.getElementById('btn-finish');
+      tbody.innerHTML = '';
+
+      if (materiasAgregadas.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #a0aec0;">No hay materias agregadas a la propuesta.</td></tr>';
+        btnFinish.disabled = true;
+        return;
+      }
+
+      materiasAgregadas.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.licText}</td>
+          <td>${item.subject}</td>
+          <td>${item.semGpo}</td>
+          <td>${item.day}</td>
+          <td>${item.timeslot}</td>
+          <td><button class="btn btn-danger" onclick="eliminarMateria(${index})">Quitar</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      btnFinish.disabled = false;
+    }
+
+    function generarComprobanteConsolidado() {
       const folio = 'ENSM-LIC-' + Math.floor(100000 + Math.random() * 900000);
       const now = new Date();
       const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
 
       document.getElementById('rec-folio').innerText = folio;
       document.getElementById('rec-date').innerText = dateStr;
-      document.getElementById('rec-cve-doc').innerText = cveDoc;
-      document.getElementById('rec-name').innerText = nameDoc;
-      document.getElementById('rec-lic').innerText = licText;
-      document.getElementById('rec-subject').innerText = subject;
-      
-      // Mostrar Semestre y Grupo si aplica
-      document.getElementById('rec-group').innerText = groupVal ? sem + '° Semestre (Grupo ' + groupVal + ')' : sem + '° Semestre';
-      
-      document.getElementById('rec-day').innerText = day;
-      document.getElementById('rec-timeslot').innerText = timeslot;
+      document.getElementById('rec-cve-doc').innerText = docenteActual.clave;
+      document.getElementById('rec-name').innerText = docenteActual.nombre;
 
-      document.getElementById('form-container').style.display = 'none';
+      const recTbody = document.getElementById('rec-tbody');
+      recTbody.innerHTML = '';
+
+      materiasAgregadas.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.licText}</td>
+          <td>${item.subject}</td>
+          <td>${item.semGpo}</td>
+          <td>${item.day}</td>
+          <td>${item.timeslot}</td>
+        `;
+        recTbody.appendChild(tr);
+      });
+
+      document.getElementById('main-container').style.display = 'none';
       document.getElementById('receipt-modal').style.display = 'block';
-    });
+    }
   </script>
 </body>
 </html>
