@@ -95,6 +95,10 @@
       background-color: var(--accent);
     }
 
+    #group-container {
+      display: none; /* Se activa solo para ES, MT e IN */
+    }
+
     #receipt-modal {
       display: none;
     }
@@ -153,7 +157,7 @@
     </div>
 
     <form id="schedule-form">
-      <!-- SELECCIÓN DE DOCENTE -->
+      <!-- SELECCIÓN DE DOCENTE (SOLO NOMBRE) -->
       <div class="form-group">
         <label for="teacher-select">Nombre del Docente:</label>
         <select id="teacher-select" required>
@@ -164,7 +168,7 @@
       <!-- SELECCIÓN DE LICENCIATURA -->
       <div class="form-group">
         <label for="licenciatura">Licenciatura:</label>
-        <select id="licenciatura" required onchange="cargarMaterias()">
+        <select id="licenciatura" required onchange="evaluarLicenciatura()">
           <option value="">-- Seleccione Licenciatura --</option>
           <option value="BL">BIOLOGÍA (BL)</option>
           <option value="ES">ESPAÑOL (ES)</option>
@@ -205,9 +209,14 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <!-- GRUPO (ÚNICAMENTE PARA ESPAÑOL, MATEMÁTICAS E INGLÉS) -->
+      <div class="form-group" id="group-container">
         <label for="group">Grupo:</label>
-        <input type="text" id="group" required placeholder="Ej. 101, A, B">
+        <select id="group">
+          <option value="">-- Seleccione Grupo --</option>
+          <option value="A">Grupo A</option>
+          <option value="B">Grupo B</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -250,22 +259,20 @@
     <div class="receipt-box">
       <p><strong>Folio de Registro:</strong> <span id="rec-folio"></span></p>
       <p><strong>Fecha / Hora de Registro:</strong> <span id="rec-date"></span></p>
-      <p><strong>Docente:</strong> <span id="rec-name"></span></p>
+      <p><strong>Docente:</strong> <span id="rec-name"></span> (Clave: <span id="rec-cve-doc"></span>)</p>
 
       <table class="receipt-table">
         <thead>
           <tr>
-            <th>Clave Docente</th>
             <th>Licenciatura</th>
-            <th>Clave y Asignatura</th>
-            <th>Sem/Grupo</th>
+            <th>Asignatura</th>
+            <th>Semestre / Grupo</th>
             <th>Día</th>
             <th>Bloque Horario</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td id="rec-cve-doc"></td>
             <td id="rec-lic"></td>
             <td id="rec-subject"></td>
             <td id="rec-group"></td>
@@ -287,11 +294,9 @@
   </div>
 
   <script>
-    // CARGAR CATÁLOGOS EXTRAÍDOS DE EXCEL
     let docentesData = [];
     let mapaMaterias = {};
 
-    // Cargar catálogos dinámicamente al iniciar
     fetch('catalogos.json')
       .then(response => response.json())
       .then(data => {
@@ -305,15 +310,33 @@
       const selectDoc = document.getElementById('teacher-select');
       selectDoc.innerHTML = '<option value="">-- Seleccione Docente --</option>';
       
-      // Ordenar docentes por nombre
       docentesData.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       docentesData.forEach(d => {
         const option = document.createElement('option');
         option.value = d.clave + '||' + d.nombre;
-        option.textContent = '[' + d.clave + '] ' + d.nombre;
+        // Muestra únicamente el Nombre del Docente
+        option.textContent = d.nombre;
         selectDoc.appendChild(option);
       });
+    }
+
+    function evaluarLicenciatura() {
+      const licCve = document.getElementById('licenciatura').value;
+      const groupContainer = document.getElementById('group-container');
+      const groupSelect = document.getElementById('group');
+
+      // Solo Español (ES), Matemáticas (MT) e Inglés (IN) tienen divisiones A y B
+      if (['ES', 'MT', 'IN'].includes(licCve)) {
+        groupContainer.style.display = 'block';
+        groupSelect.required = true;
+      } else {
+        groupContainer.style.display = 'none';
+        groupSelect.required = false;
+        groupSelect.value = '';
+      }
+
+      cargarMaterias();
     }
 
     function cargarMaterias() {
@@ -352,7 +375,7 @@
       const licText = licSelect.options[licSelect.selectedIndex].text;
       const sem = document.getElementById('semestre').value;
       const subject = document.getElementById('subject').value;
-      const group = document.getElementById('group').value;
+      const groupVal = document.getElementById('group').value;
       const day = document.getElementById('day').value;
       const timeslot = document.getElementById('time-slot').value;
 
@@ -366,7 +389,10 @@
       document.getElementById('rec-name').innerText = nameDoc;
       document.getElementById('rec-lic').innerText = licText;
       document.getElementById('rec-subject').innerText = subject;
-      document.getElementById('rec-group').innerText = sem + '° ' + group;
+      
+      // Mostrar Semestre y Grupo si aplica
+      document.getElementById('rec-group').innerText = groupVal ? sem + '° Semestre (Grupo ' + groupVal + ')' : sem + '° Semestre';
+      
       document.getElementById('rec-day').innerText = day;
       document.getElementById('rec-timeslot').innerText = timeslot;
 
