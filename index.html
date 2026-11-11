@@ -338,7 +338,7 @@
       </table>
 
       <button type="button" class="btn btn-submit" id="btn-finish" onclick="generarComprobanteConsolidado()" disabled>
-        Finalizar y Generar Recibo Consolidado
+        Finalizar y Generar Recibo
       </button>
     </div>
   </div>
@@ -347,7 +347,7 @@
   <div class="container" id="receipt-modal">
     <div class="header">
       <h1>ESCUELA NORMAL SUPERIOR DE MÉXICO</h1>
-      <h2>COMPROBANTE DE RECEPCIÓN DE CARGA HORARIA</h2>
+      <h2>COMPROBANTE DE REGISTRO DE HORARIOS</h2>
     </div>
 
     <div style="border: 2px dashed #a0aec0; padding: 25px; border-radius: 6px; background: #fafafa;">
@@ -377,7 +377,7 @@
       </table>
 
       <p style="font-size: 0.8rem; color: #718096; text-align: center; margin-top: 25px;">
-        Este documento es el comprobante oficial de propuesta de carga horaria consolidada para su validación en la División de Licenciaturas y su posterior captura en el SIG-HO.
+        Este documento NO ES UN COMPROBANTE OFICIAL para su validación en la División de Licenciaturas y su posterior captura en el SIG-HO.
       </p>
     </div>
 
@@ -714,11 +714,7 @@
 async function generarComprobanteConsolidado() {
   const btnFinish = document.getElementById('btn-finish');
   btnFinish.disabled = true;
-  btnFinish.innerText = "Guardando en BD Google Sheets...";
-
-  const folioGenerado = 'ENSM-LIC-' + Math.floor(100000 + Math.random() * 900000);
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('es-MX') + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+  btnFinish.innerText = "Validando y guardando en BD...";
 
   const payloadObj = {
     usuario: {
@@ -729,22 +725,28 @@ async function generarComprobanteConsolidado() {
   };
 
   try {
-    const formData = new URLSearchParams();
-    formData.append("payload", JSON.stringify(payloadObj));
-
-    // Petición no-cors para asegurar que llegue a Sheets sin bloqueos de navegador
-    await fetch(URL_WEB_APP_SHEETS, {
+    // Usamos text/plain para que el navegador nos permita leer el JSON de respuesta sin bloqueos CORS
+    const resp = await fetch(URL_WEB_APP_SHEETS, {
       method: "POST",
-      mode: "no-cors",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "text/plain;charset=utf-8"
       },
-      body: formData.toString()
+      body: JSON.stringify(payloadObj)
     });
+    
+    const resData = await resp.json();
 
-    // Muestra el comprobante en pantalla
-    document.getElementById('rec-folio').innerText = folioGenerado;
-    document.getElementById('rec-date').innerText = dateStr;
+    // SI LA BASE DE DATOS RECHAZA LA CAPTURA POR EMPALME O TOPE DE HORAS
+    if (resData.status === "ERROR") {
+      alert("⚠️ LA BASE DE DATOS RECHAZÓ EL REGISTRO:\n\n" + resData.messages.join("\n\n"));
+      btnFinish.disabled = false;
+      btnFinish.innerText = "Finalizar y Generar Recibo Consolidado";
+      return;
+    }
+
+    // SI LA BD GUARDA EXITOSAMENTE
+    document.getElementById('rec-folio').innerText = resData.folio;
+    document.getElementById('rec-date').innerText = resData.fecha;
     document.getElementById('rec-cve-doc').innerText = usuarioActual.clave;
     document.getElementById('rec-name').innerText = usuarioActual.nombre;
 
@@ -771,12 +773,11 @@ async function generarComprobanteConsolidado() {
     document.getElementById('receipt-modal').style.display = 'block';
 
   } catch (err) {
-    alert("Ocurrió un error al enviar a la base de datos: " + err.message);
+    alert("Ocurrió un error de conexión con Google Sheets: " + err.message);
     btnFinish.disabled = false;
     btnFinish.innerText = "Finalizar y Generar Recibo Consolidado";
   }
 }
-   
   </script>
 </body>
 </html>
