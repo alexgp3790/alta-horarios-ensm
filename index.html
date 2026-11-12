@@ -23,7 +23,10 @@
     <h5 class="mb-0">División de Licenciaturas <span class="badge bg-primary ms-2">LinkAcadémico</span></h5>
     <small class="text-light opacity-75">Sistema Integral de Gestión de Horarios · División de Licenciaturas</small>
   </div>
-  <div id="loaderTop" class="text-warning fw-semibold">Conectando con Base de Datos...</div>
+ <div class="d-flex align-items-center gap-2">
+    <div id="loaderTop" class="text-warning fw-semibold">Conectando con la base de datos</div>
+    <button id="btnSyncManual" type="button" class="btn btn-sm btn-outline-light" title="Sincronizar ahora">↻</button>
+  </div>
 </div>
 
 <div class="container-fluid py-3 px-4">
@@ -312,6 +315,57 @@
       top.className = 'text-danger fw-bold';
     }
   });
+
+  let sincronizando = false;
+
+  async function sincronizarSilencioso() {
+    if (sincronizando || document.hidden) return; // Pausa si la pestaña no está visible
+    sincronizando = true;
+    const top = document.getElementById('loaderTop');
+    const btn = document.getElementById('btnSyncManual');
+    if (btn) btn.disabled = true;
+
+    try {
+      const data = await apiGetInit();
+      DB = data;
+
+      // Actualiza el resumen de carga del docente seleccionado sin borrar sus campos
+      const idDoc = document.getElementById('selectDocente').value;
+      const doc = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
+      if (doc) {
+        const limite = Number(doc.HRS_SEM) || 0;
+        const hrsAsig = DB.asignaciones.filter(a => String(a.ID_DOCENTE).trim() === idDoc).length;
+        const hrsAct = DB.actividades.filter(a => String(a.ID_DOCENTE).trim() === idDoc).reduce((s, x) => s + (Number(x.HORAS) || 0), 0);
+        const total = hrsAsig + hrsAct;
+        const badge = document.getElementById('lblResumenCarga');
+        badge.textContent = `${total} de ${limite} hrs.`;
+        badge.className = `badge fs-6 ${total >= limite && limite > 0 ? 'bg-danger' : 'bg-success'}`;
+      }
+
+      // Recalcula horas registradas de la materia y los semáforos O / X en pantalla
+      const cveMat = document.getElementById('cmbMateria').value;
+      const grupo = document.getElementById('txtGrupoFinal').value;
+      if (cveMat && grupo) {
+        document.getElementById('lblHrsRegMat').textContent =
+          DB.asignaciones.filter(a => a.CVE_MAT === cveMat && a.GRUPO_ID === grupo).length;
+      }
+      evaluarTodosLosBloques();
+
+      const hora = new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      top.textContent = `Conectado (${DB.docentes.length} doc · ${DB.materias.length} mat) · Sync ${hora}`;
+      top.className = 'text-success fw-semibold';
+    } catch (err) {
+      top.textContent = 'Sin conexión (reintentando...)';
+      top.className = 'text-warning fw-semibold';
+    } finally {
+      sincronizando = false;
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  // Ejecuta cada 20 segundos y al dar clic en el botón ↻
+  setInterval(sincronizarSilencioso, 20000);
+  document.getElementById('btnSyncManual').addEventListener('click', sincronizarSilencioso);
 
   function construirGrids() {
     let html = '', htmlCambio = '';
