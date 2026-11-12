@@ -372,7 +372,7 @@
 
   function inicializarApp(data) {
     DB = data;
-    document.getElementById('loaderTop').textContent = `Conectado (${DB.docentes.length} docentes · ${DB.materias.length} materias)`;
+    document.getElementById('loaderTop').textContent = `Conectado`;
     document.getElementById('loaderTop').className = 'text-success fw-semibold';
 
     const optsLic = '<option value="">-- Seleccionar --</option>' +
