@@ -352,7 +352,7 @@
       evaluarTodosLosBloques();
 
       const hora = new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      top.textContent = `· Conectado ·`;
+      top.textContent = ` · Conectado · `;
       top.className = 'text-success fw-semibold';
     } catch (err) {
       top.textContent = 'Sin conexión (reintentando...)';
@@ -426,7 +426,7 @@
 
   function inicializarApp(data) {
     DB = data;
-    document.getElementById('loaderTop').textContent = `Conectado`;
+    document.getElementById('loaderTop').textContent = ` · Conectado · `;
     document.getElementById('loaderTop').className = 'text-success fw-semibold';
 
     const optsLic = '<option value="">-- Seleccionar --</option>' +
