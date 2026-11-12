@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>SIG-HO 2.0 · Gestión de Horarios</title>
+  <title>División de Licenciaturas - Gestión de Horarios</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body { background-color: #f1f5f9; font-family: 'Segoe UI', system-ui, sans-serif; }
@@ -20,7 +20,7 @@
 
 <div class="header-bar d-flex justify-content-between align-items-center">
   <div>
-    <h5 class="mb-0">SIG-HO 2.0 <span class="badge bg-primary ms-2">LinkAcadémico</span></h5>
+    <h5 class="mb-0">División de Licenciaturas <span class="badge bg-primary ms-2">LinkAcadémico</span></h5>
     <small class="text-light opacity-75">Sistema Integral de Gestión de Horarios · División de Licenciaturas</small>
   </div>
   <div id="loaderTop" class="text-warning fw-semibold">Conectando con SIG-HO_BD...</div>
@@ -31,7 +31,7 @@
     <div class="card-body py-3">
       <div class="row g-3 align-items-end">
         <div class="col-md-4">
-          <label class="form-label fw-semibold mb-1">Especialidad / Adscripción</label>
+          <label class="form-label fw-semibold mb-1">Licenciatura de Adscripción</label>
           <select id="filtroEspecialidad" class="form-select"></select>
         </div>
         <div class="col-md-5">
@@ -53,9 +53,9 @@
 
   <ul class="nav nav-tabs mb-3 bg-white rounded-top px-2 pt-2 shadow-sm" role="tablist">
     <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabAsignar">1. Asignar Horario</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabGestionar">2. Modificar / Eliminar</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabGestionar">2. Modificar / Eliminar Horarios</button></li>
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabJornada">3. Jornada y Actividades</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabCatalogos">4. Catálogos (Docentes / Materias)</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabCatalogos">4. Alta / Baja (Docentes / Materias)</button></li>
   </ul>
 
   <div id="alertaGlobal" class="alert d-none" role="alert"></div>
@@ -66,7 +66,7 @@
       <div class="row g-4">
         <div class="col-lg-5">
           <div class="card">
-            <div class="card-header">Configuración de Grupo y Asignatura</div>
+            <div class="card-header">Alta de horario por asignatura</div>
             <div class="card-body">
               <div class="row g-2 mb-3">
                 <div class="col-8">
@@ -110,8 +110,8 @@
                   <label class="form-label fw-semibold">Turno</label>
                   <select id="cmbTurno" class="form-select">
                     <option value="">--</option>
-                    <option value="M">Matutino (M)</option>
-                    <option value="V">Vespertino (V)</option>
+                    <option value="M">Matutino</option>
+                    <option value="V">Vespertino</option>
                   </select>
                 </div>
                 <div class="col-4">
@@ -135,7 +135,7 @@
         <div class="col-lg-7">
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <span>Distribución de Bloques Horarios (Máx. 6 hrs)</span>
+              <span>Distribución de Horario</span>
               <div class="form-check form-switch mb-0">
                 <input class="form-check-input" type="checkbox" id="chkTraslape">
                 <label class="form-check-label small" for="chkTraslape">Permitir horario compartido</label>
@@ -154,7 +154,7 @@
                 <tbody id="tbodyBloques"></tbody>
               </table>
               <div class="d-grid mt-3">
-                <button id="btnGuardar" class="btn btn-primary btn-lg fw-semibold">Registrar Horario en SIG-HO_BD</button>
+                <button id="btnGuardar" class="btn btn-primary btn-lg fw-semibold">Registrar Horario</button>
               </div>
             </div>
           </div>
@@ -204,7 +204,7 @@
         </div>
         <div class="col-md-6">
           <div class="card">
-            <div class="card-header">Actividades Complementarias / Descarga</div>
+            <div class="card-header">Actividades Complementarias</div>
             <div class="card-body" id="contenedorActividades"></div>
           </div>
         </div>
