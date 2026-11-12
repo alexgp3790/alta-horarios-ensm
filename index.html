@@ -274,10 +274,17 @@
   let DB = { licenciaturas: [], docentes: [], materias: [], asignaciones: [], actividades: [], jornadas: [], etiquetas: [] };
   const DIAS = ['', 'LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
   const HORAS = ['', 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
-
+  
   document.addEventListener('DOMContentLoaded', () => {
     construirGrids();
-    google.script.run.withSuccessHandler(inicializarApp).withFailureHandler(err => { const t = document.getElementById('loaderTop'); t.textContent = 'Error: ' + err.message; t.className = 'text-danger fw-bold'; }).obtenerDatosIniciales();
+    google.script.run
+      .withSuccessHandler(inicializarApp)
+      .withFailureHandler(err => {
+        const top = document.getElementById('loaderTop');
+        top.textContent = 'Error: ' + err.message;
+        top.className = 'text-danger fw-bold';
+      })
+      .obtenerDatosIniciales();
   });
 
   function construirGrids() {
