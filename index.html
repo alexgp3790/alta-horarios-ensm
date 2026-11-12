@@ -396,16 +396,72 @@
     htmlJor += `<button id="btnGuardarJornada" class="btn btn-primary w-100 mt-2">Guardar Jornada</button>`;
     document.getElementById('contenedorJornada').innerHTML = htmlJor;
 
-    const acts = ['ASESORÍA DE TITULACIÓN 7° Y 8°', 'TUTORÍA ACADÉMICA', 'INVESTIGACIÓN EDUCATIVA', 'GESTIÓN ACADÉMICA', 'CUERPO ACADÉMICO'];
-    let htmlAct = acts.map((a, idx) => `
+    // Actividades oficiales SIG-HO (Licenciatura y Posgrado)
+    const ACTS_CONFIG = [
+      { id: 'lic_0', nivel: 'LICENCIATURA', nombre: 'F. académicas específicas', hasAses: false },
+      { id: 'lic_1', nivel: 'LICENCIATURA', nombre: 'Inv. con Rec. Institucional', hasAses: false },
+      { id: 'lic_2', nivel: 'LICENCIATURA', nombre: 'Superación Académica', hasAses: false },
+      { id: 'lic_3', nivel: 'LICENCIATURA', nombre: 'Asesoría 7° y 8°', hasAses: true },
+      { id: 'lic_4', nivel: 'LICENCIATURA', nombre: 'Vinc. y Rep. Interinstitucional', hasAses: false },
+      { id: 'lic_5', nivel: 'LICENCIATURA', nombre: 'Gest. y Rep. Institucional', hasAses: false },
+      { id: 'lic_6', nivel: 'LICENCIATURA', nombre: 'Difusión de la cultura', hasAses: false },
+      { id: 'lic_7', nivel: 'LICENCIATURA', nombre: 'Coord., Jefatura o Act. Directivas', hasAses: false },
+      { id: 'pos_0', nivel: 'POSGRADO', nombre: 'Tutoría o Dirección de Tesis', hasAses: false },
+      { id: 'pos_1', nivel: 'POSGRADO', nombre: 'Actividades de Posgrado', hasAses: false },
+      { id: 'pos_2', nivel: 'POSGRADO', nombre: 'Coord. o Jefatura de Posgrado', hasAses: false }
+    ];
+    window.ACTS_CONFIG = ACTS_CONFIG;
+
+    const renderFilaAct = (item) => `
       <div class="row g-2 align-items-center mb-2">
-        <div class="col-7"><div class="form-check"><input class="form-check-input act-chk" type="checkbox" id="achk_${idx}" value="${a}"><label class="form-check-label small" for="achk_${idx}">${a}</label></div></div>
-        <div class="col-3"><input type="number" id="ahrs_${idx}" class="form-control form-control-sm" placeholder="Hrs"></div>
-        <div class="col-2">${idx === 0 ? '<input type="number" id="aases" class="form-control form-control-sm" placeholder="Alum">' : ''}</div>
-      </div>`).join('');
-    htmlAct += `<button id="btnGuardarAct" class="btn btn-primary w-100 mt-2">Guardar Actividades</button>`;
+        <div class="${item.hasAses ? 'col-6' : 'col-9'}">
+          <div class="form-check">
+            <input class="form-check-input act-chk act-ctrl" type="checkbox" id="achk_${item.id}" data-id="${item.id}" disabled>
+            <label class="form-check-label small" for="achk_${item.id}">${item.nombre}</label>
+          </div>
+        </div>
+        ${item.hasAses ? `
+        <div class="col-3">
+          <input type="number" id="aases_${item.id}" class="form-control form-control-sm act-ctrl" placeholder="# Asesorados" min="0" disabled>
+        </div>` : ''}
+        <div class="col-3">
+          <input type="number" id="ahrs_${item.id}" class="form-control form-control-sm act-ctrl" placeholder="Hrs" min="0" disabled>
+        </div>
+      </div>`;
+
+    const licHtml = ACTS_CONFIG.filter(x => x.nivel === 'LICENCIATURA').map(renderFilaAct).join('');
+    const posHtml = ACTS_CONFIG.filter(x => x.nivel === 'POSGRADO').map(renderFilaAct).join('');
+
+    const htmlAct = `
+      <div class="row g-3">
+        <div class="col-md-7">
+          <div class="border rounded p-2 bg-light h-100">
+            <div class="fw-semibold small text-primary border-bottom pb-1 mb-2">Licenciatura</div>
+            ${licHtml}
+          </div>
+        </div>
+        <div class="col-md-5 d-flex flex-column justify-content-between">
+          <div class="border rounded p-2 bg-light mb-3">
+            <div class="fw-semibold small text-primary border-bottom pb-1 mb-2">Posgrado</div>
+            ${posHtml}
+          </div>
+          <div>
+            <div class="form-check form-switch mb-2">
+              <input class="form-check-input" type="checkbox" id="chkHabilitarAct">
+              <label class="form-check-label fw-semibold small" for="chkHabilitarAct">Registrar / Modificar Actividades</label>
+            </div>
+            <button id="btnGuardarAct" class="btn btn-primary w-100" disabled>Registrar Actividades</button>
+          </div>
+        </div>
+      </div>`;
+
     document.getElementById('contenedorActividades').innerHTML = htmlAct;
 
+    document.getElementById('chkHabilitarAct').addEventListener('change', e => {
+      const activo = e.target.checked;
+      document.querySelectorAll('.act-ctrl').forEach(el => el.disabled = !activo);
+      document.getElementById('btnGuardarAct').disabled = !activo;
+    });
     document.querySelectorAll('.bloque-ctrl').forEach(el => {
       el.addEventListener('change', e => {
         const idx = Number(e.target.dataset.idx);
@@ -485,12 +541,34 @@
     document.getElementById('cmbGrupoDocente').innerHTML = '<option value="">-- Grupo --</option>' + grupos.map(g => `<option value="${g}">${g}</option>`).join('');
     document.getElementById('cmbAsignaturaDocente').innerHTML = '';
 
+    
+
     ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'].forEach(d => {
       const reg = DB.jornadas.find(j => String(j.ID_DOCENTE) === idDoc && String(j.DIA).toUpperCase() === d);
       document.getElementById(`jchk_${d}`).checked = !!reg;
       document.getElementById(`jde_${d}`).value = reg ? reg.HORA_INICIO : '';
       document.getElementById(`ja_${d}`).value = reg ? reg.HORA_FIN : '';
     });
+
+    // Cargar Actividades guardadas del Docente en Tab 3
+    const chkHab = document.getElementById('chkHabilitarAct');
+    if (chkHab) {
+      chkHab.checked = false;
+      document.querySelectorAll('.act-ctrl').forEach(el => el.disabled = true);
+      document.getElementById('btnGuardarAct').disabled = true;
+
+      (window.ACTS_CONFIG || []).forEach(item => {
+        const regAct = DB.actividades.find(a =>
+          String(a.ID_DOCENTE).trim() === idDoc &&
+          String(a.ACTIVIDAD || a.NOMBRE || '').trim().toUpperCase() === item.nombre.toUpperCase()
+        );
+        document.getElementById(`achk_${item.id}`).checked = !!regAct;
+        document.getElementById(`ahrs_${item.id}`).value = regAct ? (regAct.HORAS || '') : '';
+        if (item.hasAses) {
+          document.getElementById(`aases_${item.id}`).value = regAct ? (regAct.ASESORADOS || '') : '';
+        }
+      });
+    }
 
     evaluarTodosLosBloques();
   }
@@ -709,25 +787,39 @@
     procesarRespuesta(res);
   }
 
-  async function onGuardarActividades() {
+async function onGuardarActividades() {
     const idDoc = document.getElementById('selectDocente').value;
     if (!idDoc) return mostrarAlerta('Selecciona un docente.', 'warning');
-    const doc = DB.docentes.find(d => d.CVE_DOC === idDoc);
+    const doc = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
+
     const lista = [];
-    document.querySelectorAll('.act-chk').forEach((chk, idx) => {
-      if (chk.checked) {
+    (window.ACTS_CONFIG || []).forEach(item => {
+      const chk = document.getElementById(`achk_${item.id}`);
+      if (chk && chk.checked) {
+        const hrs = Number(document.getElementById(`ahrs_${item.id}`).value) || 0;
+        const ases = item.hasAses ? (Number(document.getElementById(`aases_${item.id}`).value) || 0) : 0;
         lista.push({
-          nombre: chk.value,
-          horas: document.getElementById(`ahrs_${idx}`).value,
-          nivel: 'LICENCIATURA',
-          asesorados: idx === 0 ? document.getElementById('aases').value : 0
+          nombre: item.nombre,
+          horas: hrs,
+          nivel: item.nivel,
+          asesorados: ases
         });
       }
     });
-    const res = await apiPost('guardarActividadesDocente', { idDocente: idDoc, licenciatura: doc ? doc.CVE_LIC : '', lista });
-    procesarRespuesta(res);
-  }
 
+    const btn = document.getElementById('btnGuardarAct');
+    btn.disabled = true; btn.textContent = 'Guardando...';
+    try {
+      const res = await apiPost('guardarActividadesDocente', {
+        idDocente: idDoc,
+        licenciatura: doc ? doc.CVE_LIC : '',
+        lista
+      });
+      procesarRespuesta(res);
+    } finally {
+      btn.textContent = 'Registrar Actividades';
+    }
+  }
   function limpiarFormularioDocente() {
     document.getElementById('selEditarDocente').value = '';
     document.getElementById('tituloCardDocente').textContent = 'Registrar Nuevo Docente';
