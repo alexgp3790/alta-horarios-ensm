@@ -352,7 +352,7 @@
       evaluarTodosLosBloques();
 
       const hora = new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      top.textContent = `Conectado (${DB.docentes.length} doc · ${DB.materias.length} mat) · Sync ${hora}`;
+      top.textContent = `Conectado · Ultima Sincronización · Sync ${hora}`;
       top.className = 'text-success fw-semibold';
     } catch (err) {
       top.textContent = 'Sin conexión (reintentando...)';
