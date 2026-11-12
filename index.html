@@ -65,25 +65,39 @@
     <div class="tab-pane fade show active" id="tabAsignar">
       <div class="row g-4">
         <div class="col-lg-5">
-          <div class="card">
-            <div class="card-header">Configuración de Grupo y Asignatura</div>
+  <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span id="tituloCardDocente">Registrar Nuevo Docente</span>
+              <span id="badgeClaveDoc" class="badge bg-secondary d-none"></span>
+            </div>
             <div class="card-body">
-              <div class="row g-2 mb-3">
-                <div class="col-8">
-                  <label class="form-label fw-semibold">Licenciatura</label>
-                  <select id="cmbLicMateria" class="form-select"></select>
+              <div class="mb-3">
+                <label class="form-label fw-semibold small mb-1">Seleccionar Docente para Editar (o dejar vacío para Alta Nueva)</label>
+                <select id="selEditarDocente" class="form-select form-select-sm"></select>
+              </div>
+              <div class="row g-2">
+                <div class="col-md-4"><input id="docNom" class="form-control" placeholder="Nombre(s)"></div>
+                <div class="col-md-4"><input id="docPat" class="form-control" placeholder="Apellido Paterno"></div>
+                <div class="col-md-4"><input id="docMat" class="form-control" placeholder="Apellido Materno"></div>
+                <div class="col-md-6"><input id="docCorreo" class="form-control" placeholder="Correo institucional"></div>
+                <div class="col-md-3"><input id="docHoras" type="number" class="form-control" placeholder="Hrs Sem"></div>
+                <div class="col-md-3">
+                  <select id="docSexo" class="form-select"><option value="FEMENINO">FEMENINO</option><option value="MASCULINO">MASCULINO</option></select>
                 </div>
-                <div class="col-4">
-                  <label class="form-label fw-semibold">Semestre</label>
-                  <select id="cmbSemestre" class="form-select">
-                    <option value="">--</option>
-                    <option value="1">1°</option><option value="2">2°</option>
-                    <option value="3">3°</option><option value="4">4°</option>
-                    <option value="5">5°</option><option value="6">6°</option>
-                    <option value="7">7°</option><option value="8">8°</option>
-                  </select>
+                <div class="col-md-6"><select id="docLic" class="form-select"></select></div>
+                <div class="col-md-3">
+                  <select id="docTurno" class="form-select"><option value="MATUTINO">MATUTINO</option><option value="VESPERTINO">VESPERTINO</option></select>
+                </div>
+                <div class="col-md-3">
+                  <select id="docCoor" class="form-select"><option value="NO">Coord: NO</option><option value="SI">Coord: SI</option></select>
                 </div>
               </div>
+              <div class="d-flex gap-2 mt-3">
+                <button id="btnNuevoDoc" class="btn btn-success flex-grow-1">Guardar Docente</button>
+                <button id="btnLimpiarDoc" type="button" class="btn btn-outline-secondary d-none">Cancelar Edición</button>
+              </div>
+            </div>
+          </div>
 
               <div class="mb-3">
                 <label class="form-label fw-semibold d-block">Modalidad de Grupo</label>
@@ -361,7 +375,7 @@
     document.getElementById('btnGuardarAct').addEventListener('click', onGuardarActividades);
   }
 
-  function inicializarApp(data) {
+function inicializarApp(data) {
     DB = data;
     document.getElementById('loaderTop').textContent = `Conectado (${DB.docentes.length} docentes · ${DB.materias.length} materias)`;
     document.getElementById('loaderTop').className = 'text-success fw-semibold';
@@ -370,10 +384,17 @@
       DB.licenciaturas.map(l => `<option value="${l.NOM_LIC}">${l.NOM_LIC}</option>`).join('');
     ['filtroEspecialidad', 'cmbLicMateria', 'docLic', 'matLic'].forEach(id => document.getElementById(id).innerHTML = optsLic);
 
+    const listaOrdenadaDocs = [...DB.docentes].sort((a,b) =>
+      `${a.AP_PATD} ${a.AP_MATD} ${a.NOM_DOC}`.localeCompare(`${b.AP_PATD} ${b.AP_MATD} ${b.NOM_DOC}`)
+    );
+
     const optsDocs = '<option value="">-- Mantener Docente Actual --</option>' +
-      [...DB.docentes].sort((a,b) => `${a.AP_PATD} ${a.AP_MATD} ${a.NOM_DOC}`.localeCompare(`${b.AP_PATD} ${b.AP_MATD} ${b.NOM_DOC}`))
-      .map(d => `<option value="${d.CVE_DOC}">${d.AP_PATD} ${d.AP_MATD} ${d.NOM_DOC}</option>`).join('');
+      listaOrdenadaDocs.map(d => `<option value="${d.CVE_DOC}">${d.AP_PATD} ${d.AP_MATD} ${d.NOM_DOC}</option>`).join('');
     document.getElementById('cmbNuevoDocente').innerHTML = optsDocs;
+
+    document.getElementById('selEditarDocente').innerHTML =
+      '<option value="">+ Nuevo Docente (Alta en catálogo)</option>' +
+      listaOrdenadaDocs.map(d => `<option value="${d.CVE_DOC}">${d.AP_PATD} ${d.AP_MATD} ${d.NOM_DOC} (${d.CVE_DOC})</option>`).join('');
 
     filtrarDocentes();
   }
@@ -708,6 +729,74 @@
     box.textContent = texto;
     setTimeout(() => box.classList.add('d-none'), 6000);
   }
+
+
+  function limpiarFormularioDocente() {
+    document.getElementById('selEditarDocente').value = '';
+    document.getElementById('tituloCardDocente').textContent = 'Registrar Nuevo Docente';
+    const badge = document.getElementById('badgeClaveDoc');
+    badge.textContent = ''; badge.classList.add('d-none');
+    ['docNom', 'docPat', 'docMat', 'docCorreo', 'docHoras'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('docSexo').value = 'FEMENINO';
+    document.getElementById('docLic').value = '';
+    document.getElementById('docTurno').value = 'MATUTINO';
+    document.getElementById('docCoor').value = 'NO';
+    const btn = document.getElementById('btnNuevoDoc');
+    btn.textContent = 'Guardar Docente';
+    btn.className = 'btn btn-success flex-grow-1';
+    document.getElementById('btnLimpiarDoc').classList.add('d-none');
+  }
+
+  document.getElementById('selEditarDocente').addEventListener('change', e => {
+    const cve = e.target.value;
+    if (!cve) return limpiarFormularioDocente();
+    const d = DB.docentes.find(x => String(x.CVE_DOC).trim() === cve);
+    if (!d) return;
+
+    document.getElementById('tituloCardDocente').textContent = 'Editar Docente Existente';
+    const badge = document.getElementById('badgeClaveDoc');
+    badge.textContent = d.CVE_DOC; badge.classList.remove('d-none');
+
+    document.getElementById('docNom').value = d.NOM_DOC || '';
+    document.getElementById('docPat').value = d.AP_PATD || '';
+    document.getElementById('docMat').value = d.AP_MATD || '';
+    document.getElementById('docCorreo').value = d.CORREO || '';
+    document.getElementById('docHoras').value = d.HRS_SEM || '';
+    document.getElementById('docSexo').value = String(d.SEXO || 'FEMENINO').toUpperCase();
+    document.getElementById('docLic').value = d.CVE_LIC || '';
+    document.getElementById('docTurno').value = String(d.TURNO_ADS || 'MATUTINO').toUpperCase();
+    document.getElementById('docCoor').value = String(d.COOR || 'NO').toUpperCase();
+
+    const btn = document.getElementById('btnNuevoDoc');
+    btn.textContent = 'Actualizar Datos del Docente';
+    btn.className = 'btn btn-warning fw-semibold flex-grow-1';
+    document.getElementById('btnLimpiarDoc').classList.remove('d-none');
+  });
+
+  document.getElementById('btnLimpiarDoc').addEventListener('click', limpiarFormularioDocente);
+
+  document.getElementById('btnNuevoDoc').addEventListener('click', async () => {
+    const cveEdit = document.getElementById('selEditarDocente').value;
+    const payload = {
+      modo: cveEdit ? 'EDITAR' : 'NUEVO',
+      cveDoc: cveEdit,
+      nom: document.getElementById('docNom').value,
+      pat: document.getElementById('docPat').value,
+      mat: document.getElementById('docMat').value,
+      correo: document.getElementById('docCorreo').value,
+      horas: document.getElementById('docHoras').value,
+      sexo: document.getElementById('docSexo').value,
+      lic: document.getElementById('docLic').value,
+      turno: document.getElementById('docTurno').value,
+      coor: document.getElementById('docCoor').value
+    };
+    if (!payload.nom || !payload.pat) return mostrarAlerta('Ingresa al menos Nombre y Apellido Paterno.', 'warning');
+    const res = await apiPost('guardarDocente', payload);
+    procesarRespuesta(res, () => {
+      inicializarApp(DB);
+      limpiarFormularioDocente();
+    });
+  });
 </script>
 </body>
 </html>
