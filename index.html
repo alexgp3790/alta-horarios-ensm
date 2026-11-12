@@ -678,9 +678,55 @@ function inicializarApp(data) {
     const res = await apiPost('guardarActividadesDocente', { idDocente: idDoc, licenciatura: doc ? doc.CVE_LIC : '', lista });
     procesarRespuesta(res);
   }
+function limpiarFormularioDocente() {
+    document.getElementById('selEditarDocente').value = '';
+    document.getElementById('tituloCardDocente').textContent = 'Registrar Nuevo Docente';
+    const badge = document.getElementById('badgeClaveDoc');
+    badge.textContent = ''; badge.classList.add('d-none');
+    ['docNom', 'docPat', 'docMat', 'docCorreo', 'docHoras'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('docSexo').value = 'FEMENINO';
+    document.getElementById('docLic').value = '';
+    document.getElementById('docTurno').value = 'MATUTINO';
+    document.getElementById('docCoor').value = 'NO';
+    const btn = document.getElementById('btnNuevoDoc');
+    btn.textContent = 'Guardar Docente';
+    btn.className = 'btn btn-success flex-grow-1';
+    document.getElementById('btnLimpiarDoc').classList.add('d-none');
+  }
+
+  document.getElementById('selEditarDocente').addEventListener('change', e => {
+    const cve = e.target.value;
+    if (!cve) return limpiarFormularioDocente();
+    const d = DB.docentes.find(x => String(x.CVE_DOC).trim() === cve);
+    if (!d) return;
+
+    document.getElementById('tituloCardDocente').textContent = 'Editar Docente Existente';
+    const badge = document.getElementById('badgeClaveDoc');
+    badge.textContent = d.CVE_DOC; badge.classList.remove('d-none');
+
+    document.getElementById('docNom').value = d.NOM_DOC || '';
+    document.getElementById('docPat').value = d.AP_PATD || '';
+    document.getElementById('docMat').value = d.AP_MATD || '';
+    document.getElementById('docCorreo').value = d.COR_INSTD || '';
+    document.getElementById('docHoras').value = d.HRS_SEM || '';
+    document.getElementById('docSexo').value = String(d.SEXO || 'FEMENINO').toUpperCase();
+    document.getElementById('docLic').value = d.CVE_LIC || '';
+    document.getElementById('docTurno').value = String(d.TURNO_ADS || 'MATUTINO').toUpperCase();
+    document.getElementById('docCoor').value = String(d.ES_COORDINADOR || 'NO').toUpperCase();
+
+    const btn = document.getElementById('btnNuevoDoc');
+    btn.textContent = 'Actualizar Datos del Docente';
+    btn.className = 'btn btn-warning fw-semibold flex-grow-1';
+    document.getElementById('btnLimpiarDoc').classList.remove('d-none');
+  });
+
+  document.getElementById('btnLimpiarDoc').addEventListener('click', limpiarFormularioDocente);
 
   document.getElementById('btnNuevoDoc').addEventListener('click', async () => {
+    const cveEdit = document.getElementById('selEditarDocente').value;
     const payload = {
+      modo: cveEdit ? 'EDITAR' : 'NUEVO',
+      cveDoc: cveEdit,
       nom: document.getElementById('docNom').value,
       pat: document.getElementById('docPat').value,
       mat: document.getElementById('docMat').value,
@@ -693,7 +739,10 @@ function inicializarApp(data) {
     };
     if (!payload.nom || !payload.pat) return mostrarAlerta('Ingresa al menos Nombre y Apellido Paterno.', 'warning');
     const res = await apiPost('guardarDocente', payload);
-    procesarRespuesta(res);
+    procesarRespuesta(res, () => {
+      inicializarApp(DB);
+      limpiarFormularioDocente();
+    });
   });
 
   document.getElementById('btnNuevaMat').addEventListener('click', async () => {
@@ -731,72 +780,7 @@ function inicializarApp(data) {
   }
 
 
-  function limpiarFormularioDocente() {
-    document.getElementById('selEditarDocente').value = '';
-    document.getElementById('tituloCardDocente').textContent = 'Registrar Nuevo Docente';
-    const badge = document.getElementById('badgeClaveDoc');
-    badge.textContent = ''; badge.classList.add('d-none');
-    ['docNom', 'docPat', 'docMat', 'docCorreo', 'docHoras'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('docSexo').value = 'FEMENINO';
-    document.getElementById('docLic').value = '';
-    document.getElementById('docTurno').value = 'MATUTINO';
-    document.getElementById('docCoor').value = 'NO';
-    const btn = document.getElementById('btnNuevoDoc');
-    btn.textContent = 'Guardar Docente';
-    btn.className = 'btn btn-success flex-grow-1';
-    document.getElementById('btnLimpiarDoc').classList.add('d-none');
-  }
 
-  document.getElementById('selEditarDocente').addEventListener('change', e => {
-    const cve = e.target.value;
-    if (!cve) return limpiarFormularioDocente();
-    const d = DB.docentes.find(x => String(x.CVE_DOC).trim() === cve);
-    if (!d) return;
-
-    document.getElementById('tituloCardDocente').textContent = 'Editar Docente Existente';
-    const badge = document.getElementById('badgeClaveDoc');
-    badge.textContent = d.CVE_DOC; badge.classList.remove('d-none');
-
-    document.getElementById('docNom').value = d.NOM_DOC || '';
-    document.getElementById('docPat').value = d.AP_PATD || '';
-    document.getElementById('docMat').value = d.AP_MATD || '';
-    document.getElementById('docCorreo').value = d.CORREO || '';
-    document.getElementById('docHoras').value = d.HRS_SEM || '';
-    document.getElementById('docSexo').value = String(d.SEXO || 'FEMENINO').toUpperCase();
-    document.getElementById('docLic').value = d.CVE_LIC || '';
-    document.getElementById('docTurno').value = String(d.TURNO_ADS || 'MATUTINO').toUpperCase();
-    document.getElementById('docCoor').value = String(d.COOR || 'NO').toUpperCase();
-
-    const btn = document.getElementById('btnNuevoDoc');
-    btn.textContent = 'Actualizar Datos del Docente';
-    btn.className = 'btn btn-warning fw-semibold flex-grow-1';
-    document.getElementById('btnLimpiarDoc').classList.remove('d-none');
-  });
-
-  document.getElementById('btnLimpiarDoc').addEventListener('click', limpiarFormularioDocente);
-
-  document.getElementById('btnNuevoDoc').addEventListener('click', async () => {
-    const cveEdit = document.getElementById('selEditarDocente').value;
-    const payload = {
-      modo: cveEdit ? 'EDITAR' : 'NUEVO',
-      cveDoc: cveEdit,
-      nom: document.getElementById('docNom').value,
-      pat: document.getElementById('docPat').value,
-      mat: document.getElementById('docMat').value,
-      correo: document.getElementById('docCorreo').value,
-      horas: document.getElementById('docHoras').value,
-      sexo: document.getElementById('docSexo').value,
-      lic: document.getElementById('docLic').value,
-      turno: document.getElementById('docTurno').value,
-      coor: document.getElementById('docCoor').value
-    };
-    if (!payload.nom || !payload.pat) return mostrarAlerta('Ingresa al menos Nombre y Apellido Paterno.', 'warning');
-    const res = await apiPost('guardarDocente', payload);
-    procesarRespuesta(res, () => {
-      inicializarApp(DB);
-      limpiarFormularioDocente();
-    });
-  });
 </script>
 </body>
 </html>
