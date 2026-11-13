@@ -205,6 +205,13 @@
             <div class="card-body" id="contenedorJornada"></div>
           </div>
         </div>
+        <div class="card mt-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Etiquetas Especiales en Horario</span>
+          <span class="badge bg-info text-dark">No suma a carga horaria</span>
+        </div>
+        <div class="card-body" id="contenedorEtiquetas"></div>
+      </div>
         <div class="col-md-6">
           <div class="card">
             <div class="card-header">Actividades Complementarias</div>
@@ -478,6 +485,40 @@
 
     document.getElementById('btnGuardarJornada').addEventListener('click', onGuardarJornada);
     document.getElementById('btnGuardarAct').addEventListener('click', onGuardarActividades);
+
+    // Grid de 6 renglones para Etiquetas Especiales (BD_ETIQUETAS)
+    let htmlEtiq = `
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-2">
+          <thead class="table-light">
+            <tr>
+              <th style="width:65px;">#</th>
+              <th style="width:190px;">Día</th>
+              <th style="width:130px;">De</th>
+              <th style="width:130px;">A:</th>
+              <th>Etiqueta</th>
+            </tr>
+          </thead>
+          <tbody>`;
+    for (let i = 1; i <= 6; i++) {
+      htmlEtiq += `
+            <tr>
+              <td class="fw-bold text-secondary">Fila ${i}</td>
+              <td><select id="edia_${i}" class="form-select form-select-sm">${DIAS.map(d => `<option value="${d}">${d || '-- Día --'}</option>`).join('')}</select></td>
+              <td><select id="ede_${i}" class="form-select form-select-sm">${HORAS.map(h => `<option value="${h}">${h ? h + ':00' : '--'}</option>`).join('')}</select></td>
+              <td><select id="ea_${i}" class="form-select form-select-sm">${HORAS.map(h => `<option value="${h}">${h ? h + ':00' : '--'}</option>`).join('')}</select></td>
+              <td><input type="text" id="etxt_${i}" class="form-control form-control-sm text-uppercase" placeholder="Ej. COMISIÓN ACADÉMICA / REUNIÓN DE ACADEMIA"></td>
+            </tr>`;
+    }
+    htmlEtiq += `
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button id="btnGuardarEtiquetas" class="btn btn-primary">Registrar Etiquetas</button>
+      </div>`;
+    document.getElementById('contenedorEtiquetas').innerHTML = htmlEtiq;
+    document.getElementById('btnGuardarEtiquetas').addEventListener('click', onGuardarEtiquetas);
   }
 
   function inicializarApp(data) {
@@ -569,7 +610,36 @@
         }
       });
     }
+// Cargar Etiquetas Especiales agrupando horas continuas por Día|Etiqueta
+    for (let i = 1; i <= 6; i++) {
+      document.getElementById(`edia_${i}`).value = '';
+      document.getElementById(`ede_${i}`).value = '';
+      document.getElementById(`ea_${i}`).value = '';
+      document.getElementById(`etxt_${i}`).value = '';
+    }
+    const mapaEtiq = {};
+    (DB.etiquetas || [])
+      .filter(e => String(e.ID_DOCENTE).trim() === idDoc)
+      .forEach(e => {
+        const d = String(e.DIA || '').trim().toUpperCase();
+        const et = String(e.ETIQUETA || '').trim().toUpperCase();
+        const h = Number(e.HORA) || 0;
+        if (!d || !et || !h) return;
+        const key = `${d}|${et}`;
+        if (!mapaEtiq[key]) mapaEtiq[key] = { dia: d, etiqueta: et, minH: h, maxH: h };
+        else {
+          if (h < mapaEtiq[key].minH) mapaEtiq[key].minH = h;
+          if (h > mapaEtiq[key].maxH) mapaEtiq[key].maxH = h;
+        }
+      });
 
+    Object.values(mapaEtiq).slice(0, 6).forEach((item, idx) => {
+      const r = idx + 1;
+      document.getElementById(`edia_${r}`).value = item.dia;
+      document.getElementById(`ede_${r}`).value = String(item.minH);
+      document.getElementById(`ea_${r}`).value = String(item.maxH + 1);
+      document.getElementById(`etxt_${r}`).value = item.etiqueta;
+    });
     evaluarTodosLosBloques();
   }
 
@@ -919,6 +989,38 @@ async function onGuardarActividades() {
     box.className = `alert alert-${tipo}`;
     box.textContent = texto;
     setTimeout(() => box.classList.add('d-none'), 6000);
+  }
+
+  async function onGuardarEtiquetas() {
+    const idDoc = document.getElementById('selectDocente').value;
+    if (!idDoc) return mostrarAlerta('Selecciona un docente activo.', 'warning');
+
+    const renglones = [];
+    for (let i = 1; i <= 6; i++) {
+      const dia = document.getElementById(`edia_${i}`).value;
+      const inicio = Number(document.getElementById(`ede_${i}`).value) || 0;
+      const fin = Number(document.getElementById(`ea_${i}`).value) || 0;
+      const etiqueta = document.getElementById(`etxt_${i}`).value.trim();
+
+      if (dia || inicio || fin || etiqueta) {
+        if (!dia || !inicio || !fin || !etiqueta) {
+          return mostrarAlerta(`Completa todos los campos de la Fila ${i} en Etiquetas Especiales.`, 'warning');
+        }
+        if (fin <= inicio) {
+          return mostrarAlerta(`En la Fila ${i}, la hora "A:" debe ser mayor que "De".`, 'warning');
+        }
+        renglones.push({ dia, inicio, fin, etiqueta });
+      }
+    }
+
+    const btn = document.getElementById('btnGuardarEtiquetas');
+    btn.disabled = true; btn.textContent = 'Guardando...';
+    try {
+      const res = await apiPost('guardarEtiquetasDocente', { idDocente: idDoc, renglones });
+      procesarRespuesta(res);
+    } finally {
+      btn.disabled = false; btn.textContent = 'Registrar Etiquetas';
+    }
   }
 </script>
 </body>
