@@ -592,21 +592,25 @@
     });
 
     // Cargar Actividades guardadas del Docente en Tab 3
+// Cargar Actividades guardadas del Docente en Tab 3
     const chkHab = document.getElementById('chkHabilitarAct');
     if (chkHab) {
       chkHab.checked = false;
       document.querySelectorAll('.act-ctrl').forEach(el => el.disabled = true);
       document.getElementById('btnGuardarAct').disabled = true;
 
+      const actsDoc = DB.actividades.filter(a => String(a.ID_DOCENTE).trim() === idDoc);
+
       (window.ACTS_CONFIG || []).forEach(item => {
-        const regAct = DB.actividades.find(a =>
-          String(a.ID_DOCENTE).trim() === idDoc &&
-          String(a.ACTIVIDAD || a.NOMBRE || '').trim().toUpperCase() === item.nombre.toUpperCase()
+        const objetivo = item.nombre.toUpperCase();
+        // Busca coincidencia en cualquier columna de texto del registro
+        const regAct = actsDoc.find(a =>
+          Object.values(a).some(val => String(val || '').trim().toUpperCase() === objetivo)
         );
         document.getElementById(`achk_${item.id}`).checked = !!regAct;
-        document.getElementById(`ahrs_${item.id}`).value = regAct ? (regAct.HORAS || '') : '';
+        document.getElementById(`ahrs_${item.id}`).value = regAct ? (regAct.HORAS || regAct.HRS || '') : '';
         if (item.hasAses) {
-          document.getElementById(`aases_${item.id}`).value = regAct ? (regAct.ASESORADOS || '') : '';
+          document.getElementById(`aases_${item.id}`).value = regAct ? (regAct.ASESORADOS || regAct.NUM_ASESORADOS || '') : '';
         }
       });
     }
