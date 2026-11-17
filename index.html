@@ -14,6 +14,44 @@
     .status-ok { color: #16a34a; }
     .status-err { color: #dc2626; }
     .nav-tabs .nav-link.active { font-weight: 600; color: #1d4ed8; border-bottom: 3px solid #1d4ed8; }
+    /* === ESTILOS DE IMPRESIÓN DE FORMATOS (CARTA VERTICAL) === */
+    .hoja-carta {
+      width: 21.59cm;
+      min-height: 27.94cm;
+      background: #fff;
+      margin: 0 auto 24px auto;
+      padding: 0.7cm 0.9cm;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+      color: #000;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 9pt;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .hoja-carta table { width: 100%; border-collapse: collapse; }
+    .hoja-carta th, .hoja-carta td { border: 1px solid #000; padding: 2px 4px; line-height: 1.15; }
+    .bg-gris-inst { background-color: #d9d9d9 !important; font-weight: bold; }
+    .celda-jornada { background-color: #a6a6a6 !important; }
+    .tabla-sin-borde td { border: none !important; padding: 1px 3px; }
+    @media print {
+      @page { size: letter portrait; margin: 0.4cm; }
+      body { background: #fff !important; margin: 0; padding: 0; }
+      .no-print { display: none !important; }
+      .container-fluid, .tab-content, .tab-pane { padding: 0 !important; margin: 0 !important; width: 100% !important; }
+      .hoja-carta {
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0.3cm 0.5cm !important;
+        width: 100% !important;
+        min-height: 26.8cm !important;
+        page-break-after: always;
+        break-after: page;
+      }
+      .hoja-carta:last-child { page-break-after: auto; break-after: auto; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
   </style>
 </head>
 <body>
@@ -29,7 +67,7 @@
   </div>
 </div>
 
-<div class="container-fluid py-3 px-4">
+<div class="header-bar d-flex justify-content-between align-items-center no-print">
   <div class="card mb-3">
     <div class="card-body py-3">
       <div class="row g-3 align-items-end">
@@ -54,11 +92,12 @@
     </div>
   </div>
 
-  <ul class="nav nav-tabs mb-3 bg-white rounded-top px-2 pt-2 shadow-sm" role="tablist">
+  <ul class="nav nav-tabs mb-3 bg-white rounded-top px-2 pt-2 shadow-sm no-print" role="tablist">
     <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabAsignar">1. Asignar Horario</button></li>
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabGestionar">2. Modificar / Eliminar Horarios</button></li>
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabJornada">3. Jornada y Actividades</button></li>
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabCatalogos">4. Alta / Baja (Docentes / Materias)</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabFormatos">5. Impresión de Formatos</button></li>
   </ul>
 
   <div id="alertaGlobal" class="alert d-none" role="alert"></div>
@@ -131,6 +170,48 @@
                 <span>Horas semanales: <strong id="lblHrsMat">0</strong></span>
                 <span>Registradas en grupo: <strong id="lblHrsRegMat">0</strong></span>
               </div>
+              <!-- TAB 5: IMPRESIÓN DE FORMATOS -->
+    <div class="tab-pane fade" id="tabFormatos">
+      <div class="card mb-3 no-print">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Centro de Impresión de Formatos Oficiales</span>
+          <span class="badge bg-primary">Formato Tamaño Carta</span>
+        </div>
+        <div class="card-body">
+          <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+              <label class="form-label fw-semibold small mb-1">Tipo de Formato</label>
+              <select id="selTipoFormato" class="form-select">
+                <option value="INDIVIDUAL">Horario Individual Docente</option>
+                <option value="MASIVO_LIC">Horario Individual (Masivo por Licenciatura)</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold small mb-1">Subtítulo Semestres</label>
+              <input type="text" id="fmtSubtitulo" class="form-control" value="1° A 5° SEMESTRES">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Periodo / Semestre</label>
+              <input type="text" id="fmtSemestre" class="form-control" value="SEMESTRE 1">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Ciclo Escolar</label>
+              <input type="text" id="fmtCiclo" class="form-control" value="2026-2027">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Fecha Encabezado</label>
+              <input type="text" id="fmtFecha" class="form-control" value="JUNIO 2026">
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <button id="btnVistaPreviaFormato" class="btn btn-primary fw-semibold">Generar Vista Previa</button>
+            <button id="btnImprimirFormato" class="btn btn-success fw-semibold">Imprimir / Guardar PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="zonaImpresionFormatos"></div>
+    </div>
             </div>
           </div>
         </div>
@@ -777,6 +858,13 @@
     if (!payload.idDocente || !payload.nomLic || !payload.semestre || !payload.cveMat) {
       return mostrarAlerta('Completa Docente, Licenciatura, Semestre y Asignatura.', 'warning');
     }
+    const docSel = DB.docentes.find(d => String(d.CVE_DOC).trim() === payload.idDocente);
+    const limDoc = docSel ? (Number(docSel.HRS_SEM) || 0) : 0;
+    const hrsAsigAct = DB.asignaciones.filter(a => String(a.ID_DOCENTE).trim() === payload.idDocente).length;
+    const hrsActsAct = DB.actividades.filter(a => String(a.ID_DOCENTE).trim() === payload.idDocente).reduce((s, x) => s + (Number(x.HORAS) || 0), 0);
+    if (limDoc > 0 && (hrsAsigAct + hrsActsAct + bloques.length) > limDoc) {
+      return mostrarAlerta(`¡Tope excedido! ${docSel.AP_PATD} tiene límite de ${limDoc} hrs y ya cuenta con ${hrsAsigAct + hrsActsAct} hrs asignadas (intentas sumar ${bloques.length} hrs).`, 'danger');
+    }
     const btn = document.getElementById('btnGuardar');
     btn.disabled = true; btn.textContent = 'Guardando...';
     try {
@@ -880,7 +968,13 @@ async function onGuardarActividades() {
         });
       }
     });
-
+    const limDoc = doc ? (Number(doc.HRS_SEM) || 0) : 0;
+    const hrsAsigAct = DB.asignaciones.filter(a => String(a.ID_DOCENTE).trim() === idDoc).length;
+    const totalNuevasAct = lista.reduce((s, x) => s + x.horas, 0);
+    if (limDoc > 0 && (hrsAsigAct + totalNuevasAct) > limDoc) {
+      return mostrarAlerta(`¡Tope excedido! Límite: ${limDoc} hrs | Frente a grupo: ${hrsAsigAct} hrs | Actividades: ${totalNuevasAct} hrs.`, 'danger');
+    }
+  
     const btn = document.getElementById('btnGuardarAct');
     btn.disabled = true; btn.textContent = 'Guardando...';
     try {
@@ -1026,6 +1120,378 @@ async function onGuardarActividades() {
       btn.disabled = false; btn.textContent = 'Registrar Etiquetas';
     }
   }
+
+  // =========================================================================
+  // FASE 2: MOTOR DE IMPRESIÓN DE FORMATOS (HORARIO INDIVIDUAL Y MASIVO)
+  // =========================================================================
+  function normalizarTexto(str) {
+    return String(str || '').trim().toUpperCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function construirHtmlHorarioIndividual(idDoc) {
+    const doc = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
+    if (!doc) return '';
+
+    const subtitulo = document.getElementById('fmtSubtitulo').value.trim().toUpperCase();
+    const semestreTxt = document.getElementById('fmtSemestre').value.trim().toUpperCase();
+    const cicloTxt = document.getElementById('fmtCiclo').value.trim().toUpperCase();
+    const fechaTxt = document.getElementById('fmtFecha').value.trim().toUpperCase();
+
+    const nombreCompleto = `${doc.AP_PATD || ''} ${doc.AP_MATD || ''} ${doc.NOM_DOC || ''}`.trim().toUpperCase();
+    const cveLic = String(doc.CVE_LIC || '').trim();
+    const turnoDoc = String(doc.TURNO_ADS || '').trim().toUpperCase();
+    const hrsNombramiento = Number(doc.HRS_SEM) || 0;
+
+    const licObj = DB.licenciaturas.find(l => normalizarTexto(l.NOM_LIC) === normalizarTexto(cveLic));
+    const licEnEnsenanza = licObj && licObj.EN_ENSEÑANZA ? String(licObj.EN_ENSEÑANZA).toUpperCase() : cveLic.toUpperCase();
+
+    // 1. Clasificar materias asignadas al docente en 3 bloques
+    const asigsDoc = DB.asignaciones.filter(a => String(a.ID_DOCENTE).trim() === idDoc);
+    const mapaClases = new Map();
+
+    asigsDoc.forEach(a => {
+      const cveMat = String(a.CVE_MAT || '').trim();
+      const grupo = String(a.GRUPO_ID || '').trim();
+      const key = `${cveMat}_${grupo}`;
+      const hrs = Number(a.HR_DIA) || 1;
+
+      if (!mapaClases.has(key)) {
+        const matCat = DB.materias.find(m => String(m.CVE_MAT).trim() === cveMat);
+        const nomMat = matCat ? String(matCat.NOM_MAT).toUpperCase() : cveMat;
+        const esFort = matCat ? normalizarTexto(matCat.ES_FORTALECIMIENTO) : 'NO';
+        const licAsig = normalizarTexto(a.CVE_LIC);
+        const esPosgrado = licAsig.includes('POSGRADO') || grupo.toUpperCase().startsWith('DP');
+
+        let categoria = 'CURRICULAR';
+        if (esPosgrado) categoria = 'POSGRADO';
+        else if (esFort === 'SI') categoria = 'FORTALECIMIENTO';
+
+        mapaClases.set(key, {
+          key, cveMat, nomMat,
+          semestre: String(a.SEMESTRE || '').trim(),
+          grupo, horas: 0, categoria, letra: ''
+        });
+      }
+      mapaClases.get(key).horas += hrs;
+    });
+
+    const listaCurriculares = [];
+    const listaFortalecimiento = [];
+    const listaPosgrado = [];
+
+    mapaClases.forEach(item => {
+      if (item.categoria === 'CURRICULAR') listaCurriculares.push(item);
+      else if (item.categoria === 'FORTALECIMIENTO') listaFortalecimiento.push(item);
+      else listaPosgrado.push(item);
+    });
+
+    // Asignar letras consecutivas A, B, C... en orden de aparición de las 3 tablas
+    let codeAscii = 65;
+    [...listaCurriculares, ...listaFortalecimiento, ...listaPosgrado].forEach(item => {
+      item.letra = String.fromCharCode(codeAscii++);
+    });
+
+    const hrsAtencionGrupo = listaCurriculares.reduce((s, x) => s + x.horas, 0);
+    const hrsTutoriasFort = listaFortalecimiento.reduce((s, x) => s + x.horas, 0);
+    const hrsDocenciaPosgrado = listaPosgrado.reduce((s, x) => s + x.horas, 0);
+
+    // 2. Actividades complementarias y asesorías
+    const actsDoc = DB.actividades.filter(a => String(a.ID_DOCENTE).trim() === idDoc);
+    const getHrsAct = (nombres) => {
+      const targets = nombres.map(normalizarTexto);
+      const found = actsDoc.find(a =>
+        Object.values(a).some(v => targets.includes(normalizarTexto(v)))
+      );
+      return found ? (Number(found.HORAS || found.HRS) || 0) : 0;
+    };
+
+    const filasLic = [
+      { label: 'ATENCIÓN A GRUPO DE 1° A 6°', hrs: hrsAtencionGrupo },
+      { label: 'FUNCIONES ACADÉMICAS ESPECÍFICAS', hrs: getHrsAct(['F. académicas específicas', 'Funciones académicas específicas']) },
+      { label: 'INV. CON RECONOCIMIENTO INSTITUCIONAL', hrs: getHrsAct(['Inv. con Rec. Institucional', 'Investigación con reconocimiento institucional']) },
+      { label: 'SUPERACIÓN ACADÉMICA', hrs: getHrsAct(['Superación Académica']) },
+      { label: 'ASESORÍA 7° Y 8°', hrs: getHrsAct(['Asesoría 7° y 8°']) },
+      { label: 'GESTIÓN Y REPRESENTACIÓN INSTITUCIONAL', hrs: getHrsAct(['Gest. y Rep. Institucional', 'Gestión y representación institucional']) },
+      { label: 'VINCULACIÓN Y REPRESENTACIÓN INTERINSTITUCIONAL', hrs: getHrsAct(['Vinc. y Rep. Interinstitucional', 'Vinculación y representación interinstitucional']) },
+      { label: 'DIFUSIÓN DE LA CULTURA', hrs: getHrsAct(['Difusión de la cultura']) },
+      { label: 'TUTORÍAS', hrs: hrsTutoriasFort + getHrsAct(['Tutorías']) },
+      { label: 'COORDINACIÓN, JEFATURA, ACT. DIRECTIVAS', hrs: getHrsAct(['Coord., Jefatura o Act. Directivas', 'Coordinación, jefatura o act. directivas']) }
+    ];
+
+    const filasPos = [
+      { label: 'DOCENCIA EN POSGRADO', hrs: hrsDocenciaPosgrado + getHrsAct(['Docencia en Posgrado']) },
+      { label: 'TUTORÍA Y DIRECCIÓN DE TESIS', hrs: getHrsAct(['Tutoría o Dirección de Tesis', 'Tutoría y dirección de tesis']) },
+      { label: 'ACTIVIDADES DE POSGRADO', hrs: getHrsAct(['Actividades de Posgrado']) },
+      { label: 'COORDINACIÓN O JEFATURA DE POSGRADO', hrs: getHrsAct(['Coord. o Jefatura de Posgrado', 'Coordinación o jefatura de posgrado']) }
+    ];
+
+    const totalLic = filasLic.reduce((s, x) => s + x.hrs, 0);
+    const totalPos = filasPos.reduce((s, x) => s + x.hrs, 0);
+
+    // Asesorados
+    let asesLic = 0, licAsesNom = '', asesPos = 0, posAsesNom = '';
+    actsDoc.forEach(a => {
+      const cant = Number(a.ASESORADOS || a.NUM_ASESORADOS) || 0;
+      const niv = normalizarTexto(a.NIVEL);
+      if (cant > 0) {
+        if (niv === 'POSGRADO') {
+          asesPos += cant;
+          if (a.LICENCIATURA) posAsesNom = String(a.LICENCIATURA).toUpperCase();
+        } else {
+          asesLic += cant;
+          if (a.LICENCIATURA) licAsesNom = String(a.LICENCIATURA).toUpperCase();
+        }
+      }
+    });
+
+    // 3. Cuadrícula semanal 7:00 a 21:00 (14 filas)
+    const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
+    const jornadasDoc = DB.jornadas.filter(j => String(j.ID_DOCENTE).trim() === idDoc);
+    const etiqsDoc = (DB.etiquetas || []).filter(e => String(e.ID_DOCENTE).trim() === idDoc);
+
+    const filasGrid = [];
+    for (let h = 7; h <= 20; h++) {
+      const idxFila = h - 7;
+      const celdasDias = diasCols.map(dia => {
+        const dNorm = normalizarTexto(dia);
+        const enJornada = jornadasDoc.some(j =>
+          normalizarTexto(j.DIA) === dNorm && h >= Number(j.HORA_INICIO) && h < Number(j.HORA_FIN)
+        );
+        const clasesHora = asigsDoc.filter(a => normalizarTexto(a.DIA) === dNorm && Number(a.HORA) === h);
+        const letrasHora = [...new Set(clasesHora.map(a => {
+          const obj = mapaClases.get(`${String(a.CVE_MAT).trim()}_${String(a.GRUPO_ID).trim()}`);
+          return obj ? obj.letra : '';
+        }).filter(Boolean))];
+
+        let textoCelda = '';
+        if (letrasHora.length > 0) {
+          textoCelda = letrasHora.join(' / ');
+        } else {
+          const etiq = etiqsDoc.find(e => normalizarTexto(e.DIA) === dNorm && Number(e.HORA) === h);
+          if (etiq) textoCelda = String(etiq.ETIQUETA || '').toUpperCase();
+        }
+        return `<td class="text-center fw-bold ${enJornada ? 'celda-jornada' : ''}" style="font-size:${textoCelda.length > 5 ? '6.5pt' : '8.5pt'};">${textoCelda}</td>`;
+      }).join('');
+
+      let celdaDer = '';
+      if (idxFila === 0) {
+        celdaDer = `<td colspan="3" class="bg-gris-inst text-center">DIVISIÓN LICENCIATURA</td><td class="bg-gris-inst text-center">${totalLic || 0}</td>`;
+      } else if (idxFila >= 1 && idxFila <= 10) {
+        const actItem = filasLic[idxFila - 1];
+        celdaDer = `<td colspan="3" style="font-size:7.2pt;">${actItem.label}</td><td class="text-center fw-bold">${actItem.hrs || ''}</td>`;
+      } else if (idxFila === 11) {
+        celdaDer = `<td colspan="3" class="bg-gris-inst text-center">DIVISIÓN DE POSGRADO</td><td class="bg-gris-inst text-center">${totalPos || 0}</td>`;
+      } else {
+        const posItem = filasPos[idxFila - 12];
+        celdaDer = `<td colspan="3" style="font-size:7.2pt;">${posItem ? posItem.label : ''}</td><td class="text-center fw-bold">${posItem && posItem.hrs ? posItem.hrs : ''}</td>`;
+      }
+
+      filasGrid.push(`
+        <tr>
+          <td class="text-center" style="white-space:nowrap;">${h}:00-${h + 1}:00</td>
+          ${celdasDias}
+          ${celdaDer}
+        </tr>`);
+    }
+    // Fila extra para completar las 4 actividades de Posgrado (la 4ta es Coordinación de Posgrado)
+    const cuartaPos = filasPos[3];
+    const filaExtraPos = `
+      <tr>
+        <td colspan="6" style="border:none;"></td>
+        <td colspan="3" style="font-size:7.2pt;">${cuartaPos.label}</td>
+        <td class="text-center fw-bold">${cuartaPos.hrs || ''}</td>
+      </tr>`;
+
+    // Helper para las 3 tablas inferiores (SIEMPRE visibles aunque estén vacías)
+    const renderTablaInferior = (titulo, lista) => {
+      const rows = lista.length > 0
+        ? lista.map(x => `
+            <tr>
+              <td class="text-center fw-bold" style="width:28px;">${x.letra}</td>
+              <td>${x.nomMat}</td>
+              <td class="text-center" style="width:85px;">${x.semestre ? x.semestre + '°' : ''}</td>
+              <td class="text-center" style="width:95px;">${x.grupo}</td>
+              <td class="text-center fw-bold" style="width:65px;">${x.horas}</td>
+            </tr>`).join('')
+        : `<tr><td class="text-center" style="width:28px;height:18px;">&nbsp;</td><td></td><td style="width:85px;"></td><td style="width:95px;"></td><td style="width:65px;"></td></tr>`;
+
+      return `
+        <table class="mt-2">
+          <thead>
+            <tr class="bg-gris-inst">
+              <th style="width:28px;"></th>
+              <th class="text-start">${titulo}</th>
+              <th class="text-center" style="width:85px;">SEMESTRE</th>
+              <th class="text-center" style="width:95px;">GRUPO</th>
+              <th class="text-center" style="width:65px;">HORAS</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    };
+
+    // 4. Coordinador y firmas institucionales
+    const coordObj = (DB.coordinadores || []).find(c =>
+      normalizarTexto(c.CVE_LIC) === normalizarTexto(cveLic) &&
+      normalizarTexto(c.TURNO) === normalizarTexto(turnoDoc)
+    );
+    const puestoCoord = coordObj ? String(coordObj.PUESTO_OFICIAL).toUpperCase() : `COORDINACIÓN DE ${cveLic.toUpperCase()}`;
+    const inicialesCoord = coordObj ? String(coordObj.INICIALES || '').trim() : '';
+    let nombreCoord = '';
+    if (coordObj && coordObj.CVE_DOC) {
+      const docC = DB.docentes.find(d => String(d.CVE_DOC).trim() === String(coordObj.CVE_DOC).trim());
+      if (docC) nombreCoord = `${docC.NOM_DOC || ''} ${docC.AP_PATD || ''} ${docC.AP_MATD || ''}`.trim().toUpperCase();
+    }
+
+    const mostrarFirmaPosgrado = totalPos > 0;
+
+    return `
+      <div class="hoja-carta">
+        <div>
+          <div class="text-center mb-1">
+            <img src="header_ensm.png" alt="Encabezado Institucional" style="width:100%;max-height:68px;object-fit:contain;">
+          </div>
+
+          <div class="text-center fw-bold" style="font-size:9pt;line-height:1.25;">
+            <div>HORARIO INDIVIDUAL DE DOCENCIA EN LA LICENCIATURA Y/O POSGRADO</div>
+            <div>${subtitulo}</div>
+            <div>${semestreTxt}</div>
+            <div>CICLO ESCOLAR ${cicloTxt}</div>
+          </div>
+
+          <table class="tabla-sin-borde mt-1 mb-1" style="font-size:8.2pt;">
+            <tr>
+              <td class="fw-bold" style="width:68%;">${licEnEnsenanza}</td>
+              <td class="fw-bold text-end" style="width:14%;">FECHA:</td>
+              <td class="fw-bold text-center" style="width:18%;">${fechaTxt}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="fw-bold text-end">TURNO:</td>
+              <td class="fw-bold text-center">${turnoDoc}</td>
+            </tr>
+          </table>
+
+          <table class="mb-2" style="font-size:8.3pt;">
+            <tr>
+              <td class="fw-bold text-center" style="width:13%;">DOCENTE</td>
+              <td class="fw-bold text-center" style="width:52%;">${nombreCompleto}</td>
+              <td class="fw-bold text-center" style="width:27%;">HORAS DE NOMBRAMIENTO</td>
+              <td class="fw-bold text-center" style="width:8%;">${hrsNombramiento}</td>
+            </tr>
+          </table>
+
+          <div class="text-center fw-bold" style="font-size:8.5pt;">ESTANCIA EN LA ESCUELA NORMAL</div>
+          <table style="font-size:7.6pt;">
+            <thead>
+              <tr>
+                <th rowspan="2" class="text-center" style="width:11%;">HORARIO</th>
+                <th colspan="5" class="text-center" style="width:49%;">DÍAS</th>
+                <th colspan="3" class="text-center" style="width:34%;">DISTRIBUCIÓN DE ACTIVIDADES*</th>
+                <th class="text-center" style="width:6%;">HRS.</th>
+              </tr>
+              <tr>
+                <th class="text-center" style="width:9.8%;">LUNES</th>
+                <th class="text-center" style="width:9.8%;">MARTES</th>
+                <th class="text-center" style="width:9.8%;">MIÉRCOLES</th>
+                <th class="text-center" style="width:9.8%;">JUEVES</th>
+                <th class="text-center" style="width:9.8%;">VIERNES</th>
+                <td colspan="3" class="bg-gris-inst text-center">DIVISIÓN LICENCIATURA</td>
+                <td class="bg-gris-inst text-center">${totalLic || 0}</td>
+              </tr>
+            </thead>
+            <tbody>
+              ${filasGrid.slice(1).join('')}
+              ${filaExtraPos}
+            </tbody>
+          </table>
+
+          <table class="mt-2" style="font-size:7.3pt;">
+            <tr>
+              <td rowspan="3" class="text-center fw-bold" style="width:13%;">OBSERVACIONES</td>
+              <td class="fw-bold" style="width:22%;">ASESOR DE LICENCIATURA</td>
+              <td class="text-center fw-bold" style="width:6%;">SI (${asesLic > 0 ? 'X' : ' '})</td>
+              <td class="text-center fw-bold" style="width:6%;">NO (${asesLic > 0 ? ' ' : 'X'})</td>
+              <td class="fw-bold" style="width:31%;">LICENCIATURA (S): <span class="fw-normal">${licAsesNom}</span></td>
+              <td class="fw-bold" style="width:22%;">NO. DE ASESORADOS: <span class="fw-normal">${asesLic || ''}</span></td>
+            </tr>
+            <tr>
+              <td class="fw-bold">ASESOR DE POSGRADO</td>
+              <td class="text-center fw-bold">SI (${asesPos > 0 ? 'X' : ' '})</td>
+              <td class="text-center fw-bold">NO (${asesPos > 0 ? ' ' : 'X'})</td>
+              <td class="fw-bold">NIVEL: <span class="fw-normal">${posAsesNom}</span></td>
+              <td class="fw-bold">NO. DE ASESORADOS: <span class="fw-normal">${asesPos || ''}</span></td>
+            </tr>
+            <tr>
+              <td colspan="5" style="font-size:6.7pt;font-weight:bold;">
+                * LAS ACTIVIDADES DEBERÁN ESTAR EN CONCORDANCIA CON PLAN E INFORME DE TRABAJO DE ACTIVIDADES<br>
+                * EL ÁREA SOMBREADA REPRESENTA EL HORARIO ACORDE A SUS HORAS DE NOMBRAMIENTO.
+              </td>
+            </tr>
+          </table>
+
+          ${renderTablaInferior('ASIGNATURA(S) CURRICULAR(ES)', listaCurriculares)}
+          ${renderTablaInferior('ACTIVIDADES DE FORTALECIMIENTO', listaFortalecimiento)}
+          ${renderTablaInferior('ASIGNATURA(S) CURRICULAR(ES) DE POSGRADO', listaPosgrado)}
+        </div>
+
+        <div class="mt-3">
+          <div class="text-end" style="font-size:6.5pt;margin-bottom:2px;">
+            ARCS/DIGL/RHSF/${inicialesCoord}<br>E-DL
+          </div>
+          <table class="tabla-sin-borde text-center" style="font-size:7.4pt;font-weight:bold;">
+            <tr>
+              <td style="width:${mostrarFirmaPosgrado ? '25%' : '33.3%'};vertical-align:top;height:44px;">${puestoCoord}</td>
+              <td style="width:${mostrarFirmaPosgrado ? '25%' : '33.3%'};vertical-align:top;">DIVISIÓN DE LICENCIATURAS</td>
+              ${mostrarFirmaPosgrado ? '<td style="width:25%;vertical-align:top;">DIVISIÓN DE POSGRADO</td>' : ''}
+              <td style="width:${mostrarFirmaPosgrado ? '25%' : '33.3%'};vertical-align:top;">SUBDIRECCIÓN ACADÉMICA</td>
+            </tr>
+            <tr>
+              <td style="padding:0 6px;"><div style="border-top:1px solid #000;padding-top:2px;">${nombreCoord}</div></td>
+              <td style="padding:0 6px;"><div style="border-top:1px solid #000;padding-top:2px;">DIANA ISELA GUZMÁN LÓPEZ</div></td>
+              ${mostrarFirmaPosgrado ? '<td style="padding:0 6px;"><div style="border-top:1px solid #000;padding-top:2px;">CINTHIA JESSICA SÁNCHEZ SERRANO</div></td>' : ''}
+              <td style="padding:0 6px;"><div style="border-top:1px solid #000;padding-top:2px;">AIDÉ RAQUEL CUELLAR SALAZAR</div></td>
+            </tr>
+          </table>
+          <div class="mt-2">
+            <img src="footer_ensm.png" alt="Pie de página Institucional" style="width:100%;max-height:54px;object-fit:contain;">
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function generarVistaPreviaFormatos() {
+    const tipo = document.getElementById('selTipoFormato').value;
+    const zona = document.getElementById('zonaImpresionFormatos');
+
+    if (tipo === 'INDIVIDUAL') {
+      const idDoc = document.getElementById('selectDocente').value;
+      if (!idDoc) return mostrarAlerta('Selecciona un Docente Activo en la parte superior.', 'warning');
+      zona.innerHTML = construirHtmlHorarioIndividual(idDoc);
+    } else if (tipo === 'MASIVO_LIC') {
+      const lic = document.getElementById('filtroEspecialidad').value;
+      if (!lic) return mostrarAlerta('Selecciona una Licenciatura de Adscripción en la parte superior para el modo masivo.', 'warning');
+
+      const docsLic = DB.docentes
+        .filter(d => String(d.CVE_LIC).trim() === lic && DB.asignaciones.some(a => String(a.ID_DOCENTE).trim() === String(d.CVE_DOC).trim()))
+        .sort((a, b) => `${a.AP_PATD} ${a.AP_MATD} ${a.NOM_DOC}`.localeCompare(`${b.AP_PATD} ${b.AP_MATD} ${b.NOM_DOC}`));
+
+      if (docsLic.length === 0) return mostrarAlerta('No hay docentes con asignaturas registradas en esa licenciatura.', 'warning');
+      zona.innerHTML = docsLic.map(d => construirHtmlHorarioIndividual(String(d.CVE_DOC).trim())).join('');
+      mostrarAlerta(`Vista previa masiva generada: ${docsLic.length} horarios individuales de ${lic}.`, 'success');
+    }
+  }
+
+  document.getElementById('btnVistaPreviaFormato').addEventListener('click', generarVistaPreviaFormatos);
+  document.getElementById('btnImprimirFormato').addEventListener('click', () => {
+    if (!document.getElementById('zonaImpresionFormatos').innerHTML.trim()) {
+      generarVistaPreviaFormatos();
+    }
+    if (document.getElementById('zonaImpresionFormatos').innerHTML.trim()) {
+      window.print();
+    }
+  });
 </script>
 </body>
 </html>
