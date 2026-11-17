@@ -1234,8 +1234,7 @@
         }
       }
     });
-
-    const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
+const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
     const jornadasDoc = DB.jornadas.filter(j => String(j.ID_DOCENTE).trim() === idDoc);
     const etiqsDoc = (DB.etiquetas || []).filter(e => String(e.ID_DOCENTE).trim() === idDoc);
 
@@ -1260,7 +1259,10 @@
           const etiq = etiqsDoc.find(e => normalizarTexto(e.DIA) === dNorm && Number(e.HORA) === h);
           if (etiq) textoCelda = String(etiq.ETIQUETA || '').toUpperCase();
         }
-        return `<td class="text-center fw-bold ${enJornada ? 'celda-jornada' : ''}" style="font-size:${textoCelda.length > 5 ? '6.5pt' : '8.5pt'};">${textoCelda}</td>`;
+
+        // Gris si está dentro de jornada O si tiene letra/etiqueta asignada
+        const sombreado = enJornada || textoCelda !== '';
+        return `<td class="text-center fw-bold ${sombreado ? 'celda-jornada' : ''}" style="font-size:${textoCelda.length > 5 ? '6.5pt' : '8.5pt'};">${textoCelda}</td>`;
       }).join('');
 
       let celdaDer = '';
@@ -1283,14 +1285,19 @@
           ${celdaDer}
         </tr>`);
     }
-    const cuartaPos = filasPos[3];
+
     const filaExtraPos = `
       <tr>
         <td colspan="6" style="border:none;"></td>
-        <td colspan="3" style="font-size:7.2pt;">${cuartaPos.label}</td>
-        <td class="text-center fw-bold">${cuartaPos.hrs || ''}</td>
+        <td colspan="3" style="font-size:7.2pt;">${filasPos[2].label}</td>
+        <td class="text-center fw-bold">${filasPos[2].hrs || ''}</td>
+      </tr>
+      <tr>
+        <td colspan="6" style="border:none;"></td>
+        <td colspan="3" style="font-size:7.2pt;">${filasPos[3].label}</td>
+        <td class="text-center fw-bold">${filasPos[3].hrs || ''}</td>
       </tr>`;
-
+    
     const renderTablaInferior = (titulo, lista) => {
       const rows = lista.length > 0
         ? lista.map(x => `
@@ -1369,7 +1376,7 @@
           </table>
 
           <div class="text-center fw-bold" style="font-size:8.5pt;">ESTANCIA EN LA ESCUELA NORMAL</div>
-          <table style="font-size:7.6pt;">
+<table style="font-size:7.6pt;">
             <thead>
               <tr>
                 <th rowspan="2" class="text-center" style="width:11%;">HORARIO</th>
@@ -1383,11 +1390,16 @@
                 <th class="text-center" style="width:9.8%;">MIÉRCOLES</th>
                 <th class="text-center" style="width:9.8%;">JUEVES</th>
                 <th class="text-center" style="width:9.8%;">VIERNES</th>
-                <td colspan="3" class="bg-gris-inst text-center">DIVISIÓN LICENCIATURA</td>
-                <td class="bg-gris-inst text-center">${totalLic || 0}</td>
+                <th colspan="3" class="bg-gris-inst text-center"></th>
+                <th class="bg-gris-inst text-center"></th>
               </tr>
             </thead>
             <tbody>
+              ${filasGrid.join('')}
+              ${filaExtraPos}
+            </tbody>
+          </table>
+          
               ${filasGrid.slice(1).join('')}
               ${filaExtraPos}
             </tbody>
