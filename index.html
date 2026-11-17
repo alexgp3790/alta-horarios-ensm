@@ -14,6 +14,7 @@
     .status-ok { color: #16a34a; }
     .status-err { color: #dc2626; }
     .nav-tabs .nav-link.active { font-weight: 600; color: #1d4ed8; border-bottom: 3px solid #1d4ed8; }
+
     /* === ESTILOS DE IMPRESIÓN DE FORMATOS (CARTA VERTICAL) === */
     .hoja-carta {
       width: 21.59cm;
@@ -56,19 +57,19 @@
 </head>
 <body>
 
-<div class="header-bar d-flex justify-content-between align-items-center">
+<div class="header-bar d-flex justify-content-between align-items-center no-print">
   <div>
     <h5 class="mb-0">División de Licenciaturas <span class="badge bg-primary ms-2">LinkAcadémico</span></h5>
     <small class="text-light opacity-75">Sistema Integral de Gestión de Horarios · División de Licenciaturas</small>
   </div>
- <div class="d-flex align-items-center gap-2">
+  <div class="d-flex align-items-center gap-2">
     <div id="loaderTop" class="text-warning fw-semibold">Conectando con la base de datos</div>
     <button id="btnSyncManual" type="button" class="btn btn-sm btn-outline-light" title="Sincronizar ahora">↻</button>
   </div>
 </div>
 
-<div class="header-bar d-flex justify-content-between align-items-center no-print">
-  <div class="card mb-3">
+<div class="container-fluid py-3 px-4">
+  <div class="card mb-3 no-print">
     <div class="card-body py-3">
       <div class="row g-3 align-items-end">
         <div class="col-md-4">
@@ -100,7 +101,7 @@
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabFormatos">5. Impresión de Formatos</button></li>
   </ul>
 
-  <div id="alertaGlobal" class="alert d-none" role="alert"></div>
+  <div id="alertaGlobal" class="alert d-none no-print" role="alert"></div>
 
   <div class="tab-content">
     <!-- TAB 1 -->
@@ -170,48 +171,6 @@
                 <span>Horas semanales: <strong id="lblHrsMat">0</strong></span>
                 <span>Registradas en grupo: <strong id="lblHrsRegMat">0</strong></span>
               </div>
-              <!-- TAB 5: IMPRESIÓN DE FORMATOS -->
-    <div class="tab-pane fade" id="tabFormatos">
-      <div class="card mb-3 no-print">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <span>Centro de Impresión de Formatos Oficiales</span>
-          <span class="badge bg-primary">Formato Tamaño Carta</span>
-        </div>
-        <div class="card-body">
-          <div class="row g-3 align-items-end">
-            <div class="col-md-3">
-              <label class="form-label fw-semibold small mb-1">Tipo de Formato</label>
-              <select id="selTipoFormato" class="form-select">
-                <option value="INDIVIDUAL">Horario Individual Docente</option>
-                <option value="MASIVO_LIC">Horario Individual (Masivo por Licenciatura)</option>
-              </select>
-            </div>
-            <div class="col-md-3">
-              <label class="form-label fw-semibold small mb-1">Subtítulo Semestres</label>
-              <input type="text" id="fmtSubtitulo" class="form-control" value="1° A 5° SEMESTRES">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label fw-semibold small mb-1">Periodo / Semestre</label>
-              <input type="text" id="fmtSemestre" class="form-control" value="SEMESTRE 1">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label fw-semibold small mb-1">Ciclo Escolar</label>
-              <input type="text" id="fmtCiclo" class="form-control" value="2026-2027">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label fw-semibold small mb-1">Fecha Encabezado</label>
-              <input type="text" id="fmtFecha" class="form-control" value="JUNIO 2026">
-            </div>
-          </div>
-          <div class="d-flex flex-wrap gap-2 mt-3">
-            <button id="btnVistaPreviaFormato" class="btn btn-primary fw-semibold">Generar Vista Previa</button>
-            <button id="btnImprimirFormato" class="btn btn-success fw-semibold">Imprimir / Guardar PDF</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="zonaImpresionFormatos"></div>
-    </div>
             </div>
           </div>
         </div>
@@ -277,7 +236,7 @@
       </div>
     </div>
 
-<!-- TAB 3 -->
+    <!-- TAB 3 -->
     <div class="tab-pane fade" id="tabJornada">
       <div class="row g-4">
         <div class="col-lg-5">
@@ -302,6 +261,7 @@
         <div class="card-body" id="contenedorEtiquetas"></div>
       </div>
     </div>
+
     <!-- TAB 4 -->
     <div class="tab-pane fade" id="tabCatalogos">
       <div class="row g-4">
@@ -365,6 +325,49 @@
         </div>
       </div>
     </div>
+
+    <!-- TAB 5: IMPRESIÓN DE FORMATOS -->
+    <div class="tab-pane fade" id="tabFormatos">
+      <div class="card mb-3 no-print">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Centro de Impresión de Formatos Oficiales</span>
+          <span class="badge bg-primary">Formato Tamaño Carta</span>
+        </div>
+        <div class="card-body">
+          <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+              <label class="form-label fw-semibold small mb-1">Tipo de Formato</label>
+              <select id="selTipoFormato" class="form-select">
+                <option value="INDIVIDUAL">Horario Individual Docente</option>
+                <option value="MASIVO_LIC">Horario Individual (Masivo por Licenciatura)</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold small mb-1">Subtítulo Semestres</label>
+              <input type="text" id="fmtSubtitulo" class="form-control" value="1° A 5° SEMESTRES">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Periodo / Semestre</label>
+              <input type="text" id="fmtSemestre" class="form-control" value="SEMESTRE 1">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Ciclo Escolar</label>
+              <input type="text" id="fmtCiclo" class="form-control" value="2026-2027">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Fecha Encabezado</label>
+              <input type="text" id="fmtFecha" class="form-control" value="JUNIO 2026">
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <button id="btnVistaPreviaFormato" class="btn btn-primary fw-semibold">Generar Vista Previa</button>
+            <button id="btnImprimirFormato" class="btn btn-success fw-semibold">Imprimir / Guardar PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="zonaImpresionFormatos"></div>
+    </div>
   </div>
 </div>
 
@@ -372,7 +375,7 @@
 <script>
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjbqvOTFaLFeL0q1tn6r1d9ezgQ3KwKGxj5srl-1jRByvLe4khawqcK3JMbSt0obPe/exec';
 
-  let DB = { licenciaturas: [], docentes: [], materias: [], asignaciones: [], actividades: [], jornadas: [], etiquetas: [] };
+  let DB = { licenciaturas: [], docentes: [], materias: [], asignaciones: [], actividades: [], jornadas: [], etiquetas: [], coordinadores: [] };
   const DIAS = ['', 'LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
   const HORAS = ['', 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 
@@ -407,7 +410,7 @@
   let sincronizando = false;
 
   async function sincronizarSilencioso() {
-    if (sincronizando || document.hidden) return; // Pausa si la pestaña no está visible
+    if (sincronizando || document.hidden) return;
     sincronizando = true;
     const top = document.getElementById('loaderTop');
     const btn = document.getElementById('btnSyncManual');
@@ -417,7 +420,6 @@
       const data = await apiGetInit();
       DB = data;
 
-      // Actualiza el resumen de carga del docente seleccionado sin borrar sus campos
       const idDoc = document.getElementById('selectDocente').value;
       const doc = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
       if (doc) {
@@ -430,7 +432,6 @@
         badge.className = `badge fs-6 ${total >= limite && limite > 0 ? 'bg-danger' : 'bg-success'}`;
       }
 
-      // Recalcula horas registradas de la materia y los semáforos O / X en pantalla
       const cveMat = document.getElementById('cmbMateria').value;
       const grupo = document.getElementById('txtGrupoFinal').value;
       if (cveMat && grupo) {
@@ -439,7 +440,6 @@
       }
       evaluarTodosLosBloques();
 
-      const hora = new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
       top.textContent = ` · Conectado · `;
       top.className = 'text-success fw-semibold';
     } catch (err) {
@@ -451,7 +451,6 @@
     }
   }
 
-  // Ejecuta cada 20 segundos y al dar clic en el botón ↻
   setInterval(sincronizarSilencioso, 20000);
   document.getElementById('btnSyncManual').addEventListener('click', sincronizarSilencioso);
 
@@ -484,7 +483,6 @@
     htmlJor += `<button id="btnGuardarJornada" class="btn btn-primary w-100 mt-2">Guardar Jornada</button>`;
     document.getElementById('contenedorJornada').innerHTML = htmlJor;
 
-    // Actividades oficiales SIG-HO (Licenciatura y Posgrado)
     const ACTS_CONFIG = [
       { id: 'lic_0', nivel: 'LICENCIATURA', nombre: 'F. académicas específicas', hasAses: false },
       { id: 'lic_1', nivel: 'LICENCIATURA', nombre: 'Inv. con Rec. Institucional', hasAses: false },
@@ -567,7 +565,6 @@
     document.getElementById('btnGuardarJornada').addEventListener('click', onGuardarJornada);
     document.getElementById('btnGuardarAct').addEventListener('click', onGuardarActividades);
 
-    // Grid de 6 renglones para Etiquetas Especiales (BD_ETIQUETAS)
     let htmlEtiq = `
       <div class="table-responsive">
         <table class="table table-sm align-middle mb-2">
@@ -663,8 +660,6 @@
     document.getElementById('cmbGrupoDocente').innerHTML = '<option value="">-- Grupo --</option>' + grupos.map(g => `<option value="${g}">${g}</option>`).join('');
     document.getElementById('cmbAsignaturaDocente').innerHTML = '';
 
-    
-
     ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'].forEach(d => {
       const reg = DB.jornadas.find(j => String(j.ID_DOCENTE) === idDoc && String(j.DIA).toUpperCase() === d);
       document.getElementById(`jchk_${d}`).checked = !!reg;
@@ -672,8 +667,6 @@
       document.getElementById(`ja_${d}`).value = reg ? reg.HORA_FIN : '';
     });
 
-    // Cargar Actividades guardadas del Docente en Tab 3
-// Cargar Actividades guardadas del Docente en Tab 3
     const chkHab = document.getElementById('chkHabilitarAct');
     if (chkHab) {
       chkHab.checked = false;
@@ -684,7 +677,6 @@
 
       (window.ACTS_CONFIG || []).forEach(item => {
         const objetivo = item.nombre.toUpperCase();
-        // Busca coincidencia en cualquier columna de texto del registro
         const regAct = actsDoc.find(a =>
           Object.values(a).some(val => String(val || '').trim().toUpperCase() === objetivo)
         );
@@ -695,7 +687,7 @@
         }
       });
     }
-// Cargar Etiquetas Especiales agrupando horas continuas por Día|Etiqueta
+
     for (let i = 1; i <= 6; i++) {
       document.getElementById(`edia_${i}`).value = '';
       document.getElementById(`ede_${i}`).value = '';
@@ -879,7 +871,7 @@
     } catch (e) {
       mostrarAlerta('Error de red: ' + e.message, 'danger');
     } finally {
-      btn.disabled = false; btn.textContent = 'Registrar Horario en SIG-HO_BD';
+      btn.disabled = false; btn.textContent = 'Registrar Horario';
     }
   });
 
@@ -949,7 +941,7 @@
     procesarRespuesta(res);
   }
 
-async function onGuardarActividades() {
+  async function onGuardarActividades() {
     const idDoc = document.getElementById('selectDocente').value;
     if (!idDoc) return mostrarAlerta('Selecciona un docente.', 'warning');
     const doc = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
@@ -968,13 +960,14 @@ async function onGuardarActividades() {
         });
       }
     });
+
     const limDoc = doc ? (Number(doc.HRS_SEM) || 0) : 0;
     const hrsAsigAct = DB.asignaciones.filter(a => String(a.ID_DOCENTE).trim() === idDoc).length;
     const totalNuevasAct = lista.reduce((s, x) => s + x.horas, 0);
     if (limDoc > 0 && (hrsAsigAct + totalNuevasAct) > limDoc) {
       return mostrarAlerta(`¡Tope excedido! Límite: ${limDoc} hrs | Frente a grupo: ${hrsAsigAct} hrs | Actividades: ${totalNuevasAct} hrs.`, 'danger');
     }
-  
+
     const btn = document.getElementById('btnGuardarAct');
     btn.disabled = true; btn.textContent = 'Guardando...';
     try {
@@ -988,6 +981,7 @@ async function onGuardarActividades() {
       btn.textContent = 'Registrar Actividades';
     }
   }
+
   function limpiarFormularioDocente() {
     document.getElementById('selEditarDocente').value = '';
     document.getElementById('tituloCardDocente').textContent = 'Registrar Nuevo Docente';
@@ -1084,7 +1078,7 @@ async function onGuardarActividades() {
 
   function mostrarAlerta(texto, tipo) {
     const box = document.getElementById('alertaGlobal');
-    box.className = `alert alert-${tipo}`;
+    box.className = `alert alert-${tipo} no-print`;
     box.textContent = texto;
     setTimeout(() => box.classList.add('d-none'), 6000);
   }
@@ -1146,7 +1140,6 @@ async function onGuardarActividades() {
     const licObj = DB.licenciaturas.find(l => normalizarTexto(l.NOM_LIC) === normalizarTexto(cveLic));
     const licEnEnsenanza = licObj && licObj.EN_ENSEÑANZA ? String(licObj.EN_ENSEÑANZA).toUpperCase() : cveLic.toUpperCase();
 
-    // 1. Clasificar materias asignadas al docente en 3 bloques
     const asigsDoc = DB.asignaciones.filter(a => String(a.ID_DOCENTE).trim() === idDoc);
     const mapaClases = new Map();
 
@@ -1186,7 +1179,6 @@ async function onGuardarActividades() {
       else listaPosgrado.push(item);
     });
 
-    // Asignar letras consecutivas A, B, C... en orden de aparición de las 3 tablas
     let codeAscii = 65;
     [...listaCurriculares, ...listaFortalecimiento, ...listaPosgrado].forEach(item => {
       item.letra = String.fromCharCode(codeAscii++);
@@ -1196,7 +1188,6 @@ async function onGuardarActividades() {
     const hrsTutoriasFort = listaFortalecimiento.reduce((s, x) => s + x.horas, 0);
     const hrsDocenciaPosgrado = listaPosgrado.reduce((s, x) => s + x.horas, 0);
 
-    // 2. Actividades complementarias y asesorías
     const actsDoc = DB.actividades.filter(a => String(a.ID_DOCENTE).trim() === idDoc);
     const getHrsAct = (nombres) => {
       const targets = nombres.map(normalizarTexto);
@@ -1229,7 +1220,6 @@ async function onGuardarActividades() {
     const totalLic = filasLic.reduce((s, x) => s + x.hrs, 0);
     const totalPos = filasPos.reduce((s, x) => s + x.hrs, 0);
 
-    // Asesorados
     let asesLic = 0, licAsesNom = '', asesPos = 0, posAsesNom = '';
     actsDoc.forEach(a => {
       const cant = Number(a.ASESORADOS || a.NUM_ASESORADOS) || 0;
@@ -1245,7 +1235,6 @@ async function onGuardarActividades() {
       }
     });
 
-    // 3. Cuadrícula semanal 7:00 a 21:00 (14 filas)
     const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
     const jornadasDoc = DB.jornadas.filter(j => String(j.ID_DOCENTE).trim() === idDoc);
     const etiqsDoc = (DB.etiquetas || []).filter(e => String(e.ID_DOCENTE).trim() === idDoc);
@@ -1294,7 +1283,6 @@ async function onGuardarActividades() {
           ${celdaDer}
         </tr>`);
     }
-    // Fila extra para completar las 4 actividades de Posgrado (la 4ta es Coordinación de Posgrado)
     const cuartaPos = filasPos[3];
     const filaExtraPos = `
       <tr>
@@ -1303,7 +1291,6 @@ async function onGuardarActividades() {
         <td class="text-center fw-bold">${cuartaPos.hrs || ''}</td>
       </tr>`;
 
-    // Helper para las 3 tablas inferiores (SIEMPRE visibles aunque estén vacías)
     const renderTablaInferior = (titulo, lista) => {
       const rows = lista.length > 0
         ? lista.map(x => `
@@ -1331,7 +1318,6 @@ async function onGuardarActividades() {
         </table>`;
     };
 
-    // 4. Coordinador y firmas institucionales
     const coordObj = (DB.coordinadores || []).find(c =>
       normalizarTexto(c.CVE_LIC) === normalizarTexto(cveLic) &&
       normalizarTexto(c.TURNO) === normalizarTexto(turnoDoc)
