@@ -1149,14 +1149,6 @@
       return coincideLic && coincideTurno;
     });
 
-    const puestoCoord = coordObj ? String(coordObj.PUESTO_OFICIAL).toUpperCase() : `COORDINACIÓN DE ${cveLic.toUpperCase()}`;
-    const inicialesCoord = coordObj ? String(coordObj.INICIALES || '').trim() : '';
-    let nombreCoord = '';
-    if (coordObj && coordObj.CVE_DOC) {
-      const docC = DB.docentes.find(d => String(d.CVE_DOC).trim() === String(coordObj.CVE_DOC).trim());
-      if (docC) nombreCoord = `${docC.NOM_DOC || ''} ${docC.AP_PATD || ''} ${docC.AP_MATD || ''}`.trim().toUpperCase();
-    }
-
     const mostrarFirmaPosgrado = totalPos > 0;
     if (!doc) return '';
 
