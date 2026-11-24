@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>División de Licenciaturas - Gestión de Horarios</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <style>
     body { background-color: #f1f5f9; font-family: 'Segoe UI', system-ui, sans-serif; }
     .header-bar { background: #1e293b; color: #fff; padding: 14px 24px; border-bottom: 4px solid #3b82f6; }
@@ -21,18 +23,18 @@
       min-height: 27.94cm;
       background: #fff;
       margin: 0 auto 24px auto;
-      padding: 0.7cm 0.9cm;
+      padding: 0.6cm 0.85cm;
       box-shadow: 0 4px 18px rgba(0,0,0,0.12);
       color: #000;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 9pt;
+      font-family: 'Noto Sans', Arial, sans-serif;
+      font-size: 8.2pt;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
     .hoja-carta table { width: 100%; border-collapse: collapse; }
-    .hoja-carta th, .hoja-carta td { border: 1px solid #000; padding: 2px 4px; line-height: 1.15; }
+    .hoja-carta th, .hoja-carta td { border: 1px solid #000; padding: 1.5px 4px; line-height: 1.1; }
     .bg-gris-inst { background-color: #d9d9d9 !important; font-weight: bold; }
     .celda-jornada { background-color: #a6a6a6 !important; }
     .tabla-sin-borde td { border: none !important; padding: 1px 3px; }
@@ -372,6 +374,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjbqvOTFaLFeL0q1tn6r1d9ezgQ3KwKGxj5srl-1jRByvLe4khawqcK3JMbSt0obPe/exec';
 
@@ -1260,27 +1263,24 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
           if (etiq) textoCelda = String(etiq.ETIQUETA || '').toUpperCase();
         }
 
-        // Gris si está dentro de jornada O si tiene letra/etiqueta asignada
         const sombreado = enJornada || textoCelda !== '';
-        return `<td class="text-center fw-bold ${sombreado ? 'celda-jornada' : ''}" style="font-size:${textoCelda.length > 5 ? '6.5pt' : '8.5pt'};">${textoCelda}</td>`;
+        return `<td class="text-center fw-bold ${sombreado ? 'celda-jornada' : ''}" style="font-size:${textoCelda.length > 5 ? '6pt' : '8pt'};">${textoCelda}</td>`;
       }).join('');
 
       let celdaDer = '';
-      if (idxFila === 0) {
-        celdaDer = `<td colspan="3" class="bg-gris-inst text-center">DIVISIÓN LICENCIATURA</td><td class="bg-gris-inst text-center">${totalLic || 0}</td>`;
-      } else if (idxFila >= 1 && idxFila <= 10) {
-        const actItem = filasLic[idxFila - 1];
-        celdaDer = `<td colspan="3" style="font-size:7.2pt;">${actItem.label}</td><td class="text-center fw-bold">${actItem.hrs || ''}</td>`;
-      } else if (idxFila === 11) {
-        celdaDer = `<td colspan="3" class="bg-gris-inst text-center">DIVISIÓN DE POSGRADO</td><td class="bg-gris-inst text-center">${totalPos || 0}</td>`;
+      if (idxFila >= 0 && idxFila <= 9) {
+        const actItem = filasLic[idxFila];
+        celdaDer = `<td colspan="3" style="font-size:6.6pt;white-space:nowrap;">${actItem.label}</td><td class="text-center fw-bold" style="font-size:7.5pt;">${actItem.hrs || ''}</td>`;
+      } else if (idxFila === 10) {
+        celdaDer = `<td colspan="3" class="bg-gris-inst text-center" style="font-size:7.2pt;">DIVISIÓN DE POSGRADO</td><td class="bg-gris-inst text-center" style="font-size:7.5pt;">${totalPos || 0}</td>`;
       } else {
-        const posItem = filasPos[idxFila - 12];
-        celdaDer = `<td colspan="3" style="font-size:7.2pt;">${posItem ? posItem.label : ''}</td><td class="text-center fw-bold">${posItem && posItem.hrs ? posItem.hrs : ''}</td>`;
+        const posItem = filasPos[idxFila - 11];
+        celdaDer = `<td colspan="3" style="font-size:6.6pt;white-space:nowrap;">${posItem ? posItem.label : ''}</td><td class="text-center fw-bold" style="font-size:7.5pt;">${posItem && posItem.hrs ? posItem.hrs : ''}</td>`;
       }
 
       filasGrid.push(`
         <tr>
-          <td class="text-center" style="white-space:nowrap;">${h}:00-${h + 1}:00</td>
+          <td class="text-center" style="white-space:nowrap;font-size:7.3pt;">${h}:00-${h + 1}:00</td>
           ${celdasDias}
           ${celdaDer}
         </tr>`);
@@ -1289,14 +1289,10 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
     const filaExtraPos = `
       <tr>
         <td colspan="6" style="border:none;"></td>
-        <td colspan="3" style="font-size:7.2pt;">${filasPos[2].label}</td>
-        <td class="text-center fw-bold">${filasPos[2].hrs || ''}</td>
-      </tr>
-      <tr>
-        <td colspan="6" style="border:none;"></td>
-        <td colspan="3" style="font-size:7.2pt;">${filasPos[3].label}</td>
-        <td class="text-center fw-bold">${filasPos[3].hrs || ''}</td>
+        <td colspan="3" style="font-size:6.6pt;white-space:nowrap;">${filasPos[3].label}</td>
+        <td class="text-center fw-bold" style="font-size:7.5pt;">${filasPos[3].hrs || ''}</td>
       </tr>`;
+    
     
     const renderTablaInferior = (titulo, lista) => {
       const rows = lista.length > 0
@@ -1375,21 +1371,23 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
             </tr>
           </table>
 
-          <div class="text-center fw-bold" style="font-size:8.5pt;">ESTANCIA EN LA ESCUELA NORMAL</div>
-<table style="font-size:7.6pt;">
+          <div class="text-center fw-bold" style="font-size:8pt;">ESTANCIA EN LA ESCUELA NORMAL</div>
+          <table style="font-size:7.3pt;">
             <thead>
               <tr>
-                <th rowspan="2" class="text-center" style="width:11%;">HORARIO</th>
-                <th colspan="5" class="text-center" style="width:49%;">DÍAS</th>
-                <th colspan="3" rowspan="1" class="text-center" style="width:34%;">DISTRIBUCIÓN DE ACTIVIDADES*</th>
-                <th rowspan="1" class="text-center" style="width:6%;">HRS.</th>
+                <th rowspan="2" class="text-center" style="width:10.5%;">HORARIO</th>
+                <th colspan="5" class="text-center" style="width:47.5%;">DÍAS</th>
+                <th colspan="3" class="text-center" style="width:36%;">DISTRIBUCIÓN DE ACTIVIDADES*</th>
+                <th class="text-center" style="width:6%;">HRS.</th>
               </tr>
               <tr>
-                <th class="text-center" style="width:9.8%;">LUNES</th>
-                <th class="text-center" style="width:9.8%;">MARTES</th>
-                <th class="text-center" style="width:9.8%;">MIÉRCOLES</th>
-                <th class="text-center" style="width:9.8%;">JUEVES</th>
-                <th class="text-center" style="width:9.8%;">VIERNES</th>
+                <th class="text-center" style="width:9.5%;">LUNES</th>
+                <th class="text-center" style="width:9.5%;">MARTES</th>
+                <th class="text-center" style="width:9.5%;">MIÉRCOLES</th>
+                <th class="text-center" style="width:9.5%;">JUEVES</th>
+                <th class="text-center" style="width:9.5%;">VIERNES</th>
+                <td colspan="3" class="bg-gris-inst text-center" style="font-size:7.2pt;">DIVISIÓN LICENCIATURA</td>
+                <td class="bg-gris-inst text-center" style="font-size:7.5pt;">${totalLic || 0}</td>
               </tr>
             </thead>
             <tbody>
@@ -1397,7 +1395,7 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
               ${filaExtraPos}
             </tbody>
           </table>
-
+         
           <table class="mt-2" style="font-size:7.3pt;">
             <tr>
               <td rowspan="3" class="text-center fw-bold" style="width:13%;">OBSERVACIONES</td>
