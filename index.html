@@ -1128,6 +1128,36 @@
 
   function construirHtmlHorarioIndividual(idDoc) {
     const doc = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
+    // 4. Coordinador y firmas institucionales (búsqueda flexible por clave/nombre y turno)
+    const licNorm = normalizarTexto(cveLic);
+    const claveLicNorm = licObj ? normalizarTexto(licObj.CVE_LIC) : licNorm;
+    const turnoNorm = normalizarTexto(turnoDoc);
+
+    const coordObj = (DB.coordinadores || []).find(c => {
+      const cLic = normalizarTexto(c.CVE_LIC);
+      const cClave = normalizarTexto(c.CLAVE);
+      const cTurno = normalizarTexto(c.TURNO);
+
+      const coincideLic = (cLic === licNorm || cClave === licNorm || cLic === claveLicNorm || cClave === claveLicNorm);
+      const coincideTurno = (
+        cTurno === turnoNorm ||
+        (turnoNorm === 'M' && cTurno === 'MATUTINO') ||
+        (turnoNorm === 'V' && cTurno === 'VESPERTINO') ||
+        (turnoNorm === 'MATUTINO' && cTurno === 'M') ||
+        (turnoNorm === 'VESPERTINO' && cTurno === 'V')
+      );
+      return coincideLic && coincideTurno;
+    });
+
+    const puestoCoord = coordObj ? String(coordObj.PUESTO_OFICIAL).toUpperCase() : `COORDINACIÓN DE ${cveLic.toUpperCase()}`;
+    const inicialesCoord = coordObj ? String(coordObj.INICIALES || '').trim() : '';
+    let nombreCoord = '';
+    if (coordObj && coordObj.CVE_DOC) {
+      const docC = DB.docentes.find(d => String(d.CVE_DOC).trim() === String(coordObj.CVE_DOC).trim());
+      if (docC) nombreCoord = `${docC.NOM_DOC || ''} ${docC.AP_PATD || ''} ${docC.AP_MATD || ''}`.trim().toUpperCase();
+    }
+
+    const mostrarFirmaPosgrado = totalPos > 0;
     if (!doc) return '';
 
     const subtitulo = document.getElementById('fmtSubtitulo').value.trim().toUpperCase();
