@@ -1126,8 +1126,9 @@
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
-  function construirHtmlHorarioIndividual(idDoc) {
-    const mostrarFirmaPosgrado = totalPos > 0;
+function construirHtmlHorarioIndividual(idDoc) {
+    const doc = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
+    if (!doc) return '';
     if (!doc) return '';
 
     const subtitulo = document.getElementById('fmtSubtitulo').value.trim().toUpperCase();
@@ -1321,10 +1322,26 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
         </table>`;
     };
 
-    const coordObj = (DB.coordinadores || []).find(c =>
-      normalizarTexto(c.CVE_LIC) === normalizarTexto(cveLic) &&
-      normalizarTexto(c.TURNO) === normalizarTexto(turnoDoc)
-    );
+  const licNorm = normalizarTexto(cveLic);
+    const claveLicNorm = licObj ? normalizarTexto(licObj.CVE_LIC) : licNorm;
+    const turnoNorm = normalizarTexto(turnoDoc);
+
+    const coordObj = (DB.coordinadores || []).find(c => {
+      const cLic = normalizarTexto(c.CVE_LIC);
+      const cClave = normalizarTexto(c.CLAVE);
+      const cTurno = normalizarTexto(c.TURNO);
+
+      const coincideLic = (cLic === licNorm || cClave === licNorm || cLic === claveLicNorm || cClave === claveLicNorm);
+      const coincideTurno = (
+        cTurno === turnoNorm ||
+        (turnoNorm === 'M' && cTurno === 'MATUTINO') ||
+        (turnoNorm === 'V' && cTurno === 'VESPERTINO') ||
+        (turnoNorm === 'MATUTINO' && cTurno === 'M') ||
+        (turnoNorm === 'VESPERTINO' && cTurno === 'V')
+      );
+      return coincideLic && coincideTurno;
+    });
+
     const puestoCoord = coordObj ? String(coordObj.PUESTO_OFICIAL).toUpperCase() : `COORDINACIÓN DE ${cveLic.toUpperCase()}`;
     const inicialesCoord = coordObj ? String(coordObj.INICIALES || '').trim() : '';
     let nombreCoord = '';
