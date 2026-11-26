@@ -1442,27 +1442,26 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
           ${renderTablaInferior('ASIGNATURA(S) CURRICULAR(ES) DE POSGRADO', listaPosgrado)}
         </div>
 
-        <div class="mt-3">
-
-  <table class="tabla-sin-borde text-center" style="width:100%;table-layout:fixed;font-size:8pt;font-weight:bold;">
+      <div class="mt-2">
+          <table class="tabla-sin-borde text-center" style="width:100%;table-layout:fixed;font-size:7.6pt;font-weight:bold;">
             <tr>
-              <td style="vertical-align:bottom;height:34px;padding:0 6px 25px 6px;">${puestoCoord}</td>
-              <td style="vertical-align:bottom;padding:0 6px 25px 6px;">DIVISIÓN DE LICENCIATURAS</td>
-              ${mostrarFirmaPosgrado ? '<td style="vertical-align:bottom;padding:0 6px 25px 6px;">DIVISIÓN DE POSGRADO</td>' : ''}
-              <td style="vertical-align:bottom;padding:0 6px 25px 6px;">SUBDIRECCIÓN ACADÉMICA</td>
+              <td style="vertical-align:bottom;padding:0 6px 46px 6px;">${puestoCoord}</td>
+              <td style="vertical-align:bottom;padding:0 6px 46px 6px;">DIVISIÓN DE LICENCIATURAS</td>
+              ${mostrarFirmaPosgrado ? '<td style="vertical-align:bottom;padding:0 6px 46px 6px;">DIVISIÓN DE POSGRADO</td>' : ''}
+              <td style="vertical-align:bottom;padding:0 6px 46px 6px;">SUBDIRECCIÓN ACADÉMICA</td>
             </tr>
             <tr>
-              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:3px;">${nombreCoord}</div></td>
-              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:10px;">DIANA ISELA GUZMÁN LÓPEZ</div></td>
-              ${mostrarFirmaPosgrado ? '<td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:3px;">CINTHIA JESSICA SÁNCHEZ SERRANO</div></td>' : ''}
-              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:3px;">AIDÉ RAQUEL CUELLAR SALAZAR</div></td>
+              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:4px;">${nombreCoord}</div></td>
+              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:4px;">DIANA ISELA GUZMÁN LÓPEZ</div></td>
+              ${mostrarFirmaPosgrado ? '<td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:4px;">CINTHIA JESSICA SÁNCHEZ SERRANO</div></td>' : ''}
+              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:4px;">AIDÉ RAQUEL CUELLAR SALAZAR</div></td>
             </tr>
           </table>
-          <div class="text-end" style="font-size:5pt;margin-bottom:2px;">
+          <div class="text-end" style="font-size:5.5pt;margin-top:2px;line-height:1.1;">
             ARCS/DIGL/RHSF/${inicialesCoord}<br>E-DL
           </div>
-          <div class="text-center mt-2">
-            <img src="footer_ensm.png" alt="Pie de página Institucional" style="width:100%;max-height:100%;object-fit:contain;">
+          <div class="text-center mt-1">
+            <img src="footer_ensm.png" alt="Pie de página Institucional" style="width:100%;max-height:44px;object-fit:contain;">
           </div>
         </div>
       </div>`;
