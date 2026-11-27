@@ -183,7 +183,7 @@
               <span>Distribución de Horario</span>
               <div class="form-check form-switch mb-0">
                 <input class="form-check-input" type="checkbox" id="chkTraslape">
-                <label class="form-check-label small" for="chkTraslape">Permitir horario compartido</label>
+                <label class="form-check-label small" for="chkTraslape">Permitir empalme de asignaturas</label>
               </div>
             </div>
             <div class="card-body">
@@ -891,6 +891,19 @@ function esLicConGruposAB(lic) {
     };
     if (!payload.idDocente || !payload.nomLic || !payload.semestre || !payload.cveMat) {
       return mostrarAlerta('Completa Docente, Licenciatura, Semestre y Asignatura.', 'warning');
+    }
+    const matSel = DB.materias.find(m => String(m.CVE_MAT).trim() === payload.cveMat);
+    const hrsRequeridas = matSel ? (Number(matSel.HRS_SEMA) || 0) : 0;
+    if (hrsRequeridas > 0 && bloques.length !== hrsRequeridas) {
+      return mostrarAlerta(
+        `Captura incompleta: la asignatura "${matSel.NOM_MAT}" requiere ${hrsRequeridas} hrs semanales completas y seleccionaste ${bloques.length}.`,
+        'warning'
+      );
+    }
+
+    const unicos = new Set(bloques.map(b => `${b.dia}_${b.hora}`));
+    if (unicos.size !== bloques.length) {
+      return mostrarAlerta('Tienes bloques duplicados (mismo día y misma hora) en la distribución. Verifica tus sesiones.', 'warning');
     }
     const docSel = DB.docentes.find(d => String(d.CVE_DOC).trim() === payload.idDocente);
     const limDoc = docSel ? (Number(docSel.HRS_SEM) || 0) : 0;
