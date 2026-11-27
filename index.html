@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>División de Licenciaturas - Gestión de Horarios</title>
+  <title>ENSM - División de Licenciaturas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   
@@ -61,7 +61,7 @@
 
 <div class="header-bar d-flex justify-content-between align-items-center no-print">
   <div>
-    <h5 class="mb-0">División de Licenciaturas <span class="badge bg-primary ms-2">LinkAcadémico</span></h5>
+    <h5 class="mb-0">División de Licenciaturas<span class="badge bg-primary ms-2">ENSM</span></h5>
     <small class="text-light opacity-75">Sistema Integral de Gestión de Horarios · División de Licenciaturas</small>
   </div>
   <div class="d-flex align-items-center gap-2">
@@ -79,14 +79,14 @@
           <select id="filtroEspecialidad" class="form-select"></select>
         </div>
         <div class="col-md-5">
-          <label class="form-label fw-semibold mb-1">Docente Activo</label>
+          <label class="form-label fw-semibold mb-1">Docente</label>
           <select id="selectDocente" class="form-select"></select>
         </div>
         <div class="col-md-3">
           <div class="bg-light p-2 rounded border d-flex justify-content-between align-items-center">
             <div>
               <small class="text-muted d-block">Turno: <strong id="lblTurnoDoc">-</strong></small>
-              <small class="text-muted">Límite: <strong id="lblLimiteDoc">0 hrs</strong></small>
+              <small class="text-muted">Horas Semanales: <strong id="lblLimiteDoc">0 hrs</strong></small>
             </div>
             <span id="lblResumenCarga" class="badge bg-secondary fs-6">0 de 0 hrs.</span>
           </div>
@@ -96,9 +96,9 @@
   </div>
 
   <ul class="nav nav-tabs mb-3 bg-white rounded-top px-2 pt-2 shadow-sm no-print" role="tablist">
-    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabAsignar">1. Asignar Horario</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabGestionar">2. Modificar / Eliminar Horarios</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabJornada">3. Jornada y Actividades</button></li>
+    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabAsignar">1. Registrar Horario</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabGestionar">2. Modificar / Eliminar Horario</button></li>
+    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabJornada">3. Alta de Jornada y Actividades</button></li>
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabCatalogos">4. Alta / Baja (Docentes / Materias)</button></li>
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabFormatos">5. Impresión de Formatos</button></li>
   </ul>
@@ -332,20 +332,20 @@
     <div class="tab-pane fade" id="tabFormatos">
       <div class="card mb-3 no-print">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <span>Centro de Impresión de Formatos Oficiales</span>
+          <span>Impresión de Formatos Oficiales</span>
           <span class="badge bg-primary">Formato Tamaño Carta</span>
         </div>
         <div class="card-body">
           <div class="row g-3 align-items-end">
             <div class="col-md-3">
-              <label class="form-label fw-semibold small mb-1">Tipo de Formato</label>
+              <label class="form-label fw-semibold small mb-1">Tipo de Impresión</label>
               <select id="selTipoFormato" class="form-select">
                 <option value="INDIVIDUAL">Horario Individual Docente</option>
                 <option value="MASIVO_LIC">Horario Individual (Masivo por Licenciatura)</option>
               </select>
             </div>
             <div class="col-md-3">
-              <label class="form-label fw-semibold small mb-1">Subtítulo Semestres</label>
+              <label class="form-label fw-semibold small mb-1">SemestresSemestres</label>
               <input type="text" id="fmtSubtitulo" class="form-control" value="1° A 5° SEMESTRES">
             </div>
             <div class="col-md-2">
@@ -362,7 +362,7 @@
             </div>
           </div>
           <div class="d-flex flex-wrap gap-2 mt-3">
-            <button id="btnVistaPreviaFormato" class="btn btn-primary fw-semibold">Generar Vista Previa</button>
+            <button id="btnVistaPreviaFormato" class="btn btn-primary fw-semibold">Vista Previa</button>
             <button id="btnImprimirFormato" class="btn btn-success fw-semibold">Imprimir / Guardar PDF</button>
           </div>
         </div>
