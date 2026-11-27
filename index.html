@@ -739,13 +739,42 @@
     actualizarNombreGrupo();
     evaluarTodosLosBloques();
   }));
+function esLicConGruposAB(lic) {
+    return ['ESPAÑOL', 'MATEMÁTICAS', 'INGLÉS'].includes(String(lic || '').trim().toUpperCase());
+  }
 
   function configurarControlesGrupo() {
     const lic = document.getElementById('cmbLicMateria').value;
     const cmbLetra = document.getElementById('cmbLetra');
     const txtGrupo = document.getElementById('txtGrupoFinal');
-    cmbLetra.disabled = !['ESPAÑOL', 'MATEMÁTICAS', 'INGLÉS'].includes(lic);
-    if (cmbLetra.disabled) cmbLetra.value = '';
+    const radFusion = document.getElementById('modoFusion');
+    const radNormal = document.getElementById('modoNormal');
+
+    const tieneAB = esLicConGruposAB(lic);
+
+    // 1. Habilitar/bloquear selector de letra (A/B) y botón Fusión (A+B)
+    cmbLetra.disabled = !tieneAB;
+    if (!tieneAB) cmbLetra.value = '';
+
+    radFusion.disabled = !tieneAB;
+    if (!tieneAB && radFusion.checked) {
+      radNormal.checked = true;
+    }
+
+    // 2. Habilitar/bloquear Turno según modalidad (en Mixto M/V el turno va implícito)
+    const modo = document.querySelectorAll('input[name="modoGrupo"]').forEach(r => r.addEventListener('change', () => {
+    configurarControlesGrupo();
+    actualizarNombreGrupo();
+    evaluarTodosLosBloques();
+  }));
+    const cmbTurno = document.getElementById('cmbTurno');
+    if (modo === 'MIXTO') {
+      cmbTurno.value = '';
+      cmbTurno.disabled = true;
+    } else {
+      cmbTurno.disabled = false;
+    }
+
     txtGrupo.readOnly = (lic !== 'DOCENCIA EN POSGRADO');
     if (!txtGrupo.readOnly) txtGrupo.value = '';
   }
@@ -763,9 +792,19 @@
     const prefijo = licObj ? licObj.CVE_LIC : '';
     if (!prefijo || !sem) { txtGrupo.value = ''; return; }
 
-    if (modo === 'FUSION') txtGrupo.value = `${prefijo}${sem}A/B${turno || 'M'}`;
-    else if (modo === 'MIXTO') txtGrupo.value = `${prefijo}${sem}M/V`;
-    else txtGrupo.value = `${prefijo}${sem}${letra}${turno || '?'}`;
+    const tieneAB = esLicConGruposAB(lic);
+
+    if (modo === 'FUSION') {
+      txtGrupo.value = `${prefijo}${sem}A/B${turno || '?'}`;
+    } else if (modo === 'MIXTO') {
+      txtGrupo.value = tieneAB
+        ? `${prefijo}${sem}${letra || '?'}M/V`
+        : `${prefijo}${sem}M/V`;
+    } else {
+      txtGrupo.value = tieneAB
+        ? `${prefijo}${sem}${letra || '?'}${turno || '?'}`
+        : `${prefijo}${sem}${turno || '?'}`;
+    }
   }
 
   function filtrarMaterias() {
