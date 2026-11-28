@@ -404,6 +404,29 @@
               <input type="text" id="fmtFechaGpal" class="form-control" value="JUNIO 2026">
             </div>
           </div>
+
+          <div class="row g-2 align-items-end mt-2 pt-2 border-top">
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Jornadas Práctica</label>
+              <select id="selNumJornadas" class="form-select form-select-sm">
+                <option value="2" selected>2 Jornadas</option>
+                <option value="3">3 Jornadas</option>
+              </select>
+            </div>
+            <div class="col-md-3" id="wrapJor1">
+              <label class="form-label fw-semibold small mb-1">Primer Jornada</label>
+              <input type="text" id="fmtJor1" class="form-control form-control-sm text-uppercase" placeholder="Ej. 11/11/2026-15/11/2026">
+            </div>
+            <div class="col-md-3" id="wrapJor2">
+              <label class="form-label fw-semibold small mb-1">Segunda Jornada</label>
+              <input type="text" id="fmtJor2" class="form-control form-control-sm text-uppercase" placeholder="Ej. 23/11/2026-04/12/2026">
+            </div>
+            <div class="col-md-4 d-none" id="wrapJor3">
+              <label class="form-label fw-semibold small mb-1">Tercer Jornada</label>
+              <input type="text" id="fmtJor3" class="form-control form-control-sm text-uppercase" placeholder="Ej. 11/01/2027-15/01/2027">
+            </div>
+          </div>
+
           <div class="d-flex flex-wrap gap-2 mt-3">
             <button id="btnVistaPreviaGpal" class="btn btn-primary fw-semibold">Vista Previa Grupal</button>
             <button id="btnImprimirGpal" class="btn btn-success fw-semibold">Imprimir / PDF Grupal</button>
@@ -413,11 +436,8 @@
 
       <div id="zonaImpresionFormatos"></div>
     </div>
-      <div id="zonaImpresionFormatos"></div>
-    </div>
-  </div>
-</div>
 
+    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
@@ -680,8 +700,8 @@
 
     selDoc.innerHTML = '<option value="">-- Seleccionar Docente --</option>' +
       filtrados.map(d => `<option value="${d.CVE_DOC}">${d.AP_PATD} ${d.AP_MATD} ${d.NOM_DOC} (${d.CVE_DOC})</option>`).join('');
+     onDocenteChange();
     actualizarComboGruposFormato();
-    onDocenteChange();
   }
 
 
@@ -1840,8 +1860,309 @@ function actualizarComboGruposFormato() {
       : '<option value="">-- Sin grupos capturados --</option>';
   }
 
+  function formatearRangoJornada(texto) {
+    const limpio = String(texto || '').trim().toUpperCase();
+    if (!limpio) return '';
+
+    const MESES = [
+      '', 'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO',
+      'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
+    ];
+
+    const match = limpio.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})\s*[\-–aA]+\s*(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if (!match) return limpio;
+
+    const d1 = parseInt(match[1], 10);
+    const m1 = parseInt(match[2], 10);
+    const y1 = match[3];
+    const d2 = parseInt(match[4], 10);
+    const m2 = parseInt(match[5], 10);
+    const y2 = match[6];
+
+    if (!MESES[m1] || !MESES[m2]) return limpio;
+
+    if (y1 === y2 && m1 === m2) {
+      return `DEL ${d1} AL ${d2} DE ${MESES[m1]} DE ${y1}`;
+    }
+    if (y1 === y2) {
+      return `DEL ${d1} DE ${MESES[m1]} AL ${d2} DE ${MESES[m2]} DE ${y1}`;
+    }
+    return `DEL ${d1} DE ${MESES[m1]} DE ${y1} AL ${d2} DE ${MESES[m2]} DE ${y2}`;
+  }
+
+  function construirHtmlHorarioGrupal(grupoID, licNombreForzada) {
+    const grpClean = String(grupoID || '').trim().toUpperCase();
+    const asigsGrupo = (DB.asignaciones || []).filter(a => String(a.GRUPO_ID || '').trim().toUpperCase() === grpClean);
+    if (asigsGrupo.length === 0) return '';
+
+    const primera = asigsGrupo[0];
+    const cveLic = String(licNombreForzada || primera.CVE_LIC || '').trim();
+    const licObj = DB.licenciaturas.find(l =>
+      normalizarTexto(l.NOM_LIC) === normalizarTexto(cveLic) ||
+      normalizarTexto(l.CVE_LIC) === normalizarTexto(cveLic)
+    );
+    const licEnEnsenanza = licObj && licObj.EN_ENSEÑANZA ? String(licObj.EN_ENSEÑANZA).toUpperCase() : cveLic.toUpperCase();
+    const nomLicCatalogo = licObj ? String(licObj.NOM_LIC).trim() : cveLic;
+
+    const ultimoChar = grpClean.slice(-1);
+    const esVespertino = (ultimoChar === 'V');
+    const turnoTexto = esVespertino ? 'VESPERTINO' : 'MATUTINO';
+
+    const penultimoChar = grpClean.length >= 2 ? grpClean.slice(-2, -1) : '';
+    let letraGrupo = 'ÚNICO';
+    let semNum = String(primera.SEMESTRE || '').trim();
+
+    if (penultimoChar === 'A' || penultimoChar === 'B') {
+      letraGrupo = penultimoChar;
+      if (!semNum && grpClean.length >= 3) semNum = grpClean.slice(-3, -2);
+    } else if (!semNum && /\d/.test(penultimoChar)) {
+      semNum = penultimoChar;
+    }
+
+    const MAPA_SEMESTRES = {
+      '1': 'PRIMERO', '2': 'SEGUNDO', '3': 'TERCERO', '4': 'CUARTO',
+      '5': 'QUINTO', '6': 'SEXTO', '7': 'SÉPTIMO', '8': 'OCTAVO'
+    };
+    const semestreTexto = MAPA_SEMESTRES[semNum] || semNum.toUpperCase();
+
+    const semestreHdr = document.getElementById('fmtSemestreGpal').value.trim().toUpperCase();
+    const cicloTxt = document.getElementById('fmtCicloGpal').value.trim().toUpperCase();
+    const fechaTxt = document.getElementById('fmtFechaGpal').value.trim().toUpperCase();
+    const planTxt = document.getElementById('fmtPlan').value.trim().toUpperCase();
+
+    const mapaMat = new Map();
+    asigsGrupo.forEach(a => {
+      const cveMat = String(a.CVE_MAT || '').trim().toUpperCase();
+      if (!cveMat) return;
+      if (!mapaMat.has(cveMat)) {
+        const matCat = DB.materias.find(m => String(m.CVE_MAT).trim().toUpperCase() === cveMat);
+        const nomMat = matCat ? String(matCat.NOM_MAT).toUpperCase() : cveMat;
+        const esFort = matCat ? normalizarTexto(matCat.ES_FORTALECIMIENTO) : 'NO';
+        const idDoc = String(a.ID_DOCENTE || '').trim();
+        const docObj = DB.docentes.find(d => String(d.CVE_DOC).trim() === idDoc);
+        const nomDoc = docObj ? `${docObj.NOM_DOC || ''} ${docObj.AP_PATD || ''} ${docObj.AP_MATD || ''}`.trim().toUpperCase() : '';
+
+        mapaMat.set(cveMat, {
+          cveMat,
+          nomMat,
+          horas: 0,
+          nomDoc,
+          esFort: (esFort === 'SI' || esFort === 'TRUE'),
+          letra: ''
+        });
+      }
+      mapaMat.get(cveMat).horas += (Number(a.HR_DIA) || 1);
+    });
+
+    const ordenadas = [...mapaMat.values()].sort((a, b) => a.cveMat.localeCompare(b.cveMat));
+    const curriculares = ordenadas.filter(x => !x.esFort);
+    const fortalecimiento = ordenadas.filter(x => x.esFort);
+
+    let ascii = 65;
+    [...curriculares, ...fortalecimiento].forEach(item => {
+      item.letra = String.fromCharCode(ascii++);
+    });
+
+    const horaInicioBase = esVespertino ? 13 : 7;
+    const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
+    const filasGrid = [];
+
+    for (let offset = 0; offset < 8; offset++) {
+      const h = horaInicioBase + offset;
+      const hIniStr = String(h).padStart(2, '0') + ':00';
+      const hFinStr = String(h + 1).padStart(2, '0') + ':00';
+
+      const celdas = diasCols.map(dia => {
+        const dNorm = normalizarTexto(dia);
+        const regsHora = asigsGrupo.filter(a => normalizarTexto(a.DIA) === dNorm && Number(a.HORA) === h);
+        const letras = [...new Set(regsHora.map(r => {
+          const obj = mapaMat.get(String(r.CVE_MAT || '').trim().toUpperCase());
+          return obj ? obj.letra : '';
+        }).filter(Boolean))];
+        return `<td class="text-center fw-bold" style="font-size:8.5pt;">${letras.join(' / ')}</td>`;
+      }).join('');
+
+      filasGrid.push(`
+        <tr>
+          <td class="text-center fw-semibold" style="white-space:nowrap;">${hIniStr} - ${hFinStr}</td>
+          ${celdas}
+        </tr>`);
+    }
+
+    const renderTablaMaterias = (titulo, lista) => {
+      if (lista.length === 0) return '';
+      const rows = lista.map(x => `
+        <tr>
+          <td class="text-center fw-bold" style="width:28px;">${x.letra}</td>
+          <td style="width:49%;">${x.nomMat}</td>
+          <td class="text-center fw-bold" style="width:65px;">${x.horas}</td>
+          <td>${x.nomDoc}</td>
+        </tr>`).join('');
+
+      return `
+        <table class="mt-2" style="font-size:7.6pt;">
+          <thead>
+            <tr class="bg-gris-inst">
+              <th style="width:28px;"></th>
+              <th class="text-center" style="width:49%;">${titulo}</th>
+              <th class="text-center" style="width:65px;">HORAS</th>
+              <th class="text-center">NOMBRE DEL DOCENTE</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+    };
+
+    const numJornadas = Number(document.getElementById('selNumJornadas').value) || 2;
+    const jor1Txt = formatearRangoJornada(document.getElementById('fmtJor1').value);
+    const jor2Txt = formatearRangoJornada(document.getElementById('fmtJor2').value);
+    const jor3Txt = formatearRangoJornada(document.getElementById('fmtJor3').value);
+
+    const htmlTablaPracticas = numJornadas === 3
+      ? `
+          <table class="mt-2" style="font-size:7.3pt;">
+            <tr class="bg-gris-inst">
+              <th colspan="3" class="text-center">PERIODOS DE PRÁCTICAS PROFESIONALES</th>
+            </tr>
+            <tr class="fw-bold text-center">
+              <td style="width:33.33%;">PRIMER JORNADA</td>
+              <td style="width:33.33%;">SEGUNDA JORNADA</td>
+              <td style="width:33.34%;">TERCER JORNADA</td>
+            </tr>
+            <tr class="text-center fw-semibold">
+              <td style="height:20px;">${jor1Txt || '&nbsp;'}</td>
+              <td style="height:20px;">${jor2Txt || '&nbsp;'}</td>
+              <td style="height:20px;">${jor3Txt || '&nbsp;'}</td>
+            </tr>
+          </table>`
+      : `
+          <table class="mt-2" style="font-size:7.5pt;">
+            <tr class="bg-gris-inst">
+              <th colspan="2" class="text-center">PERIODOS DE PRÁCTICAS PROFESIONALES</th>
+            </tr>
+            <tr class="fw-bold text-center">
+              <td style="width:50%;">PRIMER JORNADA</td>
+              <td style="width:50%;">SEGUNDA JORNADA</td>
+            </tr>
+            <tr class="text-center fw-semibold">
+              <td style="height:20px;">${jor1Txt || '&nbsp;'}</td>
+              <td style="height:20px;">${jor2Txt || '&nbsp;'}</td>
+            </tr>
+          </table>`;
+
+    const licNorm = normalizarTexto(nomLicCatalogo);
+    const claveLicNorm = licObj ? normalizarTexto(licObj.CVE_LIC) : licNorm;
+    const coordObj = (DB.coordinadores || []).find(c => {
+      const cLic = normalizarTexto(c.CVE_LIC);
+      const cClave = normalizarTexto(c.CLAVE);
+      const cTurno = normalizarTexto(c.TURNO);
+      const matchLic = (cLic === licNorm || cClave === licNorm || cLic === claveLicNorm || cClave === claveLicNorm);
+      const matchTurno = (cTurno === turnoTexto || (turnoTexto === 'MATUTINO' && cTurno === 'M') || (turnoTexto === 'VESPERTINO' && cTurno === 'V'));
+      return matchLic && matchTurno;
+    });
+
+    const puestoCoord = coordObj ? String(coordObj.PUESTO_OFICIAL).toUpperCase() : `COORDINACIÓN DE ${nomLicCatalogo.toUpperCase()}`;
+    const inicialesCoord = coordObj ? String(coordObj.INICIALES || '').trim() : '';
+    let nombreCoord = '';
+    if (coordObj && coordObj.CVE_DOC) {
+      const docC = DB.docentes.find(d => String(d.CVE_DOC).trim() === String(coordObj.CVE_DOC).trim());
+      if (docC) nombreCoord = `${docC.NOM_DOC || ''} ${docC.AP_PATD || ''} ${docC.AP_MATD || ''}`.trim().toUpperCase();
+    }
+
+    return `
+      <div class="hoja-carta">
+        <div>
+          <div class="text-center mb-1">
+            <img src="header_ensm.png" alt="Encabezado Institucional" style="width:100%;max-height:100%;object-fit:contain;">
+          </div>
+
+          <div class="text-center fw-bold" style="font-size:9pt;line-height:1.25;">
+            <div>HORARIO DE GRUPO</div>
+            <div>${semestreHdr}</div>
+            <div>CICLO ESCOLAR ${cicloTxt}</div>
+          </div>
+
+          <table class="mt-2 mb-2" style="font-size:7.8pt;">
+            <tr>
+              <td class="fw-bold" style="width:14%;">NOMBRE:</td>
+              <td colspan="3" class="text-center fw-bold">ESCUELA NORMAL SUPERIOR DE MÉXICO</td>
+              <td class="fw-bold" style="width:10%;">FECHA</td>
+              <td class="fw-bold" style="width:18%;">${fechaTxt}</td>
+            </tr>
+            <tr>
+              <td colspan="4" class="fw-bold">${licEnEnsenanza}</td>
+              <td class="fw-bold">TURNO:</td>
+              <td class="fw-bold">${turnoTexto}</td>
+            </tr>
+            <tr>
+              <td class="fw-bold">SEMESTRE:</td>
+              <td class="fw-bold" style="width:26%;">${semestreTexto}</td>
+              <td colspan="2" class="fw-bold">${planTxt}</td>
+              <td class="fw-bold">GRUPO:</td>
+              <td class="fw-bold">${letraGrupo}</td>
+            </tr>
+          </table>
+
+          <div class="text-center fw-bold" style="font-size:8pt;">ESTANCIA EN LA ESCUELA NORMAL</div>
+          <table style="font-size:7.6pt;">
+            <thead>
+              <tr>
+                <th rowspan="2" class="text-center" style="width:15%;">HORARIO</th>
+                <th colspan="5" class="text-center">DÍAS</th>
+              </tr>
+              <tr>
+                <th class="text-center" style="width:17%;">LUNES</th>
+                <th class="text-center" style="width:17%;">MARTES</th>
+                <th class="text-center" style="width:17%;">MIÉRCOLES</th>
+                <th class="text-center" style="width:17%;">JUEVES</th>
+                <th class="text-center" style="width:17%;">VIERNES</th>
+              </tr>
+            </thead>
+            <tbody>${filasGrid.join('')}</tbody>
+          </table>
+
+          ${renderTablaMaterias('ASIGNATURAS CURRICULARES', curriculares)}
+          ${renderTablaMaterias('ACTIVIDADES DE FORTALECIMIENTO', fortalecimiento)}
+          ${htmlTablaPracticas}
+        </div>
+
+        <div class="mt-2">
+          <div class="text-end" style="font-size:5.5pt;margin-bottom:2px;line-height:1.1;">
+            ARCS/DIGL/RHSF/${inicialesCoord}<br>E-DL
+          </div>
+          <table class="tabla-sin-borde text-center" style="width:100%;table-layout:fixed;font-size:7.6pt;font-weight:bold;">
+            <tr>
+              <td style="vertical-align:bottom;padding:0 6px 46px 6px;">${puestoCoord}</td>
+              <td style="vertical-align:bottom;padding:0 6px 46px 6px;">DIVISIÓN DE LICENCIATURAS</td>
+              <td style="vertical-align:bottom;padding:0 6px 46px 6px;">SUBDIRECCIÓN ACADÉMICA</td>
+            </tr>
+            <tr>
+              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:4px;">${nombreCoord}</div></td>
+              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:4px;">DIANA ISELA GUZMÁN LÓPEZ</div></td>
+              <td style="padding:0 8px;vertical-align:top;"><div style="border-top:1px solid #000;padding-top:4px;">AIDÉ RAQUEL CUELLAR SALAZAR</div></td>
+            </tr>
+          </table>
+          <div class="text-center mt-1">
+            <img src="footer_ensm.png" alt="Pie de página Institucional" style="width:100%;max-height:44px;object-fit:contain;">
+          </div>
+        </div>
+      </div>`;
+  }
+
   document.getElementById('selModoGrupal').addEventListener('change', e => {
     document.getElementById('wrapGrupoFormato').classList.toggle('d-none', e.target.value !== 'GRUPAL_IND');
+  });
+
+  document.getElementById('selNumJornadas').addEventListener('change', e => {
+    const esTres = (e.target.value === '3');
+    document.getElementById('wrapJor3').classList.toggle('d-none', !esTres);
+    if (!esTres) document.getElementById('fmtJor3').value = '';
+  });
+
+  ['fmtJor1', 'fmtJor2', 'fmtJor3'].forEach(id => {
+    document.getElementById(id).addEventListener('blur', e => {
+      e.target.value = formatearRangoJornada(e.target.value);
+    });
   });
 
   function generarVistaPreviaIndividual() {
