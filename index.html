@@ -958,7 +958,7 @@ function esLicConGruposAB(lic) {
     const hrsRequeridas = matSel ? (Number(matSel.HRS_SEMA) || 0) : 0;
     if (hrsRequeridas > 0 && bloques.length !== hrsRequeridas) {
       return mostrarAlerta(
-        `Captura incompleta: la asignatura "${matSel.NOM_MAT}" requiere ${hrsRequeridas} hrs semanales completas y seleccionaste ${bloques.length}.`,
+        `Horario incompleto: la asignatura "${matSel.NOM_MAT}" requiere registrar ${hrsRequeridas} hrs. semanales`,
         'warning'
       );
     }
