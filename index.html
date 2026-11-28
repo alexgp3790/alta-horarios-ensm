@@ -327,36 +327,26 @@
       </div>
     </div>
 
-    <!-- TAB 5: IMPRESIÓN DE FORMATOS -->
+<!-- TAB 5: IMPRESIÓN DE FORMATOS -->
     <div class="tab-pane fade" id="tabFormatos">
+      <!-- BLOQUE 1: HORARIOS INDIVIDUALES -->
       <div class="card mb-3 no-print">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <span>Impresión de Formatos Oficiales</span>
+          <span>1. Horarios Individuales (Docentes)</span>
           <span class="badge bg-primary">Formato Tamaño Carta</span>
         </div>
         <div class="card-body">
           <div class="row g-3 align-items-end">
             <div class="col-md-4">
-              <label class="form-label fw-semibold small mb-1">Tipo de Formato</label>
-              <select id="selTipoFormato" class="form-select">
-                <option value="INDIVIDUAL">Horario Individual Docente</option>
-                <option value="MASIVO_LIC">Horario Individual (Masivo por Licenciatura)</option>
-                <option value="GRUPAL_IND">Horario Grupal (Por Grupo)</option>
-                <option value="GRUPAL_LIC">Horario Grupal (Masivo por Licenciatura)</option>
-                <option value="GRUPAL_TODO">Horario Grupal (Masivo Total - Todas las Lic.)</option>
+              <label class="form-label fw-semibold small mb-1">Modalidad Individual</label>
+              <select id="selModoIndividual" class="form-select">
+                <option value="INDIVIDUAL">Individual (Docente Activo)</option>
+                <option value="MASIVO_LIC">Masivo por Licenciatura</option>
               </select>
             </div>
-            <div class="col-md-2 d-none" id="wrapGrupoFormato">
-              <label class="form-label fw-semibold small mb-1">Grupo</label>
-              <select id="selGrupoFormato" class="form-select"></select>
-            </div>
-            <div class="col-md-2" id="wrapSubtituloFormato">
+            <div class="col-md-2">
               <label class="form-label fw-semibold small mb-1">Subtítulo Semestres</label>
               <input type="text" id="fmtSubtitulo" class="form-control" value="1° A 5° SEMESTRES">
-            </div>
-            <div class="col-md-2 d-none" id="wrapPlanFormato">
-              <label class="form-label fw-semibold small mb-1">Plan de Estudios</label>
-              <input type="text" id="fmtPlan" class="form-control" value="PLAN 2022">
             </div>
             <div class="col-md-2">
               <label class="form-label fw-semibold small mb-1">Periodo / Semestre</label>
@@ -372,12 +362,57 @@
             </div>
           </div>
           <div class="d-flex flex-wrap gap-2 mt-3">
-            <button id="btnVistaPreviaFormato" class="btn btn-primary fw-semibold">Vista Previa</button>
-            <button id="btnImprimirFormato" class="btn btn-success fw-semibold">Imprimir / Guardar PDF</button>
+            <button id="btnVistaPreviaInd" class="btn btn-primary fw-semibold">Vista Previa Individual</button>
+            <button id="btnImprimirInd" class="btn btn-success fw-semibold">Imprimir / PDF Individual</button>
           </div>
         </div>
       </div>
 
+      <!-- BLOQUE 2: HORARIOS GRUPALES -->
+      <div class="card mb-3 no-print">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>2. Horarios Grupales (Por Licenciatura)</span>
+          <span class="badge bg-dark">Grupos con Asignaturas Registradas</span>
+        </div>
+        <div class="card-body">
+          <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+              <label class="form-label fw-semibold small mb-1">Modalidad Grupal</label>
+              <select id="selModoGrupal" class="form-select">
+                <option value="GRUPAL_IND">Individual por Grupo</option>
+                <option value="GRUPAL_LIC">Masivo por Licenciatura</option>
+              </select>
+            </div>
+            <div class="col-md-2" id="wrapGrupoFormato">
+              <label class="form-label fw-semibold small mb-1">Grupo</label>
+              <select id="selGrupoFormato" class="form-select"></select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Plan de Estudios</label>
+              <input type="text" id="fmtPlan" class="form-control" value="PLAN 2022">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Periodo / Semestre</label>
+              <input type="text" id="fmtSemestreGpal" class="form-control" value="SEMESTRE 1">
+            </div>
+            <div class="col-md-1">
+              <label class="form-label fw-semibold small mb-1">Ciclo</label>
+              <input type="text" id="fmtCicloGpal" class="form-control" value="2026-2027">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-semibold small mb-1">Fecha Encabezado</label>
+              <input type="text" id="fmtFechaGpal" class="form-control" value="JUNIO 2026">
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <button id="btnVistaPreviaGpal" class="btn btn-primary fw-semibold">Vista Previa Grupal</button>
+            <button id="btnImprimirGpal" class="btn btn-success fw-semibold">Imprimir / PDF Grupal</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="zonaImpresionFormatos"></div>
+    </div>
       <div id="zonaImpresionFormatos"></div>
     </div>
   </div>
@@ -1784,17 +1819,42 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
       </div>`;
   }
 
-  function generarVistaPreviaFormatos() {
-    const tipo = document.getElementById('selTipoFormato').value;
+function actualizarComboGruposFormato() {
+    const lic = document.getElementById('filtroEspecialidad').value;
+    const selGrupo = document.getElementById('selGrupoFormato');
+    if (!selGrupo) return;
+
+    if (!lic) {
+      selGrupo.innerHTML = '<option value="">-- Selecciona Licenciatura --</option>';
+      return;
+    }
+
+    const gruposUnicos = [...new Set(
+      (DB.asignaciones || [])
+        .filter(a => String(a.CVE_LIC).trim() === lic && String(a.GRUPO_ID || '').trim() !== '')
+        .map(a => String(a.GRUPO_ID).trim().toUpperCase())
+    )].sort();
+
+    selGrupo.innerHTML = gruposUnicos.length > 0
+      ? '<option value="">-- Grupo --</option>' + gruposUnicos.map(g => `<option value="${g}">${g}</option>`).join('')
+      : '<option value="">-- Sin grupos capturados --</option>';
+  }
+
+  document.getElementById('selModoGrupal').addEventListener('change', e => {
+    document.getElementById('wrapGrupoFormato').classList.toggle('d-none', e.target.value !== 'GRUPAL_IND');
+  });
+
+  function generarVistaPreviaIndividual() {
+    const modo = document.getElementById('selModoIndividual').value;
     const zona = document.getElementById('zonaImpresionFormatos');
 
-    if (tipo === 'INDIVIDUAL') {
+    if (modo === 'INDIVIDUAL') {
       const idDoc = document.getElementById('selectDocente').value;
       if (!idDoc) return mostrarAlerta('Selecciona un Docente Activo en la parte superior.', 'warning');
       zona.innerHTML = construirHtmlHorarioIndividual(idDoc);
-    } else if (tipo === 'MASIVO_LIC') {
+    } else {
       const lic = document.getElementById('filtroEspecialidad').value;
-      if (!lic) return mostrarAlerta('Selecciona una Licenciatura de Adscripción en la parte superior para el modo masivo.', 'warning');
+      if (!lic) return mostrarAlerta('Selecciona una Licenciatura de Adscripción en la parte superior.', 'warning');
 
       const docsLic = DB.docentes
         .filter(d => String(d.CVE_LIC).trim() === lic && DB.asignaciones.some(a => String(a.ID_DOCENTE).trim() === String(d.CVE_DOC).trim()))
@@ -1802,18 +1862,44 @@ const diasCols = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES'];
 
       if (docsLic.length === 0) return mostrarAlerta('No hay docentes con asignaturas registradas en esa licenciatura.', 'warning');
       zona.innerHTML = docsLic.map(d => construirHtmlHorarioIndividual(String(d.CVE_DOC).trim())).join('');
-      mostrarAlerta(`Vista previa masiva generada: ${docsLic.length} horarios individuales de ${lic}.`, 'success');
+      mostrarAlerta(`Vista previa generada: ${docsLic.length} horarios individuales de ${lic}.`, 'success');
     }
   }
 
-  document.getElementById('btnVistaPreviaFormato').addEventListener('click', generarVistaPreviaFormatos);
-  document.getElementById('btnImprimirFormato').addEventListener('click', () => {
-    if (!document.getElementById('zonaImpresionFormatos').innerHTML.trim()) {
-      generarVistaPreviaFormatos();
+  function generarVistaPreviaGrupal() {
+    const modo = document.getElementById('selModoGrupal').value;
+    const zona = document.getElementById('zonaImpresionFormatos');
+    const lic = document.getElementById('filtroEspecialidad').value;
+
+    if (!lic) return mostrarAlerta('Selecciona una Licenciatura de Adscripción en la parte superior.', 'warning');
+
+    if (modo === 'GRUPAL_IND') {
+      const grp = document.getElementById('selGrupoFormato').value;
+      if (!grp) return mostrarAlerta('Selecciona un Grupo de la lista.', 'warning');
+      zona.innerHTML = construirHtmlHorarioGrupal(grp, lic);
+    } else {
+      const gruposLic = [...new Set(
+        DB.asignaciones
+          .filter(a => String(a.CVE_LIC).trim() === lic && String(a.GRUPO_ID || '').trim() !== '')
+          .map(a => String(a.GRUPO_ID).trim().toUpperCase())
+      )].sort();
+
+      if (gruposLic.length === 0) return mostrarAlerta('No hay grupos con asignaturas registradas en esa licenciatura.', 'warning');
+      zona.innerHTML = gruposLic.map(g => construirHtmlHorarioGrupal(g, lic)).join('');
+      mostrarAlerta(`Vista previa generada: ${gruposLic.length} horarios grupales de ${lic}.`, 'success');
     }
-    if (document.getElementById('zonaImpresionFormatos').innerHTML.trim()) {
-      window.print();
-    }
+  }
+
+  document.getElementById('btnVistaPreviaInd').addEventListener('click', generarVistaPreviaIndividual);
+  document.getElementById('btnImprimirInd').addEventListener('click', () => {
+    generarVistaPreviaIndividual();
+    if (document.getElementById('zonaImpresionFormatos').innerHTML.trim()) window.print();
+  });
+
+  document.getElementById('btnVistaPreviaGpal').addEventListener('click', generarVistaPreviaGrupal);
+  document.getElementById('btnImprimirGpal').addEventListener('click', () => {
+    generarVistaPreviaGrupal();
+    if (document.getElementById('zonaImpresionFormatos').innerHTML.trim()) window.print();
   });
 </script>
 </body>
